@@ -1,0 +1,32 @@
+pratik@KPI-PratikTrainee:~$ vi  sample.sh
+pratik@KPI-PratikTrainee:~$ sh sample.sh
+how are you? pratik
+fine
+name:pratik
+age:age
+pratik@KPI-PratikTrainee:~$ fg
+-bash: fg: current: no such job
+pratik@KPI-PratikTrainee:~$ fg
+-bash: fg: current: no such job
+pratik@KPI-PratikTrainee:~$ sh sample.sh
+how are you? pratik
+fine
+name:pratik
+age:age
+pratik@KPI-PratikTrainee:~$ vi sample.txt
+pratik@KPI-PratikTrainee:~$ cat sample.txt
+
+this is my unix file
+pratik@KPI-PratikTrainee:~$ cat sample.sh
+name="pratik"
+age=22
+echo "how are you? $name"
+read data
+
+echo "name:$name"
+echo "age:age"
+pratik@KPI-PratikTrainee:~$ sh sample.sh
+how are you? pratik
+fine
+name:pratik
+age:age
