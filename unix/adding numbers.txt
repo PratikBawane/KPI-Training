@@ -1,0 +1,71 @@
+pratik@KPI-PratikTrainee:~$ vi smaple.txt
+pratik@KPI-PratikTrainee:~$ vi sample.txt
+pratik@KPI-PratikTrainee:~$ vi add.sh
+pratik@KPI-PratikTrainee:~$ sh add.sh.
+sh: 0: Can't open add.sh.
+pratik@KPI-PratikTrainee:~$ sh add.sh
+25+25
+pratik@KPI-PratikTrainee:~$ vi add.sh
+pratik@KPI-PratikTrainee:~$ sh add.sh
+add.sh: 2: Syntax error: "(" unexpected
+pratik@KPI-PratikTrainee:~$ vi add.sh
+pratik@KPI-PratikTrainee:~$ sh add.sh
+
+pratik@KPI-PratikTrainee:~$ vi add.sh
+pratik@KPI-PratikTrainee:~$ sh add.sh
+25+25
+pratik@KPI-PratikTrainee:~$ vi add.sh
+pratik@KPI-PratikTrainee:~$ sh add.sh
+50
+pratik@KPI-PratikTrainee:~$ cat add.sh
+#!bin/bash
+sum=$((25+25))
+echo $sum
+pratik@KPI-PratikTrainee:~$ vi add.sh
+pratik@KPI-PratikTrainee:~$ expr $5+$5
+expr: syntax error: missing argument after ‘+’
+pratik@KPI-PratikTrainee:~$ expr $5 + $5
+expr: syntax error: missing argument after ‘+’
+pratik@KPI-PratikTrainee:~$ expr  + 5
+5
+pratik@KPI-PratikTrainee:~$ expr 5 + 5
+10
+pratik@KPI-PratikTrainee:~$ expr 5 / 2
+2
+pratik@KPI-PratikTrainee:~$ vi add2.sh
+pratik@KPI-PratikTrainee:~$ sh add2.sh
+enter num1:
+56
+enter num2:
+76
+sum
+pratik@KPI-PratikTrainee:~$ vi add2.sh
+pratik@KPI-PratikTrainee:~$ sh add2.sh
+enter num1:
+67
+enter num2:
+46
+sum is:113
+pratik@KPI-PratikTrainee:~$ cat add2.sh
+#!bin/bash
+echo "enter num1:"
+read n1
+echo "enter num2: "
+read n2
+sum=$(($n1 + $n2))
+echo "sum is:$sum"
+pratik@KPI-PratikTrainee:~$ vi add2.sh
+pratik@KPI-PratikTrainee:~$ sh add2.sh
+enter num1:
+enter num2:
+56
+add2.sh: 5: read: n1,n2: bad variable name
+add2.sh: 6: arithmetic expression: expecting primary: " + "
+pratik@KPI-PratikTrainee:~$ vi add2.sh
+pratik@KPI-PratikTrainee:~$ sh add2.sh
+enter num1:
+enter num2:
+65
+add2.sh: 5: n2: not found
+add2.sh: 6: arithmetic expression: expecting primary: "65 + "
+pratik@KPI-PratikTrainee:~$
