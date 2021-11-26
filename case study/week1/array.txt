@@ -1,0 +1,25 @@
+#!/bin/bash
+arr=`cat arrfile.txt`
+#echo $arr
+while IFS=  read -r line
+do
+        arr[$i]="$line"
+        i=$((i + 1))
+done<arrfile.txt
+echo ${arr[@]}
+
+#output>>
+pratik@KPI-PratikTrainee:~$ cat arrfile.txt
+python
+sql
+java
+c
+c++
+scrum
+lean
+kanba
+agile
+waterfall
+pratik@KPI-PratikTrainee:~$ vi arr.sh
+pratik@KPI-PratikTrainee:~$ ./arr.sh
+python sql java c c++ scrum lean kanba agile waterfall
