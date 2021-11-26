@@ -1,0 +1,536 @@
+pratik@KPI-PratikTrainee:~$ vi clicmds.txt
+pratik@KPI-PratikTrainee:~$ cat clicmds.txt
+cd = change directory
+pwd = will show us the dir
+ls = list
+cp = copy
+mv = move
+rm = remove
+echo = helps us to print
+cat = catalogue
+less = shows the content of the file in a new terminal
+grep = used to grab a desired word/chr
+mkdir = make dir
+touch = helps make files quickly
+chmod = used to change the mode from r+w+x
+mn + help
+
+use "cd -" to get back to previous dir
+use "ls -l" to get all tasks performed
+use "clear" to clear all
+use "q" to get back when using "less" cmd
+use "read" to take i/p from the user
+
+pratik@KPI-PratikTrainee:~$ vi clicmds.txt
+pratik@KPI-PratikTrainee:~$ cat clicmds.txt
+cd = change directory
+pwd = will show us the dir
+ls = list
+cp = copy
+mv = move
+rm = remove
+echo = helps us to print
+cat = concatenate allows us to create files and view content
+less = shows the content of the file in a new terminal
+grep = used to grab a desired word/chr
+mkdir = make dir
+touch = helps make files quickly
+chmod = used to change the mode from r+w+x
+mn + help
+
+use "cd -" to get back to previous dir
+use "ls -l" to get all tasks performed
+use "clear" to clear all
+use "q" to get back when using "less" cmd
+use "read" to take i/p from the user
+
+pratik@KPI-PratikTrainee:~$ nano variable.sh
+pratik@KPI-PratikTrainee:~$ sh variable.sh
+What is your name?
+pratik
+Pratik
+pratik@KPI-PratikTrainee:~$ nano variable.sh
+pratik@KPI-PratikTrainee:~$ sh variable.sh
+What is your name?
+Pratik
+pratik@KPI-PratikTrainee:~$ cat variable.sh
+#!/bin/sh
+echo "What is your name?"
+person="Pratik"
+
+echo $person
+pratik@KPI-PratikTrainee:~$ nano variable.sh
+pratik@KPI-PratikTrainee:~$ sh variable.sh
+What is your name?
+variable.sh: 5: person: is read only
+pratik@KPI-PratikTrainee:~$ nano variable.sh
+pratik@KPI-PratikTrainee:~$ cat variable.sh
+#!/bin/sh
+echo "What is your name?"
+person="Pratik"
+readonly person
+person="Bawane"
+echo $person
+pratik@KPI-PratikTrainee:~$ nano variable.sh
+pratik@KPI-PratikTrainee:~$ sh variable.sh
+What is your name?
+Bawane
+pratik@KPI-PratikTrainee:~$ cat variable.sh
+#!/bin/sh
+echo "What is your name?"
+person="Pratik"
+unset person
+person="Bawane"
+echo $person
+pratik@KPI-PratikTrainee:~$ nano special_var.sh
+pratik@KPI-PratikTrainee:~$ sh special_var.sh
+file name: special_var.sh
+first parameter:
+second parameter:
+arguments in a script: 0
+double quoted arg:
+individually double quoted arg:
+status of last cmd: 0
+process no. of current shell: 92
+pratik@KPI-PratikTrainee:~$ chmod +x special_var.sh
+pratik@KPI-PratikTrainee:~$ chmod +x ./special_var.sh
+pratik@KPI-PratikTrainee:~$ ./special_var.sh Pratik Bawane
+file name: ./special_var.sh
+first parameter: Pratik
+second parameter: Bawane
+arguments in a script: 2
+double quoted arg: Pratik Bawane
+individually double quoted arg: Pratik Bawane
+status of last cmd: 0
+process no. of current shell: 95
+pratik@KPI-PratikTrainee:~$ ./special_var.sh "Pratik" "Bawane"
+file name: ./special_var.sh
+first parameter: Pratik
+second parameter: Bawane
+arguments in a script: 2
+double quoted arg: Pratik Bawane
+individually double quoted arg: Pratik Bawane
+status of last cmd: 0
+process no. of current shell: 96
+pratik@KPI-PratikTrainee:~$ cat special_var.sh
+#!/bin/sh
+echo "file name: $0"
+echo "first parameter: $1"
+echo "second parameter: $2"
+echo "arguments in a script: $#"
+echo "double quoted arg: $*"
+echo "individually double quoted arg: $@"
+echo "status of last cmd: $?"
+echo "process no. of current shell: $$"
+pratik@KPI-PratikTrainee:~$ nano special_var.sh
+pratik@KPI-PratikTrainee:~$ chmod 777 special_var.sh
+pratik@KPI-PratikTrainee:~$ chmod 777 ./special_var.sh
+pratik@KPI-PratikTrainee:~$ ./special.sh Hello Pratik Bawane! How are you?
+-bash: ./special.sh: No such file or directory
+pratik@KPI-PratikTrainee:~$ ./special_var.sh Hello Pratik Bawane! How are you?
+Hello
+Pratik
+Bawane!
+How
+are
+you?
+pratik@KPI-PratikTrainee:~$ cat special_var.sh
+#!/bin/sh
+for i in $*
+do
+        echo $i
+done
+
+pratik@KPI-PratikTrainee:~$ nano forloop.sh
+pratik@KPI-PratikTrainee:~$ sh forloop.sh
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+pratik@KPI-PratikTrainee:~$ cat forloop.sh
+#!/bin/sh
+for var in 0 1 2 3 4 5 6 7 8 9
+do
+        echo $var
+done
+
+pratik@KPI-PratikTrainee:~$ nano whileloop.sh
+pratik@KPI-PratikTrainee:~$ sh whileloop.sh
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+pratik@KPI-PratikTrainee:~$ cat whileloop.sh
+#!/bin/sh
+a=0
+while [ $a -lt 10 ]
+do
+        echo $a
+        a=`expr $a + 1`
+done
+pratik@KPI-PratikTrainee:~$ nano whileloop.sh
+pratik@KPI-PratikTrainee:~$ sh whileloop.sh
+whileloop.sh: 3: [: missing ]
+pratik@KPI-PratikTrainee:~$ nano whileloop.sh
+pratik@KPI-PratikTrainee:~$ sh whileloop.sh
+whileloop.sh: 3: Syntax error: word unexpected (expecting ")")
+pratik@KPI-PratikTrainee:~$ nano whileloop.sh
+pratik@KPI-PratikTrainee:~$ sh whileloop.sh
+whileloop.sh: 3: Syntax error: "(" unexpected (expecting ")")
+pratik@KPI-PratikTrainee:~$ nano whileloop.sh
+pratik@KPI-PratikTrainee:~$ sh whileloop.sh
+whileloop.sh: 3: Syntax error: "(" unexpected (expecting ")")
+pratik@KPI-PratikTrainee:~$ chmod 777 ./whileloop.sh
+pratik@KPI-PratikTrainee:~$ ./whileloop.sh
+./whileloop.sh: 3: Syntax error: "(" unexpected (expecting ")")
+pratik@KPI-PratikTrainee:~$ nano until.sh
+pratik@KPI-PratikTrainee:~$ sh until.sh
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+pratik@KPI-PratikTrainee:~$ cat until.sh
+#!/bin/sh
+a=0
+until [ ! $a -lt 10 ]
+do
+        echo $a
+        a=`expr $a + 1`
+done
+pratik@KPI-PratikTrainee:~$ nano nestedloop.sh
+pratik@KPI-PratikTrainee:~$ sh nestedloop.sh
+0
+10
+210
+3210
+43210
+543210
+6543210
+76543210
+876543210
+9876543210
+pratik@KPI-PratikTrainee:~$ cat nestedloop.sh
+#!/bin/sh
+a=0
+while [ "$a" -lt 10 ]   #loop 1
+do
+        b="$a"
+        while [ "$b" -ge 0 ]    #loop2
+        do
+        echo -n "$b"
+        b=`expr $b - 1`
+        done
+        echo
+        a=`expr $a + 1`
+done
+pratik@KPI-PratikTrainee:~$ nano loopcontrol.sh
+pratik@KPI-PratikTrainee:~$ sh loopcontrol.sh
+0
+1
+2
+3
+4
+5
+pratik@KPI-PratikTrainee:~$ cat loopcontrol.sh
+#!/bin/sh
+a=0
+while [ $a -lt 10 ]
+do
+        echo $a
+        if [ $a -eq 5 ]
+        then
+                break
+        fi
+        a=`expr $a + 1`
+done
+pratik@KPI-PratikTrainee:~$ nano odd_even.sh
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+Odd number
+pratik@KPI-PratikTrainee:~$ nano odd_even.sh
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: missing ]
+odd_even.sh: 7: ]: not found
+Odd number
+pratik@KPI-PratikTrainee:~$ nano odd_even.sh
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+pratik@KPI-PratikTrainee:~$ nano odd_even.sh
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+pratik@KPI-PratikTrainee:~$ nano odd_even.sh
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+pratik@KPI-PratikTrainee:~$ nano odd_even.sh
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+expr: syntax error: unexpected argument ‘2’
+odd_even.sh: 6: [: -eq: unexpected operator
+Odd number
+pratik@KPI-PratikTrainee:~$ nano functions.sh
+pratik@KPI-PratikTrainee:~$ cat continue.sh
+cat: continue.sh: No such file or directory
+pratik@KPI-PratikTrainee:~$ cat odd_even.sh
+#!/bin/sh
+num="1 2 3 4 5 6 7 8"
+for i in $num
+do
+        Q=`expr $num % 2`
+        if [ $Q -eq 0 ]
+        then
+                echo "Even number"
+                continue
+        fi
+        echo "Odd number"
+done
+pratik@KPI-PratikTrainee:~$ nano functions.sh
+pratik@KPI-PratikTrainee:~$ sh functions.sh
+Hello World!
+pratik@KPI-PratikTrainee:~$ cat functions.sh
+#!/bin/sh
+#define function
+hello(){
+        echo "Hello World!"
+}
+
+#call function
+hello
+pratik@KPI-PratikTrainee:~$ nano functions.sh
+pratik@KPI-PratikTrainee:~$ sh functions.sh
+Hello Pratik Bawane
+pratik@KPI-PratikTrainee:~$ cat functions.sh
+#!/bin/sh
+#define function
+hello(){
+        echo "Hello $1 $2"
+}
+
+#call function
+hello Pratik Bawane
+pratik@KPI-PratikTrainee:~$ nano functions.sh
+pratik@KPI-PratikTrainee:~$ sh functions.sh
+Hello 5
+pratik@KPI-PratikTrainee:~$ cat functions.sh
+#!/bin/sh
+#define function
+hello(){
+        echo "Hello $#"
+}
+
+#call function
+hello Pratik Bawane! How are you?
+pratik@KPI-PratikTrainee:~$ nano functions.sh
+pratik@KPI-PratikTrainee:~$ sh functions.sh
+Hello Pratik Bawane!
+returned value is: 10
+pratik@KPI-PratikTrainee:~$ cat functions.sh
+#!/bin/sh
+#define function
+hello(){
+        echo "Hello $1 $2"
+        return 10
+}
+
+#call function
+hello Pratik Bawane!
+
+#capture returned value
+ret=$?
+echo "returned value is: $ret"
+pratik@KPI-PratikTrainee:~$ nano functions.sh
+pratik@KPI-PratikTrainee:~$ sh functions.sh
+Who's there?...hello?
+It's Rodger here!...I can hear you.
+pratik@KPI-PratikTrainee:~$ cat functions.sh
+#!/bin/sh
+func1(){
+        echo "Who's there?...hello?"
+        func2
+}
+func2(){
+        echo "It's Rodger here!...I can hear you."
+}
+func1
+pratik@KPI-PratikTrainee:~$ echo "These are the recurssive function."
+These are the recurssive function.
+pratik@KPI-PratikTrainee:~$
+
+pratik@KPI-PratikTrainee:~$ nano odd_even.sh
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+Enter a number:9
+RESULT: 9 is Odd
+pratik@KPI-PratikTrainee:~$ sh odd_even.sh
+Enter a number:68
+RESULT: 68 is even
+pratik@KPI-PratikTrainee:~$ cat odd_even.sh
+
+#!/bin/sh
+echo -n "Enter a number:"
+read n
+echo -n "RESULT: "
+if [ `expr $n % 2` -eq 0 ]
+then
+        echo "$n is even"
+else
+        echo "$n is Odd"
+fi
+
+pratik@KPI-PratikTrainee:~$
