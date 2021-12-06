@@ -1,0 +1,345 @@
+SQL> select to_char(hiredate) from emp;
+
+TO_CHAR(HIREDATE)
+------------------
+17-DEC-80
+20-FEB-81
+22-FEB-81
+02-APR-81
+28-SEP-81
+01-MAY-81
+09-JUN-81
+09-DEC-82
+17-NOV-81
+08-SEP-81
+12-JAN-83
+03-DEC-81
+03-DEC-81
+23-JAN-82
+
+14 rows selected.
+
+SQL> select to_char(hiredate, 'DD-MON-RR Day') from emp;
+
+TO_CHAR(HIREDATE,'DD-MON-RRDAY')
+-------------------------------------------------------
+17-DEC-80 Wednesday
+20-FEB-81 Friday
+22-FEB-81 Sunday
+02-APR-81 Thursday
+28-SEP-81 Monday
+01-MAY-81 Friday
+09-JUN-81 Tuesday
+09-DEC-82 Thursday
+17-NOV-81 Tuesday
+08-SEP-81 Tuesday
+12-JAN-83 Wednesday
+03-DEC-81 Thursday
+03-DEC-81 Thursday
+23-JAN-82 Saturday
+
+14 rows selected.
+
+SQL> select to_char(hiredate, 'DD-MON-RR Dy') from emp;
+
+TO_CHAR(HIREDATE,'DD-MON-RRDY')
+-------------------------------
+17-DEC-80 Wed
+20-FEB-81 Fri
+22-FEB-81 Sun
+02-APR-81 Thu
+28-SEP-81 Mon
+01-MAY-81 Fri
+09-JUN-81 Tue
+09-DEC-82 Thu
+17-NOV-81 Tue
+08-SEP-81 Tue
+12-JAN-83 Wed
+03-DEC-81 Thu
+03-DEC-81 Thu
+23-JAN-82 Sat
+
+14 rows selected.
+
+SQL> select to_char(hiredate, 'DD-MON-RR D') from emp;
+
+TO_CHAR(HIREDATE,'DD
+--------------------
+17-DEC-80 4
+20-FEB-81 6
+22-FEB-81 1
+02-APR-81 5
+28-SEP-81 2
+01-MAY-81 6
+09-JUN-81 3
+09-DEC-82 5
+17-NOV-81 3
+08-SEP-81 3
+12-JAN-83 4
+03-DEC-81 5
+03-DEC-81 5
+23-JAN-82 7
+
+14 rows selected.
+
+SQL> select to_char(hiredate, 'DD-MON-RR DD') from emp;
+
+TO_CHAR(HIREDATE,'DD-
+---------------------
+17-DEC-80 17
+20-FEB-81 20
+22-FEB-81 22
+02-APR-81 02
+28-SEP-81 28
+01-MAY-81 01
+09-JUN-81 09
+09-DEC-82 09
+17-NOV-81 17
+08-SEP-81 08
+12-JAN-83 12
+03-DEC-81 03
+03-DEC-81 03
+23-JAN-82 23
+
+14 rows selected.
+
+SQL> select to_char(hiredate, 'DD-MON-RR HH12:MI:SS AM') from emp;
+
+TO_CHAR(HIREDATE,'DD-MON-RRHH1
+------------------------------
+17-DEC-80 12:00:00 AM
+20-FEB-81 12:00:00 AM
+22-FEB-81 12:00:00 AM
+02-APR-81 12:00:00 AM
+28-SEP-81 12:00:00 AM
+01-MAY-81 12:00:00 AM
+09-JUN-81 12:00:00 AM
+09-DEC-82 12:00:00 AM
+17-NOV-81 12:00:00 AM
+08-SEP-81 12:00:00 AM
+12-JAN-83 12:00:00 AM
+03-DEC-81 12:00:00 AM
+03-DEC-81 12:00:00 AM
+23-JAN-82 12:00:00 AM
+
+14 rows selected.
+
+SQL> select to_char(1890, '$9,999.00') from dual;
+
+TO_CHAR(18
+----------
+ $1,890.00
+
+SQL> select to_char(1890.34667, '$9,999.00') from dual;
+
+TO_CHAR(18
+----------
+ $1,890.35
+
+SQL> select to_char(1890.34667, '$00,000.00') from dual;
+
+TO_CHAR(189
+-----------
+ $01,890.35
+
+SQL> select to_char(1890.34667, '$000,000.00') from dual;
+
+TO_CHAR(1890
+------------
+ $001,890.35
+
+SQL> select to_char(1890.34667, '$000,000.000000') from dual;
+
+TO_CHAR(1890.346
+----------------
+ $001,890.346670
+
+SQL> select to_char(sal, '00,000.00') from dual;
+select to_char(sal, '00,000.00') from dual
+               *
+ERROR at line 1:
+ORA-00904: "SAL": invalid identifier
+
+
+SQL> select to_char(sal, '00,000.00') from emp;
+
+TO_CHAR(SA
+----------
+ 00,800.00
+ 01,600.00
+ 01,250.00
+ 02,975.00
+ 01,250.00
+ 02,850.00
+ 02,450.00
+ 03,000.00
+ 05,000.00
+ 01,500.00
+ 01,100.00
+ 00,950.00
+ 03,000.00
+ 01,300.00
+
+14 rows selected.
+
+SQL> select to_char(sysdate, 'DD-MONTH-RRRR') from dual;
+
+TO_CHAR(SYSDATE,'DD-MONTH-RRRR')
+--------------------------------------------
+03-DECEMBER -2021
+
+SQL> select to_char(sysdate, 'DD.MONTH.RRRR') from dual;
+
+TO_CHAR(SYSDATE,'DD.MONTH.RRRR')
+--------------------------------------------
+03.DECEMBER .2021
+
+SQL> select to_char(sysdate, 'DD/MONTH/RRRR') from dual;
+
+TO_CHAR(SYSDATE,'DD/MONTH/RRRR')
+--------------------------------------------
+03/DECEMBER /2021
+
+SQL> select to_char(sysdate, 'DD/MON/RRRR') from dual;
+
+TO_CHAR(SYSDATE,'DD/
+--------------------
+03/DEC/2021
+
+SQL> select to_char(sysdate, 'DD/MON/YY') from dual;
+
+TO_CHAR(SYSDATE,'D
+------------------
+03/DEC/21
+
+SQL> select to_char(sysdate, 'DD/MON/YYYY') from dual;
+
+TO_CHAR(SYSDATE,'DD/
+--------------------
+03/DEC/2021
+
+SQL> select to_char(sysdate, 'DD/MON/YYYY Dy') from dual;
+
+TO_CHAR(SYSDATE,'DD/MON/YYYYDY')
+---------------------------------
+03/DEC/2021 Fri
+
+SQL> select to_char(sysdate, 'DD/MON/YYYY Day') from dual;
+
+TO_CHAR(SYSDATE,'DD/MON/YYYYDAY')
+---------------------------------------------------------
+03/DEC/2021 Friday
+
+SQL> select to_char(sysdate, 'DD/MON/YYYY Day am') from dual;
+
+TO_CHAR(SYSDATE,'DD/MON/YYYYDAYAM')
+------------------------------------------------------------
+03/DEC/2021 Friday    pm
+
+SQL> select to_char(sysdate, 'DD/MON/YYYY Day pm') from dual;
+
+TO_CHAR(SYSDATE,'DD/MON/YYYYDAYPM')
+------------------------------------------------------------
+03/DEC/2021 Friday    pm
+
+SQL> select to_char(sysdate, 'DD/MON/YYYY Day AD') from dual;
+
+TO_CHAR(SYSDATE,'DD/MON/YYYYDAYAD')
+------------------------------------------------------------
+03/DEC/2021 Friday    AD
+
+SQL> select to_char(sysdate, 'DD/MON/YYYY Day BC') from dual;
+
+TO_CHAR(SYSDATE,'DD/MON/YYYYDAYBC')
+------------------------------------------------------------
+03/DEC/2021 Friday    AD
+
+SQL> select to_char(sysdate, 'DDth/MON/YYYY Day') from dual;
+
+TO_CHAR(SYSDATE,'DDTH/MON/YYYYDAY')
+-----------------------------------------------------------
+03RD/DEC/2021 Friday
+
+SQL> select to_char(sysdate, 'DDth||' of'||/MONTH/YYYY Day') from dual;
+select to_char(sysdate, 'DDth||' of'||/MONTH/YYYY Day') from dual
+                                 *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select to_char(sysdate, 'DDth/||' of'||/MONTH/YYYY Day') from dual;
+select to_char(sysdate, 'DDth/||' of'||/MONTH/YYYY Day') from dual
+                                  *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select to_char(sysdate, 'DDth/||' of'||MONTH/YYYY Day') from dual;
+select to_char(sysdate, 'DDth/||' of'||MONTH/YYYY Day') from dual
+                                  *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select to_char(sysdate, 'DDth/||MONTH/YYYY Day') from dual;
+
+TO_CHAR(SYSDATE,'DDTH/||MONTH/YYYYDAY')
+-------------------------------------------------------------------------------------
+03RD/||DECEMBER /2021 Friday
+
+SQL> select to_char(sysdate, 'DDth/MONTH/YYYY Day') from dual;
+
+TO_CHAR(SYSDATE,'DDTH/MONTH/YYYYDAY')
+-----------------------------------------------------------------------------------
+03RD/DECEMBER /2021 Friday
+
+SQL> select to_date('14-NOV-1986','DD-MON-RRRR' from dual;
+select to_date('14-NOV-1986','DD-MON-RRRR' from dual
+                                           *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select to_date('14-NOV-1986','DD-MON-RRRR') from dual;
+
+TO_DATE('
+---------
+14-NOV-86
+
+SQL> select to_char(to_date('14-NOV-1986','DD-MON-RRRR'),J) from dual;
+select to_char(to_date('14-NOV-1986','DD-MON-RRRR'),J) from dual
+                                                    *
+ERROR at line 1:
+ORA-00904: "J": invalid identifier
+
+
+SQL> select to_char(to_date('14-NOV-1986','DD-MON-RRRR'),'J') from dual;
+
+TO_CHAR
+-------
+2446749
+
+SQL> select to_char(sysdate-to_date('04-NOV-1997','DD-MON-RRRR'),'J') from dual;
+select to_char(sysdate-to_date('04-NOV-1997','DD-MON-RRRR'),'J') from dual
+                                                            *
+ERROR at line 1:
+ORA-01481: invalid number format model
+
+
+SQL> select to_number(sysdate-to_date('04-NOV-1997','DD-MON-RRRR')) from dual;
+
+TO_NUMBER(SYSDATE-TO_DATE('04-NOV-1997','DD-MON-RRRR'))
+-------------------------------------------------------
+                                             8795.50807
+
+SQL> select to_number(sysdate-to_date('04-NOV-1997','DD-MON-RRRR')) as days from dual;
+
+      DAYS
+----------
+8795.50832
+
+SQL> select to_number(sysdate-to_date('04-NOV-1997','DD-MON-RRRR')) as days_till_now from dual;
+
+DAYS_TILL_NOW
+-------------
+   8795.50852
