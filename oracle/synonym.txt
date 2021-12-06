@@ -1,0 +1,196 @@
+SQL> create synonym for seq1 as s1;
+create synonym for seq1 as s1
+               *
+ERROR at line 1:
+ORA-00995: missing or invalid synonym identifier
+
+
+SQL> create synonym s1 for seq1;
+create synonym s1 for seq1
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> grant create synonym to pratik;
+
+Grant succeeded.
+
+SQL> conn pratik
+Enter password:
+Connected.
+SQL> create synonym s1 for seq1;
+
+Synonym created.
+
+SQL> select *from cat;
+
+TABLE_NAME                     TABLE_TYPE
+------------------------------ -----------
+BOOK_MASTER                    TABLE
+BOOK_TRANSACTIONS              TABLE
+DEPARTMENT_MASTER              TABLE
+DEPT                           TABLE
+DESIGNATION_MASTER             TABLE
+EMP                            TABLE
+PARENT                         TABLE
+S1                             SYNONYM
+SEQ1                           SEQUENCE
+STAFF_MASTER                   TABLE
+STUDENT_MARKS                  TABLE
+STUDENT_MASTER                 TABLE
+
+12 rows selected.
+
+SQL> select s1.currval from dual;
+select s1.currval from dual
+       *
+ERROR at line 1:
+ORA-08002: sequence S1.CURRVAL is not yet defined in this session
+
+
+SQL> select s1.nextval from dual;
+
+   NEXTVAL
+----------
+         5
+
+SQL> select s1.currval from dual;
+
+   CURRVAL
+----------
+         5
+
+SQL> create synonym for emp as e;
+create synonym for emp as e
+               *
+ERROR at line 1:
+ORA-00995: missing or invalid synonym identifier
+
+
+SQL> create synonym e for emp;
+
+Synonym created.
+
+SQL> select *from cat;
+
+TABLE_NAME                     TABLE_TYPE
+------------------------------ -----------
+BOOK_MASTER                    TABLE
+BOOK_TRANSACTIONS              TABLE
+DEPARTMENT_MASTER              TABLE
+DEPT                           TABLE
+DESIGNATION_MASTER             TABLE
+E                              SYNONYM
+EMP                            TABLE
+PARENT                         TABLE
+S1                             SYNONYM
+SEQ1                           SEQUENCE
+STAFF_MASTER                   TABLE
+STUDENT_MARKS                  TABLE
+STUDENT_MASTER                 TABLE
+
+13 rows selected.
+
+SQL> select * from e;'
+  2  select * from e;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select * from e;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30
+
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10
+
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000
+        20
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500
+         0
+        30
+
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100
+        20
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10
+
+
+14 rows selected.
+
+SQL> set line 120
+SQL> select * from e;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select *from cat;
+
+TABLE_NAME                     TABLE_TYPE
+------------------------------ -----------
+BOOK_MASTER                    TABLE
+BOOK_TRANSACTIONS              TABLE
+DEPARTMENT_MASTER              TABLE
+DEPT                           TABLE
+DESIGNATION_MASTER             TABLE
+E                              SYNONYM
+EMP                            TABLE
+PARENT                         TABLE
+S1                             SYNONYM
+SEQ1                           SEQUENCE
+STAFF_MASTER                   TABLE
+STUDENT_MARKS                  TABLE
+STUDENT_MASTER                 TABLE
+
+13 rows selected.
