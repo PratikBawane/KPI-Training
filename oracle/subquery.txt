@@ -1,0 +1,416 @@
+SQL> select hiredate from emp;
+
+HIREDATE
+---------
+17-DEC-80
+20-FEB-81
+22-FEB-81
+02-APR-81
+28-SEP-81
+01-MAY-81
+09-JUN-81
+09-DEC-82
+17-NOV-81
+08-SEP-81
+12-JAN-83
+03-DEC-81
+03-DEC-81
+23-JAN-82
+
+14 rows selected.
+
+SQL> select hiredate from emp where ename='SCOTT';
+
+HIREDATE
+---------
+09-DEC-82
+
+SQL> select ename from emp where hiredate>(select hiredate from emp where ename='SCOTT');
+
+ENAME
+----------
+ADAMS
+
+SQL> select ename,hiredate from emp where hiredate>(select hiredate from emp where ename='SCOTT');
+
+ENAME      HIREDATE
+---------- ---------
+ADAMS      12-JAN-83
+
+SQL> desc designation_master
+ Name
+               Null?    Type
+ ----------------------------------------------------------------------------- -------- ----------------------------------------------------
+ DESIGN_CODE
+               NOT NULL NUMBER(3)
+ DESIGN_NAME
+                        VARCHAR2(50)
+
+SQL> show line
+linesize 140
+SQL> set line 80
+SQL> desc designation_master
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DESIGN_CODE                               NOT NULL NUMBER(3)
+ DESIGN_NAME                                        VARCHAR2(50)
+
+SQL> col design_name format a20
+SQL> select *from designation_master
+  2  ;
+
+DESIGN_CODE DESIGN_NAME
+----------- --------------------
+        101 HOD
+        102 Professor
+        103 Reader
+        104 Sr.Lecturer
+        105 Lecturer
+        106 Director
+
+6 rows selected.
+
+SQL> col staff_name format a20
+SQL> select staff_name from staff_master where design_code = (select design_code from designation_master where design_name='Director');
+
+STAFF_NAME
+--------------------
+John
+
+SQL> desc department_master
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_CODE                                 NOT NULL NUMBER(2)
+ DEPT_NAME                                          VARCHAR2(50)
+
+SQL> col  DEPT_NAME format a20
+SQL> select * from department_master;
+
+ DEPT_CODE DEPT_NAME
+---------- --------------------
+        10 Computer Science
+        20 Electricals
+        30 Electronics
+        40 Mechanics
+        50 Robotics
+
+SQL> select student_name from student_master where dept_code=(select dept_code from department_master where dept_name='Robotics');
+
+STUDENT_NAME
+--------------------
+Rahul
+Sunder
+Amit Raj
+Ravi Raj
+
+SQL> select department_name from department_master;
+select department_name from department_master
+       *
+ERROR at line 1:
+ORA-00904: "DEPARTMENT_NAME": invalid identifier
+
+
+SQL> select dept_name from department_master;
+
+DEPT_NAME
+--------------------
+Computer Science
+Electricals
+Electronics
+Mechanics
+Robotics
+
+SQL> select staff_name from staff_master where dept_name=(select dept_name from department_master);
+select staff_name from staff_master where dept_name=(select dept_name from department_master)
+                                          *
+ERROR at line 1:
+ORA-00904: "DEPT_NAME": invalid identifier
+
+
+SQL> select * from student_marks;
+
+STUDENT_CODE STUDENT_YEAR   SUBJECT1   SUBJECT2   SUBJECT3
+------------ ------------ ---------- ---------- ----------
+        1001         2010         55         45         78
+        1002         2010         66         74         88
+        1003         2010         87         54         65
+        1004         2010         65         64         90
+        1005         2010         78         88         65
+        1006         2010         65         86         54
+        1007         2010         67         79         49
+        1008         2010         72         55         55
+        1009         2010         71         59         58
+        1010         2010         68         44         92
+        1011         2010         89         96         78
+        1012         2010         78         56         55
+        1013         2010         75         58         65
+        1014         2010         73         74         65
+        1015         2010         66         45         74
+        1016         2010         68         78         74
+        1017         2010         69         44         52
+        1018         2010         65         78         56
+        1019         2010         78         58         74
+        1020         2010         45         55         65
+        1021         2010         78         79         78
+        1001         2011         68         44         92
+        1002         2011         89         96         78
+        1003         2011         78         56         55
+        1004         2011         75         58         65
+        1005         2011         73         74         65
+        1006         2011         66         45         74
+        1007         2011         68         78         74
+        1008         2011         69         44         52
+        1009         2011         65         78         56
+        1010         2011         78         58         74
+        1011         2011         45         55         65
+        1012         2011         78         79         78
+        1013         2011         66         74         88
+        1014         2011         65         64         90
+        1015         2011         78         88         65
+        1016         2011         65         86         54
+        1017         2011         67         79         49
+        1018         2011         72         55         55
+        1019         2011         71         59         58
+        1020         2011         55         45         78
+        1021         2011         87         54         65
+
+42 rows selected.
+
+SQL> select * from student_marks group by subject1;
+select * from student_marks group by subject1
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select * from student_marks group by student_code;
+select * from student_marks group by student_code
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select student_code from student_marks group by student_code;
+
+STUDENT_CODE
+------------
+        1003
+        1009
+        1011
+        1013
+        1016
+        1006
+        1017
+        1001
+        1002
+        1007
+        1004
+        1010
+        1015
+        1021
+        1005
+        1008
+        1014
+        1012
+        1018
+        1019
+        1020
+
+21 rows selected.
+
+SQL> select subject1+subject2+subject3 as total marks from student_marks;
+select subject1+subject2+subject3 as total marks from student_marks
+                                           *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select subject1+subject2+subject3 as total_marks from student_marks;
+
+TOTAL_MARKS
+-----------
+        178
+        228
+        206
+        219
+        231
+        205
+        195
+        182
+        188
+        204
+        263
+        189
+        198
+        212
+        185
+        220
+        165
+        199
+        210
+        165
+        235
+        204
+        263
+        189
+        198
+        212
+        185
+        220
+        165
+        199
+        210
+        165
+        235
+        228
+        219
+        231
+        205
+        195
+        182
+        188
+        178
+        206
+
+42 rows selected.
+
+SQL> select staff_name from staff_master;
+
+STAFF_NAME
+--------------------
+Arvind
+Shyam
+Mohan
+Anil
+John
+Allen
+Smith
+Raviraj
+Rahul
+Ram
+
+10 rows selected.
+
+SQL> select staff_name from staff_master where dept_code=(select dept_code from department_master where dept_name='Robotics');
+
+no rows selected
+
+SQL> select * from department_master;
+
+ DEPT_CODE DEPT_NAME
+---------- --------------------
+        10 Computer Science
+        20 Electricals
+        30 Electronics
+        40 Mechanics
+        50 Robotics
+
+SQL> select staff_name from staff_master where dept_code=50;
+
+no rows selected
+
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME           DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE
+---------- -------------------- ----------- ---------- --------- ---------
+  MGR_CODE  STAFF_SAL STAFF_ADDRESS
+---------- ---------- --------------------
+    100001 Arvind                       102         30 15-JAN-80 15-JAN-03
+    100006      17000 Bangalore
+
+    100002 Shyam                        102         20 18-FEB-80 17-FEB-02
+    100007      20000 Chennai
+
+    100003 Mohan                        102         10 23-MAR-80 19-JAN-02
+    100006      24000 Mumbai
+
+    100004 Anil                         102         20 22-APR-77 11-MAR-01
+    100006      20000 Hyderabad
+
+    100005 John                         106         10 22-MAY-76 21-JAN-01
+    100007      32000 Bangalore
+
+    100006 Allen                        103         30 22-JAN-80 23-APR-01
+    100005      42000 Chennai
+
+    100007 Smith                        103         20 19-JUL-73 12-MAR-02
+    100005      62000 Mumbai
+
+    100008 Raviraj                      102         40 17-JUN-80 11-JAN-03
+    100006      18000 Bangalore
+
+    100009 Rahul                        102         20 16-JAN-78 11-DEC-03
+    100006      22000 Hyderabad
+
+    100010 Ram                          103         30 17-JAN-79 17-JAN-02
+    100007      32000 Bangalore
+
+
+10 rows selected.
+
+SQL> show line
+linesize 80
+SQL> set line 140
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME           DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL STAFF_ADDRESS
+---------- -------------------- ----------- ---------- --------- --------- ---------- ---------- --------------------
+    100001 Arvind                       102         30 15-JAN-80 15-JAN-03     100006      17000 Bangalore
+    100002 Shyam                        102         20 18-FEB-80 17-FEB-02     100007      20000 Chennai
+    100003 Mohan                        102         10 23-MAR-80 19-JAN-02     100006      24000 Mumbai
+    100004 Anil                         102         20 22-APR-77 11-MAR-01     100006      20000 Hyderabad
+    100005 John                         106         10 22-MAY-76 21-JAN-01     100007      32000 Bangalore
+    100006 Allen                        103         30 22-JAN-80 23-APR-01     100005      42000 Chennai
+    100007 Smith                        103         20 19-JUL-73 12-MAR-02     100005      62000 Mumbai
+    100008 Raviraj                      102         40 17-JUN-80 11-JAN-03     100006      18000 Bangalore
+    100009 Rahul                        102         20 16-JAN-78 11-DEC-03     100006      22000 Hyderabad
+    100010 Ram                          103         30 17-JAN-79 17-JAN-02     100007      32000 Bangalore
+
+10 rows selected.
+
+SQL> select * from department_master;
+
+ DEPT_CODE DEPT_NAME
+---------- --------------------
+        10 Computer Science
+        20 Electricals
+        30 Electronics
+        40 Mechanics
+        50 Robotics
+
+SQL> select staff_name from staff_master where dept_code=(select dept_code from department_master where dept_name='Electronics');
+
+STAFF_NAME
+--------------------
+Arvind
+Allen
+Ram
+
+SQL> select staff_name from staff_master where dept_code=(select dept_code from department_master where dept_name='Electricals');
+
+STAFF_NAME
+--------------------
+Shyam
+Anil
+Smith
+Rahul
+
+SQL> select staff_name from staff_master where dept_code=(select dept_code from department_master where dept_name='Computer Science');
+
+STAFF_NAME
+--------------------
+Mohan
+John
+
+SQL> select staff_name from staff_master where dept_code=(select dept_code from department_master where dept_name='Mechanics';
+select staff_name from staff_master where dept_code=(select dept_code from department_master where dept_name='Mechanics'
+                                                     *
+ERROR at line 1:
+ORA-00921: unexpected end of SQL command
+
+
+SQL> select staff_name from staff_master where dept_code=(select dept_code from department_master where dept_name='Mechanics');
+
+STAFF_NAME
+--------------------
+Raviraj
