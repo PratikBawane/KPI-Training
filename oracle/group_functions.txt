@@ -1,0 +1,145 @@
+SQL> select count(*) from student_master;
+
+  COUNT(*)
+----------
+        21
+
+SQL> select count(*) from student_marks;
+
+  COUNT(*)
+----------
+        42
+
+SQL> select count(*) from book_master;
+
+  COUNT(*)
+----------
+         9
+
+SQL> select sum(subject1) from student_marks;
+
+SUM(SUBJECT1)
+-------------
+         2956
+
+SQL> select sum(subject2) from student_marks;
+
+SUM(SUBJECT2)
+-------------
+         2738
+
+SQL> select sum(subject3) from student_marks;
+
+SUM(SUBJECT3)
+-------------
+         2860
+
+SQL> select avg(subject3) from student_marks;
+
+AVG(SUBJECT3)
+-------------
+   68.0952381
+
+SQL> select avg(subject2) from student_marks;
+
+AVG(SUBJECT2)
+-------------
+   65.1904762
+
+SQL> select avg(subject1) from student_marks;
+
+AVG(SUBJECT1)
+-------------
+   70.3809524
+
+SQL> select deptno,avg(sal) from emp group by deptno;
+
+    DEPTNO   AVG(SAL)
+---------- ----------
+        30 1566.66667
+        20       2175
+        10 2916.66667
+
+SQL> select deptno,avg(sal) from emp group by deptno order by 1;
+
+    DEPTNO   AVG(SAL)
+---------- ----------
+        10 2916.66667
+        20       2175
+        30 1566.66667
+
+SQL> select deptno,sum(sal) from emp group by deptno order by 1;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        10       8750
+        20      10875
+        30       9400
+
+SQL> select max(book_issue_date) from book_transactions;
+
+MAX(BOOK_
+---------
+31-MAY-11
+
+SQL> select min(book_issue_date) from book_transactions;
+
+MIN(BOOK_
+---------
+01-APR-10
+
+SQL> select min(book_expected_return_date) from book_transactions;
+
+MIN(BOOK_
+---------
+07-APR-10
+
+SQL> select max(book_expected_return_date) from book_transactions;
+
+MAX(BOOK_
+---------
+08-JUN-11
+
+SQL> select max(book_expected_return_date) from book_transactions;
+
+MAX(BOOK_
+---------
+08-JUN-11
+
+SQL> select variance(sal) from emp;
+
+VARIANCE(SAL)
+-------------
+   1398313.87
+
+SQL> select variance(3) from emp;
+
+VARIANCE(3)
+-----------
+          0
+
+SQL> select variance(3.5) from emp;
+
+VARIANCE(3.5)
+-------------
+            0
+
+SQL> select variance(ename) from emp;
+select variance(ename) from emp
+                *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select variance(hiredate) from emp;
+select variance(hiredate) from emp
+                *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> select variance(comm) from emp;
+
+VARIANCE(COMM)
+--------------
+    363333.333
