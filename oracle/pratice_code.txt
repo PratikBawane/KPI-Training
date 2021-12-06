@@ -1,0 +1,1019 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Dec 2 14:31:43 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> conn pratik
+Enter password:
+Connected.
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select e.ename from emp e join dept d on e.deptno=d.deptno group by e.ename,d.deptno;
+
+ENAME
+----------
+SMITH
+JONES
+FORD
+CLARK
+SCOTT
+TURNER
+JAMES
+KING
+ADAMS
+BLAKE
+MILLER
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+
+14 rows selected.
+
+SQL> set pagesize 50
+SQL> select e.ename from emp e join dept d on e.deptno=d.deptno group by e.ename,d.deptno;
+
+ENAME
+----------
+SMITH
+JONES
+FORD
+CLARK
+SCOTT
+TURNER
+JAMES
+KING
+ADAMS
+BLAKE
+MILLER
+ALLEN
+WARD
+MARTIN
+
+14 rows selected.
+
+SQL> select dname from dept;
+
+DNAME
+--------------
+ACCOUNTING
+RESEARCH
+SALES
+OPERATIONS
+
+SQL> select e.ename from emp e join dept d on e.deptno=d.deptno;
+
+ENAME
+----------
+SMITH
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+KING
+TURNER
+ADAMS
+JAMES
+FORD
+MILLER
+
+14 rows selected.
+
+SQL> select e.ename, d.dname from emp e join dept d on e.deptno=d.deptno;
+
+ENAME      DNAME
+---------- --------------
+SMITH      RESEARCH
+ALLEN      SALES
+WARD       SALES
+JONES      RESEARCH
+MARTIN     SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+SCOTT      RESEARCH
+KING       ACCOUNTING
+TURNER     SALES
+ADAMS      RESEARCH
+JAMES      SALES
+FORD       RESEARCH
+MILLER     ACCOUNTING
+
+14 rows selected.
+
+SQL> select e.ename, d.dname from emp e join dept d on e.deptno=d.deptno order by 1;
+
+ENAME      DNAME
+---------- --------------
+ADAMS      RESEARCH
+ALLEN      SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+FORD       RESEARCH
+JAMES      SALES
+JONES      RESEARCH
+KING       ACCOUNTING
+MARTIN     SALES
+MILLER     ACCOUNTING
+SCOTT      RESEARCH
+SMITH      RESEARCH
+TURNER     SALES
+WARD       SALES
+
+14 rows selected.
+
+SQL> select e.ename, d.dname from emp e join dept d on e.deptno=d.deptno order by 2;
+
+ENAME      DNAME
+---------- --------------
+CLARK      ACCOUNTING
+KING       ACCOUNTING
+MILLER     ACCOUNTING
+JONES      RESEARCH
+FORD       RESEARCH
+ADAMS      RESEARCH
+SMITH      RESEARCH
+SCOTT      RESEARCH
+WARD       SALES
+TURNER     SALES
+ALLEN      SALES
+JAMES      SALES
+BLAKE      SALES
+MARTIN     SALES
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30
+
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10
+
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000
+        20
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+        30
+
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100
+        20
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10
+
+
+14 rows selected.
+
+SQL> set line 80
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30
+
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10
+
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000
+        20
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+        30
+
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100
+        20
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10
+
+
+14 rows selected.
+
+SQL> set line 60
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE
+---------- ---------- --------- ---------- ---------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80
+       800                    20
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81
+      1600        300         30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81
+      1250        500         30
+
+      7566 JONES      MANAGER         7839 02-APR-81
+      2975                    20
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81
+      1250       1400         30
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81
+      2850                    30
+
+      7782 CLARK      MANAGER         7839 09-JUN-81
+      2450                    10
+
+      7788 SCOTT      ANALYST         7566 09-DEC-82
+      3000                    20
+
+      7839 KING       PRESIDENT            17-NOV-81
+      5000                    10
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81
+      1500          0         30
+
+      7876 ADAMS      CLERK           7788 12-JAN-83
+      1100                    20
+
+      7900 JAMES      CLERK           7698 03-DEC-81
+       950                    30
+
+      7902 FORD       ANALYST         7566 03-DEC-81
+      3000                    20
+
+      7934 MILLER     CLERK           7782 23-JAN-82
+      1300                    10
+
+
+14 rows selected.
+
+SQL> set line 100
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select * from book_master;
+
+ BOOK_CODE BOOK_NAME                                          BOOK_PUB_YEAR
+---------- -------------------------------------------------- -------------
+BOOK_PUB_AUTHOR
+--------------------------------------------------
+  10000001 Let Us C++                                                  2000
+Yashavant Kanetkar
+
+  10000002 Mastersing VC++                                             2005
+P.J Allen
+
+  10000003 JAVA Complete Reference                                     2004
+H.Schild
+
+  10000004 J2EE Complete Reference                                     2000
+H. Schild
+
+  10000005 Relational DBMS                                             2000
+B.C. Desai
+
+  10000006 Let Us C                                                    2000
+Yashavant Kanetkar
+
+  10000007 Intoduction To Algorithams                                  2001
+Cormen
+
+  10000008 Computer Networks                                           2000
+Tanenbaum
+
+  10000009 Introduction to O/S                                         2001
+Millan
+
+
+9 rows selected.
+
+SQL> desc book_master
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ BOOK_CODE                                             NOT NULL NUMBER(10)
+ BOOK_NAME                                             NOT NULL VARCHAR2(50)
+ BOOK_PUB_YEAR                                                  NUMBER
+ BOOK_PUB_AUTHOR                                       NOT NULL VARCHAR2(50)
+
+SQL> col  BOOK_NAME format a20
+SQL> col  BOOK_author format a20
+SQL> select * from book_master;
+
+ BOOK_CODE BOOK_NAME            BOOK_PUB_YEAR BOOK_PUB_AUTHOR
+---------- -------------------- ------------- --------------------------------------------------
+  10000001 Let Us C++                    2000 Yashavant Kanetkar
+  10000002 Mastersing VC++               2005 P.J Allen
+  10000003 JAVA Complete Refere          2004 H.Schild
+           nce
+
+  10000004 J2EE Complete Refere          2000 H. Schild
+           nce
+
+  10000005 Relational DBMS               2000 B.C. Desai
+  10000006 Let Us C                      2000 Yashavant Kanetkar
+  10000007 Intoduction To Algor          2001 Cormen
+           ithams
+
+  10000008 Computer Networks             2000 Tanenbaum
+  10000009 Introduction to O/S           2001 Millan
+
+9 rows selected.
+
+SQL> col  BOOK_NAME format a28
+SQL> select * from book_master;
+
+ BOOK_CODE BOOK_NAME                    BOOK_PUB_YEAR
+---------- ---------------------------- -------------
+BOOK_PUB_AUTHOR
+--------------------------------------------------
+  10000001 Let Us C++                            2000
+Yashavant Kanetkar
+
+  10000002 Mastersing VC++                       2005
+P.J Allen
+
+  10000003 JAVA Complete Reference               2004
+H.Schild
+
+  10000004 J2EE Complete Reference               2000
+H. Schild
+
+  10000005 Relational DBMS                       2000
+B.C. Desai
+
+  10000006 Let Us C                              2000
+Yashavant Kanetkar
+
+  10000007 Intoduction To Algorithams            2001
+Cormen
+
+  10000008 Computer Networks                     2000
+Tanenbaum
+
+  10000009 Introduction to O/S                   2001
+Millan
+
+
+9 rows selected.
+
+SQL> set line 140
+SQL> select * from book_master;
+
+ BOOK_CODE BOOK_NAME                    BOOK_PUB_YEAR BOOK_PUB_AUTHOR
+---------- ---------------------------- ------------- --------------------------------------------------
+  10000001 Let Us C++                            2000 Yashavant Kanetkar
+  10000002 Mastersing VC++                       2005 P.J Allen
+  10000003 JAVA Complete Reference               2004 H.Schild
+  10000004 J2EE Complete Reference               2000 H. Schild
+  10000005 Relational DBMS                       2000 B.C. Desai
+  10000006 Let Us C                              2000 Yashavant Kanetkar
+  10000007 Intoduction To Algorithams            2001 Cormen
+  10000008 Computer Networks                     2000 Tanenbaum
+  10000009 Introduction to O/S                   2001 Millan
+
+9 rows selected.
+
+SQL> select *from book_master;
+
+ BOOK_CODE BOOK_NAME                    BOOK_PUB_YEAR BOOK_PUB_AUTHOR
+---------- ---------------------------- ------------- --------------------------------------------------
+  10000001 Let Us C++                            2000 Yashavant Kanetkar
+  10000002 Mastersing VC++                       2005 P.J Allen
+  10000003 JAVA Complete Reference               2004 H.Schild
+  10000004 J2EE Complete Reference               2000 H. Schild
+  10000005 Relational DBMS                       2000 B.C. Desai
+  10000006 Let Us C                              2000 Yashavant Kanetkar
+  10000007 Intoduction To Algorithams            2001 Cormen
+  10000008 Computer Networks                     2000 Tanenbaum
+  10000009 Introduction to O/S                   2001 Millan
+
+9 rows selected.
+
+SQL> select * from designation_master;
+
+DESIGN_CODE DESIGN_NAME
+----------- --------------------------------------------------
+        101 HOD
+        102 Professor
+        103 Reader
+        104 Sr.Lecturer
+        105 Lecturer
+        106 Director
+
+6 rows selected.
+
+SQL> select s.staff_name, d.design_name from staff_master s join designation_master d on s.design_code=d.design_code;
+
+STAFF_NAME                                         DESIGN_NAME
+-------------------------------------------------- --------------------------------------------------
+Arvind                                             Professor
+Shyam                                              Professor
+Mohan                                              Professor
+Anil                                               Professor
+John                                               Director
+Allen                                              Reader
+Smith                                              Reader
+Raviraj                                            Professor
+Rahul                                              Professor
+Ram                                                Reader
+
+10 rows selected.
+
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL
+---------- -------------------------------------------------- ----------- ---------- --------- --------- ---------- ----------
+STAFF_ADDRESS
+--------------------------------------------------------------------------------------------------------------------------------------------
+    100001 Arvind                                                     102         30 15-JAN-80 15-JAN-03     100006      17000
+Bangalore
+
+    100002 Shyam                                                      102         20 18-FEB-80 17-FEB-02     100007      20000
+Chennai
+
+    100003 Mohan                                                      102         10 23-MAR-80 19-JAN-02     100006      24000
+Mumbai
+
+    100004 Anil                                                       102         20 22-APR-77 11-MAR-01     100006      20000
+Hyderabad
+
+    100005 John                                                       106         10 22-MAY-76 21-JAN-01     100007      32000
+Bangalore
+
+    100006 Allen                                                      103         30 22-JAN-80 23-APR-01     100005      42000
+Chennai
+
+    100007 Smith                                                      103         20 19-JUL-73 12-MAR-02     100005      62000
+Mumbai
+
+    100008 Raviraj                                                    102         40 17-JUN-80 11-JAN-03     100006      18000
+Bangalore
+
+    100009 Rahul                                                      102         20 16-JAN-78 11-DEC-03     100006      22000
+Hyderabad
+
+    100010 Ram                                                        103         30 17-JAN-79 17-JAN-02     100007      32000
+Bangalore
+
+
+10 rows selected.
+
+SQL> desc staf_master
+ERROR:
+ORA-04043: object staf_master does not exist
+
+
+SQL> desc staff_master
+ Name                                                                          Null?    Type
+ ----------------------------------------------------------------------------- -------- ----------------------------------------------------
+ STAFF_CODE                                                                    NOT NULL NUMBER(8)
+ STAFF_NAME                                                                    NOT NULL VARCHAR2(50)
+ DESIGN_CODE                                                                            NUMBER(3)
+ DEPT_CODE                                                                              NUMBER(2)
+ STAFF_DOB                                                                              DATE
+ HIREDATE                                                                               DATE
+ MGR_CODE                                                                               NUMBER(8)
+ STAFF_SAL                                                                              NUMBER(10,2)
+ STAFF_ADDRESS                                                                          VARCHAR2(240)
+
+SQL> show line
+linesize 140
+SQL> set line 100
+SQL> col  STAFF_NAME format a20
+SQL> col  STAFF_address format a28
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME           DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL
+---------- -------------------- ----------- ---------- --------- --------- ---------- ----------
+STAFF_ADDRESS
+----------------------------
+    100001 Arvind                       102         30 15-JAN-80 15-JAN-03     100006      17000
+Bangalore
+
+    100002 Shyam                        102         20 18-FEB-80 17-FEB-02     100007      20000
+Chennai
+
+    100003 Mohan                        102         10 23-MAR-80 19-JAN-02     100006      24000
+Mumbai
+
+    100004 Anil                         102         20 22-APR-77 11-MAR-01     100006      20000
+Hyderabad
+
+    100005 John                         106         10 22-MAY-76 21-JAN-01     100007      32000
+Bangalore
+
+    100006 Allen                        103         30 22-JAN-80 23-APR-01     100005      42000
+Chennai
+
+    100007 Smith                        103         20 19-JUL-73 12-MAR-02     100005      62000
+Mumbai
+
+    100008 Raviraj                      102         40 17-JUN-80 11-JAN-03     100006      18000
+Bangalore
+
+    100009 Rahul                        102         20 16-JAN-78 11-DEC-03     100006      22000
+Hyderabad
+
+    100010 Ram                          103         30 17-JAN-79 17-JAN-02     100007      32000
+Bangalore
+
+
+10 rows selected.
+
+SQL> set line 130
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME           DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL STAFF_ADDRESS
+---------- -------------------- ----------- ---------- --------- --------- ---------- ---------- ----------------------------
+    100001 Arvind                       102         30 15-JAN-80 15-JAN-03     100006      17000 Bangalore
+    100002 Shyam                        102         20 18-FEB-80 17-FEB-02     100007      20000 Chennai
+    100003 Mohan                        102         10 23-MAR-80 19-JAN-02     100006      24000 Mumbai
+    100004 Anil                         102         20 22-APR-77 11-MAR-01     100006      20000 Hyderabad
+    100005 John                         106         10 22-MAY-76 21-JAN-01     100007      32000 Bangalore
+    100006 Allen                        103         30 22-JAN-80 23-APR-01     100005      42000 Chennai
+    100007 Smith                        103         20 19-JUL-73 12-MAR-02     100005      62000 Mumbai
+    100008 Raviraj                      102         40 17-JUN-80 11-JAN-03     100006      18000 Bangalore
+    100009 Rahul                        102         20 16-JAN-78 11-DEC-03     100006      22000 Hyderabad
+    100010 Ram                          103         30 17-JAN-79 17-JAN-02     100007      32000 Bangalore
+
+10 rows selected.
+
+SQL> select * from student_master;
+
+STUDENT_CODE STUDENT_NAME                                        DEPT_CODE STUDENT_D
+------------ -------------------------------------------------- ---------- ---------
+STUDENT_ADDRESS
+----------------------------------------------------------------------------------------------------------------------------------
+        1001 Amit                                                       10 11-JAN-80
+chennai
+
+        1002 Ravi                                                       10 01-NOV-81
+New Delhi
+
+        1003 Ajay                                                       20 13-JAN-82
+
+
+        1004 Raj                                                        30 14-JAN-79
+Mumbai
+
+        1005 Arvind                                                     40 15-JAN-83
+Bangalore
+
+        1006 Rahul                                                      50 16-JAN-81
+Delhi
+
+        1007 Mehul                                                      20 17-JAN-82
+Chennai
+
+        1008 Dev                                                        10 11-MAR-81
+Bangalore
+
+        1009 Vijay                                                      30 19-JAN-80
+Bangalore
+
+        1010 Rajat                                                      40 20-JAN-80
+Bangalore
+
+        1011 Sunder                                                     50 21-JAN-80
+Chennai
+
+        1012 Rajesh                                                     30 22-JAN-80
+
+
+        1013 Anil                                                       20 23-JAN-80
+Chennai
+
+        1014 Sunil                                                      10 15-FEB-85
+
+
+        1015 Kapil                                                      40 18-MAR-81
+Mumbai
+
+
+STUDENT_CODE STUDENT_NAME                                        DEPT_CODE STUDENT_D
+------------ -------------------------------------------------- ---------- ---------
+STUDENT_ADDRESS
+----------------------------------------------------------------------------------------------------------------------------------
+        1016 Ashok                                                      40 26-NOV-80
+
+
+        1017 Ramesh                                                     30 27-DEC-80
+
+
+        1018 Amit Raj                                                   50 28-SEP-80
+New Delhi
+
+        1019 Ravi Raj                                                   50 29-MAY-81
+New Delhi
+
+        1020 Amrit                                                      10 11-NOV-80
+
+
+        1021 Sumit                                                      20 01-JAN-80
+Chennai
+
+
+21 rows selected.
+
+SQL> desc student_master
+ Name                                                                    Null?    Type
+ ----------------------------------------------------------------------- -------- ------------------------------------------------
+ STUDENT_CODE                                                            NOT NULL NUMBER(6)
+ STUDENT_NAME                                                            NOT NULL VARCHAR2(50)
+ DEPT_CODE                                                                        NUMBER(2)
+ STUDENT_DOB                                                                      DATE
+ STUDENT_ADDRESS                                                                  VARCHAR2(240)
+
+SQL> col  STUDENT_NAME format a20
+SQL> col  STUDENT_address format a28
+SQL> select * from student_master;
+
+STUDENT_CODE STUDENT_NAME          DEPT_CODE STUDENT_D STUDENT_ADDRESS
+------------ -------------------- ---------- --------- ----------------------------
+        1001 Amit                         10 11-JAN-80 chennai
+        1002 Ravi                         10 01-NOV-81 New Delhi
+        1003 Ajay                         20 13-JAN-82
+        1004 Raj                          30 14-JAN-79 Mumbai
+        1005 Arvind                       40 15-JAN-83 Bangalore
+        1006 Rahul                        50 16-JAN-81 Delhi
+        1007 Mehul                        20 17-JAN-82 Chennai
+        1008 Dev                          10 11-MAR-81 Bangalore
+        1009 Vijay                        30 19-JAN-80 Bangalore
+        1010 Rajat                        40 20-JAN-80 Bangalore
+        1011 Sunder                       50 21-JAN-80 Chennai
+        1012 Rajesh                       30 22-JAN-80
+        1013 Anil                         20 23-JAN-80 Chennai
+        1014 Sunil                        10 15-FEB-85
+        1015 Kapil                        40 18-MAR-81 Mumbai
+        1016 Ashok                        40 26-NOV-80
+        1017 Ramesh                       30 27-DEC-80
+        1018 Amit Raj                     50 28-SEP-80 New Delhi
+        1019 Ravi Raj                     50 29-MAY-81 New Delhi
+        1020 Amrit                        10 11-NOV-80
+        1021 Sumit                        20 01-JAN-80 Chennai
+
+21 rows selected.
+
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME           DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL STAFF_ADDRESS
+---------- -------------------- ----------- ---------- --------- --------- ---------- ---------- ----------------------------
+    100001 Arvind                       102         30 15-JAN-80 15-JAN-03     100006      17000 Bangalore
+    100002 Shyam                        102         20 18-FEB-80 17-FEB-02     100007      20000 Chennai
+    100003 Mohan                        102         10 23-MAR-80 19-JAN-02     100006      24000 Mumbai
+    100004 Anil                         102         20 22-APR-77 11-MAR-01     100006      20000 Hyderabad
+    100005 John                         106         10 22-MAY-76 21-JAN-01     100007      32000 Bangalore
+    100006 Allen                        103         30 22-JAN-80 23-APR-01     100005      42000 Chennai
+    100007 Smith                        103         20 19-JUL-73 12-MAR-02     100005      62000 Mumbai
+    100008 Raviraj                      102         40 17-JUN-80 11-JAN-03     100006      18000 Bangalore
+    100009 Rahul                        102         20 16-JAN-78 11-DEC-03     100006      22000 Hyderabad
+    100010 Ram                          103         30 17-JAN-79 17-JAN-02     100007      32000 Bangalore
+
+10 rows selected.
+
+SQL> desc department_master
+ Name                                                                    Null?    Type
+ ----------------------------------------------------------------------- -------- ------------------------------------------------
+ DEPT_CODE                                                               NOT NULL NUMBER(2)
+ DEPT_NAME                                                                        VARCHAR2(50)
+
+SQL> col  DEPT_NAME format a25
+SQL> select * from department_master;
+
+ DEPT_CODE DEPT_NAME
+---------- -------------------------
+        10 Computer Science
+        20 Electricals
+        30 Electronics
+        40 Mechanics
+        50 Robotics
+
+SQL> select s.student_name, d.dept_name from student_master s join department_master d on s.dept_code=d.dept_code;
+
+STUDENT_NAME         DEPT_NAME
+-------------------- -------------------------
+Amit                 Computer Science
+Ravi                 Computer Science
+Ajay                 Electricals
+Raj                  Electronics
+Arvind               Mechanics
+Rahul                Robotics
+Mehul                Electricals
+Dev                  Computer Science
+Vijay                Electronics
+Rajat                Mechanics
+Sunder               Robotics
+Rajesh               Electronics
+Anil                 Electricals
+Sunil                Computer Science
+Kapil                Mechanics
+Ashok                Mechanics
+Ramesh               Electronics
+Amit Raj             Robotics
+Ravi Raj             Robotics
+Amrit                Computer Science
+Sumit                Electricals
+
+21 rows selected.
+
+SQL> select s.student_name, d.dept_name from student_master s join department_master d on s.dept_code=d.dept_code group by s.student_name, d.dept_name;
+
+STUDENT_NAME         DEPT_NAME
+-------------------- -------------------------
+Ajay                 Electricals
+Rajat                Mechanics
+Amrit                Computer Science
+Raj                  Electronics
+Mehul                Electricals
+Vijay                Electronics
+Anil                 Electricals
+Kapil                Mechanics
+Sumit                Electricals
+Amit                 Computer Science
+Arvind               Mechanics
+Sunder               Robotics
+Sunil                Computer Science
+Ashok                Mechanics
+Ramesh               Electronics
+Ravi Raj             Robotics
+Ravi                 Computer Science
+Dev                  Computer Science
+Rajesh               Electronics
+Rahul                Robotics
+Amit Raj             Robotics
+
+21 rows selected.
+
+SQL> select count(*) from student_master s join department_master d using(dept_code);
+
+  COUNT(*)
+----------
+        21
+
+SQL> select count(*) from student_master s join department_master d using(d.dept_code);
+select count(*) from student_master s join department_master d using(d.dept_code)
+                                                                      *
+ERROR at line 1:
+ORA-01748: only simple column names allowed here
+
+
+SQL> select count(*) from student_master s join department_master d using(dept_code);
+
+  COUNT(*)
+----------
+        21
+
+SQL>  select count(*) from student_master s join department_master d using(dept_code) group by d.dept_code;
+ select count(*) from student_master s join department_master d using(dept_code) group by d.dept_code
+                                                                                          *
+ERROR at line 1:
+ORA-25154: column part of USING clause cannot have qualifier
+
+
+SQL>  select count(*) from student_master s join department_master d using(dept_code) group by dept_code;
+
+  COUNT(*)
+----------
+         4
+         4
+         4
+         4
+         5
+
+SQL>  select count(*),d.dept_name from student_master s join department_master d using(dept_code) group by dept_code;
+ select count(*),d.dept_name from student_master s join department_master d using(dept_code) group by dept_code
+                 *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL>  select count(*),d.dept_name from student_master s join department_master d using(dept_code) group by dept_code, d.dept_name;
+
+  COUNT(*) DEPT_NAME
+---------- -------------------------
+         4 Robotics
+         4 Electronics
+         4 Electricals
+         5 Computer Science
+         4 Mechanics
+
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME           DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL STAFF_ADDRESS
+---------- -------------------- ----------- ---------- --------- --------- ---------- ---------- ----------------------------
+    100001 Arvind                       102         30 15-JAN-80 15-JAN-03     100006      17000 Bangalore
+    100002 Shyam                        102         20 18-FEB-80 17-FEB-02     100007      20000 Chennai
+    100003 Mohan                        102         10 23-MAR-80 19-JAN-02     100006      24000 Mumbai
+    100004 Anil                         102         20 22-APR-77 11-MAR-01     100006      20000 Hyderabad
+    100005 John                         106         10 22-MAY-76 21-JAN-01     100007      32000 Bangalore
+    100006 Allen                        103         30 22-JAN-80 23-APR-01     100005      42000 Chennai
+    100007 Smith                        103         20 19-JUL-73 12-MAR-02     100005      62000 Mumbai
+    100008 Raviraj                      102         40 17-JUN-80 11-JAN-03     100006      18000 Bangalore
+    100009 Rahul                        102         20 16-JAN-78 11-DEC-03     100006      22000 Hyderabad
+    100010 Ram                          103         30 17-JAN-79 17-JAN-02     100007      32000 Bangalore
+
+10 rows selected.
+
+SQL> select s.staff_name,n.staff_name from staff_name s join staff_name n on s.staff_code=n.mgr_code;
+select s.staff_name,n.staff_name from staff_name s join staff_name n on s.staff_code=n.mgr_code
+                                                        *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select s.staff_name,n.staff_name from staff_name s join staff_master n on s.staff_code=n.mgr_code;
+select s.staff_name,n.staff_name from staff_name s join staff_master n on s.staff_code=n.mgr_code
+                                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select s.staff_name,n.staff_name from staff_master s join staff_master n on s.staff_code=n.mgr_code;
+
+STAFF_NAME           STAFF_NAME
+-------------------- --------------------
+Allen                Arvind
+Smith                Shyam
+Allen                Mohan
+Allen                Anil
+Smith                John
+John                 Allen
+John                 Smith
+Allen                Raviraj
+Allen                Rahul
+Smith                Ram
+
+10 rows selected.
+
+SQL> select s.staff_name,n.staff_name as manager from staff_master s join staff_master n on s.staff_code=n.mgr_code;
+
+STAFF_NAME           MANAGER
+-------------------- --------------------------------------------------
+Allen                Arvind
+Smith                Shyam
+Allen                Mohan
+Allen                Anil
+Smith                John
+John                 Allen
+John                 Smith
+Allen                Raviraj
+Allen                Rahul
+Smith                Ram
+
+10 rows selected.
+
+SQL> select s.staff_name as staff,n.staff_name as manager from staff_master s join staff_master n on s.staff_code=n.mgr_code;
+
+STAFF                                              MANAGER
+-------------------------------------------------- --------------------------------------------------
+Allen                                              Arvind
+Smith                                              Shyam
+Allen                                              Mohan
+Allen                                              Anil
+Smith                                              John
+John                                               Allen
+John                                               Smith
+Allen                                              Raviraj
+Allen                                              Rahul
+Smith                                              Ram
+
+10 rows selected.
+
+SQL> select s.staff_name as manager,n.staff_name as staff from staff_master s join staff_master n on s.staff_code=n.mgr_code;
+
+MANAGER                                            STAFF
+-------------------------------------------------- --------------------------------------------------
+Allen                                              Arvind
+Smith                                              Shyam
+Allen                                              Mohan
+Allen                                              Anil
+Smith                                              John
+John                                               Allen
+John                                               Smith
+Allen                                              Raviraj
+Allen                                              Rahul
+Smith                                              Ram
+
+10 rows selected.
+
+SQL> select e.ename as manager, m.ename as staff from emp e join emp m on e.empno=m.mgr;
+
+MANAGER    STAFF
+---------- ----------
+FORD       SMITH
+BLAKE      ALLEN
+BLAKE      WARD
+KING       JONES
+BLAKE      MARTIN
+KING       BLAKE
+KING       CLARK
+JONES      SCOTT
+BLAKE      TURNER
+SCOTT      ADAMS
+BLAKE      JAMES
+JONES      FORD
+CLARK      MILLER
+
+13 rows selected.
+
+SQL> select e.ename as manager, m.ename as staff from emp e join emp m on e.empno=m.mgr order by 1;
+
+MANAGER    STAFF
+---------- ----------
+BLAKE      JAMES
+BLAKE      MARTIN
+BLAKE      ALLEN
+BLAKE      TURNER
+BLAKE      WARD
+CLARK      MILLER
+FORD       SMITH
+JONES      SCOTT
+JONES      FORD
+KING       BLAKE
+KING       JONES
+KING       CLARK
+SCOTT      ADAMS
+
+13 rows selected.
+
+SQL>
