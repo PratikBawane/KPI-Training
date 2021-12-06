@@ -1,0 +1,157 @@
+SQL> create sequence seq1;
+
+Sequence created.
+
+SQL> select seq1.next_val from dual;
+select seq1.next_val from dual
+       *
+ERROR at line 1:
+ORA-00904: "SEQ1"."NEXT_VAL": invalid identifier
+
+
+SQL> select seq1.nextval from dual;
+
+   NEXTVAL
+----------
+         1
+
+SQL> select seq1.currval from dual;
+
+   CURRVAL
+----------
+         1
+
+SQL> drop sequence seq1;
+
+Sequence dropped.
+
+SQL> create sequence seq1;
+
+Sequence created.
+
+SQL> drop sequence seq1;
+
+Sequence dropped.
+
+SQL> create sequence seq1 increment by 3 start with 4 maxvalue 20 nocycle;
+
+Sequence created.
+
+SQL> select seq1.nextval from emp;
+ERROR:
+ORA-08004: sequence SEQ1.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+
+
+
+no rows selected
+
+SQL> select seq1.nextval from dual;;
+select seq1.nextval from dual;
+                             *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select seq1.nextval from dual;
+select seq1.nextval from dual
+       *
+ERROR at line 1:
+ORA-08004: sequence SEQ1.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+
+
+SQL> select seq1.currval from dual;
+
+   CURRVAL
+----------
+        19
+
+SQL> create table parent(id number primary key, name varchar not null);
+create table parent(id number primary key, name varchar not null)
+                                                        *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> create table parent(id number primary key, name varchar(20) not null);
+
+Table created.
+
+SQL> desc parent
+ Name
+               Null?    Type
+ ----------------------------------------------------------------------------- -------- ----------------------------------------------------
+ ID
+               NOT NULL NUMBER
+ NAME
+               NOT NULL VARCHAR2(20)
+
+SQL> set line 80
+SQL> desc parent
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER
+ NAME                                      NOT NULL VARCHAR2(20)
+
+SQL> select * from cat;
+
+TABLE_NAME                     TABLE_TYPE
+------------------------------ -----------
+BOOK_MASTER                    TABLE
+BOOK_TRANSACTIONS              TABLE
+DEPARTMENT_MASTER              TABLE
+DEPT                           TABLE
+DESIGNATION_MASTER             TABLE
+EMP                            TABLE
+PARENT                         TABLE
+SEQ1                           SEQUENCE
+STAFF_MASTER                   TABLE
+STUDENT_MARKS                  TABLE
+STUDENT_MASTER                 TABLE
+
+11 rows selected.
+
+SQL> insert into parent values(seq1.nextval, 'Susane');
+insert into parent values(seq1.nextval, 'Susane')
+                          *
+ERROR at line 1:
+ORA-08004: sequence SEQ1.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+
+
+SQL> drop sequence seq1;
+
+Sequence dropped.
+
+SQL> create sequence seq1;
+
+Sequence created.
+
+SQL> insert into parent values(seq1.nextval, 'Susane');
+
+1 row created.
+
+SQL> insert into parent values(seq1.nextval, 'Emma');
+
+1 row created.
+
+SQL> insert into parent values(seq1.nextval, 'Winzee');
+
+1 row created.
+
+SQL> insert into parent values(seq1.nextval, 'Rachel');
+
+1 row created.
+
+SQL> select * from parent;
+
+        ID NAME
+---------- --------------------
+         1 Susane
+         2 Emma
+         3 Winzee
+         4 Rachel
+
+SQL> select seq1.currval from dual;
+
+   CURRVAL
+----------
+         4
