@@ -1,0 +1,134 @@
+1) Display the student code, subjects and total marks for every student.
+total marks is calculated as (s1+s2+s3...).
+
+SQL> select s.student_code, dept_name as subject, subject1+subject2+subject3 as total_marks from student_master s natural join department_master join student_marks t on s.student_code=t.student_code;
+
+STUDENT_CODE SUBJECT              TOTAL_MARKS
+------------ -------------------- -----------
+        1001 Computer Science             178
+        1002 Computer Science             228
+        1003 Electricals                  206
+        1004 Electronics                  219
+        1005 Mechanics                    231
+        1006 Robotics                     205
+        1007 Electricals                  195
+        1008 Computer Science             182
+        1009 Electronics                  188
+        1010 Mechanics                    204
+        1011 Robotics                     263
+        1012 Electronics                  189
+        1013 Electricals                  198
+        1014 Computer Science             212
+        1015 Mechanics                    185
+        1016 Mechanics                    220
+        1017 Electronics                  165
+        1018 Robotics                     199
+        1019 Robotics                     210
+        1020 Computer Science             165
+        1021 Electricals                  235
+        1001 Computer Science             204
+        1002 Computer Science             263
+        1003 Electricals                  189
+        1004 Electronics                  198
+        1005 Mechanics                    212
+        1006 Robotics                     185
+        1007 Electricals                  220
+        1008 Computer Science             165
+        1009 Electronics                  199
+        1010 Mechanics                    210
+        1011 Robotics                     165
+        1012 Electronics                  235
+        1013 Electricals                  228
+        1014 Computer Science             219
+        1015 Mechanics                    231
+        1016 Mechanics                    205
+        1017 Electronics                  195
+        1018 Robotics                     182
+        1019 Robotics                     188
+        1020 Computer Science             178
+        1021 Electricals                  206
+
+42 rows selected.
+
+
+2) List the name and designations of the staff who have joined before Jan 2005.
+SQL> select s.staff_name, d.design_name from staff_master s natural join designation_master d where to_char(hiredate,'MON-RRRR')<'JAN-2005';
+
+STAFF_NAME           DESIGN_NAME
+-------------------- --------------------------------------------------
+Arvind               Professor
+Shyam                Professor
+Mohan                Professor
+John                 Director
+Allen                Reader
+Raviraj              Professor
+Rahul                Professor
+Ram                  Reader
+
+8 rows selected.
+
+
+
+3) Display the employees for whom the manager is not allocated.
+SQL> select ename from emp where mgr is null;
+
+ENAME
+----------
+KING
+
+
+
+4) Display the details of the books that is not been returned and expected return date was monday.
+SQL> select book_code,book_name, book_expected_return_date, book_actual_return_date from book_transactions natural join book_master where to_char(book_actual_return_date, 'fmday')='monday';
+
+ BOOK_CODE BOOK_NAME                    BOOK_EXPE BOOK_ACTU
+---------- ---------------------------- --------- ---------
+  10000005 Relational DBMS              21-MAR-11 21-MAR-11
+
+
+
+5) Check the date of birth of the students and display only those students who were born on saturday or sunday.
+SQL> select student_name, to_char(student_dob, 'DD-MON-RR Day') as dob from student_master where to_char(student_dob, 'fmday')='saturday' or to_char(student_dob, 'fmday')='sunday';
+
+STUDENT_NAME         DOB
+-------------------- -------------------------------------------------------
+Ravi                 01-NOV-81 Sunday
+Raj                  14-JAN-79 Sunday
+Arvind               15-JAN-83 Saturday
+Mehul                17-JAN-82 Sunday
+Vijay                19-JAN-80 Saturday
+Rajat                20-JAN-80 Sunday
+Ramesh               27-DEC-80 Saturday
+Amit Raj             28-SEP-80 Sunday
+
+8 rows selected.
+
+
+
+6) Display the staff name and hiredate (through this date find out the day!).create a new column as DAY in the result and sort it to start from monday.
+SQL> select staff_name, hiredate,to_char(hiredate, 'fmDay') as "Day" from staff_master order by(next_day(hiredate, 'Monday') - hiredate) desc;
+
+STAFF_NAME                                         HIREDATE  Day
+-------------------------------------------------- --------- ------------------------------------
+Allen                                              23-APR-01 Monday
+Smith                                              12-MAR-02 Tuesday
+Arvind                                             15-JAN-03 Wednesday
+Rahul                                              11-DEC-03 Thursday
+Ram                                                17-JAN-02 Thursday
+Raviraj                                            11-JAN-03 Saturday
+Mohan                                              19-JAN-02 Saturday
+Anil                                               11-MAR-01 Sunday
+Shyam                                              17-FEB-02 Sunday
+John                                               21-JAN-01 Sunday
+
+10 rows selected.
+
+7) Display manager name, manager code and salary of the lowest paid staff in that manager's group.Exclude that group where the salary is less then 10k. Display other records in desc order.
+SQL> select s.staff_name as manager, m.mgr_code, min(s.staff_sal) from staff_master s join staff_master m on s.staff_code=m.mgr_code group by m.mgr_code, s.staff_name, s.staff_sal having s.staff_sal>10000 order by s.staff_sal desc;
+
+MANAGER                                              MGR_CODE MIN(S.STAFF_SAL)
+-------------------------------------------------- ---------- ----------------
+Smith                                                  100007            62000
+Allen                                                  100006            42000
+John                                                   100005            32000
+
