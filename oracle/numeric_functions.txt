@@ -1,0 +1,204 @@
+SQL> select round(153.32) from dual;
+
+ROUND(153.32)
+-------------
+          153
+
+SQL> select round(153.53) from dual;
+
+ROUND(153.53)
+-------------
+          154
+
+SQL> select round(-153.53) from dual;
+
+ROUND(-153.53)
+--------------
+          -154
+
+SQL> select round(-153.32) from dual;
+
+ROUND(-153.32)
+--------------
+          -153
+
+SQL> select trunc(127.23312) from dual;
+
+TRUNC(127.23312)
+----------------
+             127
+
+SQL> select trunc(1.3312) from dual;
+
+TRUNC(1.3312)
+-------------
+            1
+
+SQL> select trunc(1.399) from dual;
+
+TRUNC(1.399)
+------------
+           1
+
+SQL> select trunc(.399) from dual;
+
+TRUNC(.399)
+-----------
+          0
+
+SQL> select ceil(2.43) from dual;
+
+CEIL(2.43)
+----------
+         3
+
+SQL> select ceil(763.773) from dual;
+
+CEIL(763.773)
+-------------
+          764
+
+SQL> select floor(3243.65)from dual;
+
+FLOOR(3243.65)
+--------------
+          3243
+
+SQL> select trunc(3243.65)from dual;
+
+TRUNC(3243.65)
+--------------
+          3243
+
+SQL> select mod(2,3) from dual;
+
+  MOD(2,3)
+----------
+         2
+
+SQL> select mod(10,5) from dual;
+
+ MOD(10,5)
+----------
+         0
+
+SQL> select mod(10,3) from dual;
+
+ MOD(10,3)
+----------
+         1
+
+SQL> select abs(-13,3) from dual;
+select abs(-13,3) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select abs(-13) from dual;
+
+  ABS(-13)
+----------
+        13
+
+SQL> select abs(-122424) from dual;
+
+ABS(-122424)
+------------
+      122424
+
+SQL> select power(2,7) from dual;
+
+POWER(2,7)
+----------
+       128
+
+SQL> select power(15,5) from dual;
+
+POWER(15,5)
+-----------
+     759375
+
+SQL> select sqrt(768) from dual;
+
+ SQRT(768)
+----------
+27.7128129
+
+SQL> select sqrt(772) from dual;
+
+ SQRT(772)
+----------
+ 27.784888
+
+SQL> select sqrt(790) from dual;
+
+ SQRT(790)
+----------
+28.1069386
+
+SQL> select sqrt(789) from dual;
+
+ SQRT(789)
+----------
+28.0891438
+
+SQL> select sqrt(788) from dual;
+
+ SQRT(788)
+----------
+28.0713377
+
+SQL> select sqrt(782) from dual;
+
+ SQRT(782)
+----------
+27.9642629
+
+SQL> select sqrt(7823) from dual;
+
+SQRT(7823)
+----------
+88.4477247
+
+SQL> select sqrt(783) from dual;
+
+ SQRT(783)
+----------
+27.9821372
+
+SQL> select sqrt(784) from dual;
+
+ SQRT(784)
+----------
+        28
+
+SQL> select sign(23)from dual;
+
+  SIGN(23)
+----------
+         1
+
+SQL> select sign(-23)from dual;
+
+ SIGN(-23)
+----------
+        -1
+
+SQL> select sign(0)from dual;
+
+   SIGN(0)
+----------
+         0
+
+SQL> select sign(0-223)from dual;
+
+SIGN(0-223)
+-----------
+         -1
+
+SQL> select sign(223-223)from dual;
+
+SIGN(223-223)
+-------------
+            0
