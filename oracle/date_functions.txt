@@ -1,0 +1,280 @@
+SQL> select sysdate from dual;
+
+SYSDATE
+---------
+03-DEC-21
+
+SQL> select current_date from dual;
+
+CURRENT_D
+---------
+03-DEC-21
+
+SQL> select sysdate+3 from dual;
+
+SYSDATE+3
+---------
+06-DEC-21
+
+SQL> select current_date+33 from dual;
+
+CURRENT_D
+---------
+05-JAN-22
+
+SQL> select add_months(sysdate,7) from dual;
+
+ADD_MONTH
+---------
+03-JUL-22
+
+SQL> select add_months(sysdate,-2) from dual;
+
+ADD_MONTH
+---------
+03-OCT-21
+
+SQL> select months_between(current_date, '02-FEB-21') from dual;
+
+MONTHS_BETWEEN(CURRENT_DATE,'02-FEB-21')
+----------------------------------------
+                              10.0480279
+
+SQL> select months_between(current_date, '03-FEB-21') from dual;
+
+MONTHS_BETWEEN(CURRENT_DATE,'03-FEB-21')
+----------------------------------------
+                                      10
+
+SQL> select months_between(current_date, '04-FEB-21') from dual;
+
+MONTHS_BETWEEN(CURRENT_DATE,'04-FEB-21')
+----------------------------------------
+                              9.98351815
+
+SQL> select last(sysdate,current_date) from dual;
+select last(sysdate,current_date) from dual
+       *
+ERROR at line 1:
+ORA-00904: "LAST": invalid identifier
+
+
+SQL> select last(sysdate) from dual;
+select last(sysdate) from dual
+       *
+ERROR at line 1:
+ORA-00904: "LAST": invalid identifier
+
+
+SQL> select last_day(sysdate) from dual;
+
+LAST_DAY(
+---------
+31-DEC-21
+
+SQL> select last_day(sysdate,current_date) from dual;
+select last_day(sysdate,current_date) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select last_day(current_date) from dual;
+
+LAST_DAY(
+---------
+31-DEC-21
+
+SQL> select last_day('21-FEB-2000') from dual;
+
+LAST_DAY(
+---------
+29-FEB-00
+
+SQL> select next_day(sysdate) from dual;
+select next_day(sysdate) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select next_day(sysdate,10) from dual;
+select next_day(sysdate,10) from dual
+                        *
+ERROR at line 1:
+ORA-01846: not a valid day of the week
+
+
+SQL> select next_day(sysdate,1) from dual;
+
+NEXT_DAY(
+---------
+05-DEC-21
+
+SQL> select next_day(sysdate,7) from dual;
+
+NEXT_DAY(
+---------
+04-DEC-21
+
+SQL> select next_day(sysdate,3) from dual;
+
+NEXT_DAY(
+---------
+07-DEC-21
+
+SQL> select next_day(sysdate,15) from dual;
+select next_day(sysdate,15) from dual
+                        *
+ERROR at line 1:
+ORA-01846: not a valid day of the week
+
+
+SQL> select next_day(sysdate,'fri') from dual;
+
+NEXT_DAY(
+---------
+10-DEC-21
+
+SQL> select next_day(sysdate,'monday') from dual;
+
+NEXT_DAY(
+---------
+06-DEC-21
+
+SQL> select next_day(sysdate-1,'thursday') from dual;
+
+NEXT_DAY(
+---------
+09-DEC-21
+
+SQL> select next_day(sysdate+24,'thursday') from dual;
+
+NEXT_DAY(
+---------
+30-DEC-21
+
+SQL> select next_day(sysdate+24) from dual;
+select next_day(sysdate+24) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select next_day(sysdate+24,1) from dual;
+
+NEXT_DAY(
+---------
+02-JAN-22
+
+SQL> select next_day(hiredate,1) from emp;
+
+NEXT_DAY(
+---------
+21-DEC-80
+22-FEB-81
+01-MAR-81
+05-APR-81
+04-OCT-81
+03-MAY-81
+14-JUN-81
+12-DEC-82
+22-NOV-81
+13-SEP-81
+16-JAN-83
+06-DEC-81
+06-DEC-81
+24-JAN-82
+
+14 rows selected.
+
+SQL> select next_day(hiredate,-1) from emp;
+select next_day(hiredate,-1) from emp
+                         *
+ERROR at line 1:
+ORA-01846: not a valid day of the week
+
+
+SQL> select next_day(hiredate,'monday') from emp;
+
+NEXT_DAY(
+---------
+22-DEC-80
+23-FEB-81
+23-FEB-81
+06-APR-81
+05-OCT-81
+04-MAY-81
+15-JUN-81
+13-DEC-82
+23-NOV-81
+14-SEP-81
+17-JAN-83
+07-DEC-81
+07-DEC-81
+25-JAN-82
+
+14 rows selected.
+
+SQL> select extract(year from hiredate) from emp;
+
+EXTRACT(YEARFROMHIREDATE)
+-------------------------
+                     1980
+                     1981
+                     1981
+                     1981
+                     1981
+                     1981
+                     1981
+                     1982
+                     1981
+                     1981
+                     1983
+                     1981
+                     1981
+                     1982
+
+14 rows selected.
+
+SQL> select extract(month from hiredate) from emp;
+
+EXTRACT(MONTHFROMHIREDATE)
+--------------------------
+                        12
+                         2
+                         2
+                         4
+                         9
+                         5
+                         6
+                        12
+                        11
+                         9
+                         1
+                        12
+                        12
+                         1
+
+14 rows selected.
+
+SQL> select extract(day from hiredate) from emp;
+
+EXTRACT(DAYFROMHIREDATE)
+------------------------
+                      17
+                      20
+                      22
+                       2
+                      28
+                       1
+                       9
+                       9
+                      17
+                       8
+                      12
+                       3
+                       3
+                      23
+
+14 rows selected.
