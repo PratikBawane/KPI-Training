@@ -1,0 +1,580 @@
+SQL> desc book_master
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ BOOK_CODE                                             NOT NULL NUMBER(10)
+ BOOK_NAME                                             NOT NULL VARCHAR2(50)
+ BOOK_PUB_YEAR                                                  NUMBER
+ BOOK_PUB_AUTHOR                                       NOT NULL VARCHAR2(50)
+
+SQL> col  BOOK_NAME format a20
+SQL> select upper(book_name) from book_master;
+
+UPPER(BOOK_NAME)
+--------------------------------------------------
+LET US C++
+MASTERSING VC++
+JAVA COMPLETE REFERENCE
+J2EE COMPLETE REFERENCE
+RELATIONAL DBMS
+LET US C
+INTODUCTION TO ALGORITHAMS
+COMPUTER NETWORKS
+INTRODUCTION TO O/S
+
+9 rows selected.
+
+SQL> select lower(book_name) from book_master;
+
+LOWER(BOOK_NAME)
+--------------------------------------------------
+let us c++
+mastersing vc++
+java complete reference
+j2ee complete reference
+relational dbms
+let us c
+intoduction to algorithams
+computer networks
+introduction to o/s
+
+9 rows selected.
+
+SQL> select initcap(book_name) from book_master;
+
+INITCAP(BOOK_NAME)
+--------------------------------------------------
+Let Us C++
+Mastersing Vc++
+Java Complete Reference
+J2ee Complete Reference
+Relational Dbms
+Let Us C
+Intoduction To Algorithams
+Computer Networks
+Introduction To O/S
+
+9 rows selected.
+
+SQL> select concat(ename,' ', job) from emp;
+select concat(ename,' ', job) from emp
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select concat(ename,job) from emp;
+
+CONCAT(ENAME,JOB)
+-------------------
+SMITHCLERK
+ALLENSALESMAN
+WARDSALESMAN
+JONESMANAGER
+MARTINSALESMAN
+BLAKEMANAGER
+CLARKMANAGER
+SCOTTANALYST
+KINGPRESIDENT
+TURNERSALESMAN
+ADAMSCLERK
+JAMESCLERK
+FORDANALYST
+MILLERCLERK
+
+14 rows selected.
+
+SQL> select ename||' ' ||' works as '|| job from emp;
+
+ENAME||''||'WORKSAS'||JOB
+------------------------------
+SMITH  works as CLERK
+ALLEN  works as SALESMAN
+WARD  works as SALESMAN
+JONES  works as MANAGER
+MARTIN  works as SALESMAN
+BLAKE  works as MANAGER
+CLARK  works as MANAGER
+SCOTT  works as ANALYST
+KING  works as PRESIDENT
+TURNER  works as SALESMAN
+ADAMS  works as CLERK
+JAMES  works as CLERK
+FORD  works as ANALYST
+MILLER  works as CLERK
+
+14 rows selected.
+
+SQL> select ename||' ' ||' works as a '|| job from emp;
+
+ENAME||''||'WORKSASA'||JOB
+--------------------------------
+SMITH  works as a CLERK
+ALLEN  works as a SALESMAN
+WARD  works as a SALESMAN
+JONES  works as a MANAGER
+MARTIN  works as a SALESMAN
+BLAKE  works as a MANAGER
+CLARK  works as a MANAGER
+SCOTT  works as a ANALYST
+KING  works as a PRESIDENT
+TURNER  works as a SALESMAN
+ADAMS  works as a CLERK
+JAMES  works as a CLERK
+FORD  works as a ANALYST
+MILLER  works as a CLERK
+
+14 rows selected.
+
+SQL> desc book_transactions
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ BOOK_CODE                                                      NUMBER(10)
+ STUDENT_CODE                                                   NUMBER(6)
+ STAFF_CODE                                                     NUMBER(8)
+ BOOK_ISSUE_DATE                                       NOT NULL DATE
+ BOOK_EXPECTED_RETURN_DATE                             NOT NULL DATE
+ BOOK_ACTUAL_RETURN_DATE                                        DATE
+
+SQL> select * from book_transactions;
+
+ BOOK_CODE STUDENT_CODE STAFF_CODE BOOK_ISSU BOOK_EXPE BOOK_ACTU
+---------- ------------ ---------- --------- --------- ---------
+  10000006         1012            02-FEB-11 09-FEB-11
+  10000008                  100006 10-MAR-11 17-MAR-11 15-MAR-11
+  10000009                  100010 01-APR-11 08-APR-11 10-APR-11
+  10000004         1015            12-FEB-11 19-FEB-11
+  10000005                  100007 14-MAR-11 21-MAR-11 21-MAR-11
+  10000007                  100007 01-APR-11 07-APR-11 06-APR-11
+  10000007                  100006 01-APR-10 07-APR-10 06-APR-10
+  10000005         1009            31-MAY-11 08-JUN-11 08-JUN-11
+
+8 rows selected.
+
+SQL> desc student_master
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUDENT_CODE                                          NOT NULL NUMBER(6)
+ STUDENT_NAME                                          NOT NULL VARCHAR2(50)
+ DEPT_CODE                                                      NUMBER(2)
+ STUDENT_DOB                                                    DATE
+ STUDENT_ADDRESS                                                VARCHAR2(240)
+
+SQL> col  STUDENT_NAME format 20
+SP2-0246: Illegal FORMAT string "20"
+SQL> col  STUDENT_NAME format a20
+SQL> col  STUDENT_address format a20
+SQL> select * from student_master;
+
+STUDENT_CODE STUDENT_NAME          DEPT_CODE STUDENT_D STUDENT_ADDRESS
+------------ -------------------- ---------- --------- --------------------
+        1001 Amit                         10 11-JAN-80 chennai
+        1002 Ravi                         10 01-NOV-81 New Delhi
+        1003 Ajay                         20 13-JAN-82
+        1004 Raj                          30 14-JAN-79 Mumbai
+        1005 Arvind                       40 15-JAN-83 Bangalore
+        1006 Rahul                        50 16-JAN-81 Delhi
+        1007 Mehul                        20 17-JAN-82 Chennai
+        1008 Dev                          10 11-MAR-81 Bangalore
+        1009 Vijay                        30 19-JAN-80 Bangalore
+        1010 Rajat                        40 20-JAN-80 Bangalore
+        1011 Sunder                       50 21-JAN-80 Chennai
+        1012 Rajesh                       30 22-JAN-80
+        1013 Anil                         20 23-JAN-80 Chennai
+        1014 Sunil                        10 15-FEB-85
+        1015 Kapil                        40 18-MAR-81 Mumbai
+        1016 Ashok                        40 26-NOV-80
+        1017 Ramesh                       30 27-DEC-80
+        1018 Amit Raj                     50 28-SEP-80 New Delhi
+        1019 Ravi Raj                     50 29-MAY-81 New Delhi
+        1020 Amrit                        10 11-NOV-80
+        1021 Sumit                        20 01-JAN-80 Chennai
+
+21 rows selected.
+
+SQL> select *from book_master;
+
+ BOOK_CODE BOOK_NAME            BOOK_PUB_YEAR BOOK_PUB_AUTHOR
+---------- -------------------- ------------- --------------------------------------------------
+  10000001 Let Us C++                    2000 Yashavant Kanetkar
+  10000002 Mastersing VC++               2005 P.J Allen
+  10000003 JAVA Complete Refere          2004 H.Schild
+           nce
+
+  10000004 J2EE Complete Refere          2000 H. Schild
+           nce
+
+  10000005 Relational DBMS               2000 B.C. Desai
+  10000006 Let Us C                      2000 Yashavant Kanetkar
+  10000007 Intoduction To Algor          2001 Cormen
+           ithams
+
+  10000008 Computer Networks             2000 Tanenbaum
+  10000009 Introduction to O/S           2001 Millan
+
+9 rows selected.
+
+SQL> col book_name format a28
+SQL> select *from book_master;
+
+ BOOK_CODE BOOK_NAME                    BOOK_PUB_YEAR
+---------- ---------------------------- -------------
+BOOK_PUB_AUTHOR
+--------------------------------------------------
+  10000001 Let Us C++                            2000
+Yashavant Kanetkar
+
+  10000002 Mastersing VC++                       2005
+P.J Allen
+
+  10000003 JAVA Complete Reference               2004
+H.Schild
+
+  10000004 J2EE Complete Reference               2000
+H. Schild
+
+  10000005 Relational DBMS                       2000
+B.C. Desai
+
+  10000006 Let Us C                              2000
+Yashavant Kanetkar
+
+  10000007 Intoduction To Algorithams            2001
+Cormen
+
+  10000008 Computer Networks                     2000
+Tanenbaum
+
+  10000009 Introduction to O/S                   2001
+Millan
+
+
+9 rows selected.
+
+SQL> desc book_master
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ BOOK_CODE                                             NOT NULL NUMBER(10)
+ BOOK_NAME                                             NOT NULL VARCHAR2(50)
+ BOOK_PUB_YEAR                                                  NUMBER
+ BOOK_PUB_AUTHOR                                       NOT NULL VARCHAR2(50)
+
+SQL> col  BOOK_PUB_AUTHOR format a28
+SQL> select *from book_master;
+
+ BOOK_CODE BOOK_NAME                    BOOK_PUB_YEAR BOOK_PUB_AUTHOR
+---------- ---------------------------- ------------- ----------------------------
+  10000001 Let Us C++                            2000 Yashavant Kanetkar
+  10000002 Mastersing VC++                       2005 P.J Allen
+  10000003 JAVA Complete Reference               2004 H.Schild
+  10000004 J2EE Complete Reference               2000 H. Schild
+  10000005 Relational DBMS                       2000 B.C. Desai
+  10000006 Let Us C                              2000 Yashavant Kanetkar
+  10000007 Intoduction To Algorithams            2001 Cormen
+  10000008 Computer Networks                     2000 Tanenbaum
+  10000009 Introduction to O/S                   2001 Millan
+
+9 rows selected.
+
+SQL> select substr(book_name,1,4)
+  2  from book_master;
+
+SUBSTR(BOOK_NAME
+----------------
+Let
+Mast
+JAVA
+J2EE
+Rela
+Let
+Into
+Comp
+Intr
+
+9 rows selected.
+
+SQL> select substr(book_name,1,14) from book_master
+  2  ;
+
+SUBSTR(BOOK_NAME,1,14)
+--------------------------------------------------------
+Let Us C++
+Mastersing VC+
+JAVA Complete
+J2EE Complete
+Relational DBM
+Let Us C
+Intoduction To
+Computer Netwo
+Introduction t
+
+9 rows selected.
+
+SQL> desc student_master;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUDENT_CODE                                          NOT NULL NUMBER(6)
+ STUDENT_NAME                                          NOT NULL VARCHAR2(50)
+ DEPT_CODE                                                      NUMBER(2)
+ STUDENT_DOB                                                    DATE
+ STUDENT_ADDRESS                                                VARCHAR2(240)
+
+SQL> select *from student_master;
+
+STUDENT_CODE STUDENT_NAME          DEPT_CODE STUDENT_D STUDENT_ADDRESS
+------------ -------------------- ---------- --------- --------------------
+        1001 Amit                         10 11-JAN-80 chennai
+        1002 Ravi                         10 01-NOV-81 New Delhi
+        1003 Ajay                         20 13-JAN-82
+        1004 Raj                          30 14-JAN-79 Mumbai
+        1005 Arvind                       40 15-JAN-83 Bangalore
+        1006 Rahul                        50 16-JAN-81 Delhi
+        1007 Mehul                        20 17-JAN-82 Chennai
+        1008 Dev                          10 11-MAR-81 Bangalore
+        1009 Vijay                        30 19-JAN-80 Bangalore
+        1010 Rajat                        40 20-JAN-80 Bangalore
+        1011 Sunder                       50 21-JAN-80 Chennai
+        1012 Rajesh                       30 22-JAN-80
+        1013 Anil                         20 23-JAN-80 Chennai
+        1014 Sunil                        10 15-FEB-85
+        1015 Kapil                        40 18-MAR-81 Mumbai
+        1016 Ashok                        40 26-NOV-80
+        1017 Ramesh                       30 27-DEC-80
+        1018 Amit Raj                     50 28-SEP-80 New Delhi
+        1019 Ravi Raj                     50 29-MAY-81 New Delhi
+        1020 Amrit                        10 11-NOV-80
+        1021 Sumit                        20 01-JAN-80 Chennai
+
+21 rows selected.
+
+SQL> select instr(student_address,'e') from student_master;
+
+INSTR(STUDENT_ADDRESS,'E')
+--------------------------
+                         3
+                         2
+
+                         0
+                         9
+                         2
+                         3
+                         9
+                         9
+                         9
+                         3
+
+                         3
+
+                         0
+
+
+                         2
+                         2
+
+                         3
+
+21 rows selected.
+
+SQL> select instr(student_address,'e',2) from student_master;
+
+INSTR(STUDENT_ADDRESS,'E',2)
+----------------------------
+                           3
+                           2
+
+                           0
+                           9
+                           2
+                           3
+                           9
+                           9
+                           9
+                           3
+
+                           3
+
+                           0
+
+
+                           2
+                           2
+
+                           3
+
+21 rows selected.
+
+SQL> select instr(student_address,'e',1,2) from student_master;
+
+INSTR(STUDENT_ADDRESS,'E',1,2)
+------------------------------
+                             0
+                             6
+
+                             0
+                             0
+                             0
+                             0
+                             0
+                             0
+                             0
+                             0
+
+                             0
+
+                             0
+
+
+                             6
+                             6
+
+                             0
+
+21 rows selected.
+
+SQL> select length(student_address) from student_master;
+
+LENGTH(STUDENT_ADDRESS)
+-----------------------
+                      7
+                      9
+
+                      6
+                      9
+                      5
+                      7
+                      9
+                      9
+                      9
+                      7
+
+                      7
+
+                      6
+
+
+                      9
+                      9
+
+                      7
+
+21 rows selected.
+
+SQL> select length(student_name) from student_master;
+
+LENGTH(STUDENT_NAME)
+--------------------
+                   4
+                   4
+                   4
+                   3
+                   6
+                   5
+                   5
+                   3
+                   5
+                   5
+                   6
+                   6
+                   4
+                   5
+                   5
+                   5
+                   6
+                   8
+                   8
+                   5
+                   5
+
+21 rows selected.
+
+SQL> select lpad(student_name,20,'*') from student_master;
+
+LPAD(STUDENT_NAME,20,'*')
+--------------------------------------------------------------------------------
+****************Amit
+****************Ravi
+****************Ajay
+*****************Raj
+**************Arvind
+***************Rahul
+***************Mehul
+*****************Dev
+***************Vijay
+***************Rajat
+**************Sunder
+**************Rajesh
+****************Anil
+***************Sunil
+***************Kapil
+***************Ashok
+**************Ramesh
+************Amit Raj
+************Ravi Raj
+***************Amrit
+***************Sumit
+
+21 rows selected.
+
+SQL> select rpad(student_name,20,'*') from student_master;
+
+RPAD(STUDENT_NAME,20,'*')
+--------------------------------------------------------------------------------
+Amit****************
+Ravi****************
+Ajay****************
+Raj*****************
+Arvind**************
+Rahul***************
+Mehul***************
+Dev*****************
+Vijay***************
+Rajat***************
+Sunder**************
+Rajesh**************
+Anil****************
+Sunil***************
+Kapil***************
+Ashok***************
+Ramesh**************
+Amit Raj************
+Ravi Raj************
+Amrit***************
+Sumit***************
+
+21 rows selected.
+
+SQL> select trim('   oracle sql database   ') from dual;
+
+TRIM('ORACLESQLDATA
+-------------------
+oracle sql database
+
+SQL> select ltrim('   oracle sql database   ') from dual;
+
+LTRIM('ORACLESQLDATABA
+----------------------
+oracle sql database
+
+SQL> select rtrim('   oracle sql database   ') from dual;
+
+RTRIM('ORACLESQLDATABA
+----------------------
+   oracle sql database
+
+SQL> select replace('jack and jue','j','bl') from dual;
+
+REPLACE('JACKA
+--------------
+black and blue
+
+SQL> select repalce('oracle', 'ora','un') from dual;
+select repalce('oracle', 'ora','un') from dual
+       *
+ERROR at line 1:
+ORA-00904: "REPALCE": invalid identifier
+
+
+SQL> select replace('oracle', 'ora','un') from dual;
+
+REPLA
+-----
+uncle
