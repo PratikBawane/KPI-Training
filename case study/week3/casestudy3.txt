@@ -1,0 +1,114 @@
+1) Display the student code, subjects and total marks for every student.
+total marks is calculated as (s1+s2+s3...).
+
+SQL> select s.student_code, d.dept_name, sum(subject1+subject2+subject3) as toatl_marks from student_marks s join student_master m on s.student_code=m.student_code join department_master d on m.dept_code=d.dept_code group by s.student_code,d.dept_name order by 1;
+
+STUDENT_CODE DEPT_NAME                                          TOATL_MARKS
+------------ -------------------------------------------------- -----------
+        1001 Computer Science                                           382
+        1002 Computer Science                                           491
+        1003 Electricals                                                395
+        1004 Electronics                                                417
+        1005 Mechanics                                                  443
+        1006 Robotics                                                   390
+        1007 Electricals                                                415
+        1008 Computer Science                                           347
+        1009 Electronics                                                387
+        1010 Mechanics                                                  414
+        1011 Robotics                                                   428
+        1012 Electronics                                                424
+        1013 Electricals                                                426
+        1014 Computer Science                                           431
+        1015 Mechanics                                                  416
+        1016 Mechanics                                                  425
+        1017 Electronics                                                360
+        1018 Robotics                                                   381
+        1019 Robotics                                                   398
+        1020 Computer Science                                           343
+        1021 Electricals                                                441
+
+21 rows selected.
+
+
+
+2) List the name and designations of the staff who have joined before Jan 2005.
+SQL> select s.staff_name, d.design_name from staff_master s join designation_master d on s.design_code=d.design_code where to_char(hiredate, 'DD-MON-RRRR') < to_date('01-JAN-2005', 'DD-MON-RRRR');
+
+STAFF_NAME                                         DESIGN_NAME
+-------------------------------------------------- --------------------
+Arvind                                             Professor
+Shyam                                              Professor
+Mohan                                              Professor
+Anil                                               Professor
+John                                               Director
+Allen                                              Reader
+Smith                                              Reader
+Raviraj                                            Professor
+Rahul                                              Professor
+Ram                                                Reader
+
+10 rows selected.
+
+
+
+3) Display the employees for whom the manager is not allocated.
+SQL> select ename from emp where mgr is null;
+
+ENAME
+----------
+KING
+
+
+
+4) Display the details of the books that is not been returned and expected return date was monday.
+SQL> select b.book_code,b.book_name, t.book_expected_return_date, t.book_actual_return_date from book_transactions t join book_master b on b.book_code=t.book_code where to_char(book_expected_return_date, 'fmday')='monday' and book_actual_return_date is null;
+
+no rows selected
+
+
+
+5) Check the date of birth of the students and display only those students who were born on saturday or sunday.
+SQL> select student_name, to_char(student_dob, 'DD-MON-RR Day') as dob from student_master where to_char(student_dob, 'fmday')='saturday' or to_char(student_dob, 'fmday')='sunday';
+
+STUDENT_NAME         DOB
+-------------------- -------------------------------------------------------
+Ravi                 01-NOV-81 Sunday
+Raj                  14-JAN-79 Sunday
+Arvind               15-JAN-83 Saturday
+Mehul                17-JAN-82 Sunday
+Vijay                19-JAN-80 Saturday
+Rajat                20-JAN-80 Sunday
+Ramesh               27-DEC-80 Saturday
+Amit Raj             28-SEP-80 Sunday
+
+8 rows selected.
+
+
+
+6) Display the staff name and hiredate (through this date find out the day!).create a new column as DAY in the result and sort it to start from monday.
+SQL> select staff_name, hiredate,to_char(hiredate, 'fmDay') as "Day" from staff_master order by(next_day(hiredate, 'Monday') - hiredate) desc;
+
+STAFF_NAME                                         HIREDATE  Day
+-------------------------------------------------- --------- ------------------------------------
+Allen                                              23-APR-01 Monday
+Smith                                              12-MAR-02 Tuesday
+Arvind                                             15-JAN-03 Wednesday
+Rahul                                              11-DEC-03 Thursday
+Ram                                                17-JAN-02 Thursday
+Raviraj                                            11-JAN-03 Saturday
+Mohan                                              19-JAN-02 Saturday
+Anil                                               11-MAR-01 Sunday
+Shyam                                              17-FEB-02 Sunday
+John                                               21-JAN-01 Sunday
+
+10 rows selected.
+
+7) Display manager name, manager code and salary of the lowest paid staff in that manager's group.Exclude that group where the salary is less then 10k. Display other records in desc order.
+SQL> select s.staff_name as manager, m.mgr_code, min(s.staff_sal) from staff_master s join staff_master m on s.staff_code=m.mgr_code group by m.mgr_code, s.staff_name, s.staff_sal having s.staff_sal>10000 order by s.staff_sal desc;
+
+MANAGER                                              MGR_CODE MIN(S.STAFF_SAL)
+-------------------------------------------------- ---------- ----------------
+Smith                                                  100007            62000
+Allen                                                  100006            42000
+John                                                   100005            32000
+
