@@ -1,0 +1,63 @@
+# num1 = int(input('Enter num1:'))
+# num2 = int(input('Enter num2:'))
+#
+# sum = num1 + num2
+#
+# print('The sum of {0} and {1} is {2}'.format(num1, num2, sum))
+
+# name = 'Shiva'
+# greet = 'How are you?'
+# print('Hello {0}! {1}'.format(name, greet))
+#
+
+# x = 5
+# y = 19
+#
+# temp = x
+# x = y
+# y = temp
+#
+# print('The value of x after swapping is {}'.format(x))
+# print('The value of y after swapping is {}'.format(y))
+#
+
+# a = 25
+# b = 3
+# if(a>b):
+#     print(a,'is greater than', b)
+# elif(a==b):
+#     print(a, 'is equal to', b)
+# else:
+#     print(b, 'is greater than', a)
+
+#
+# fruits = ['apple', 'banana', 'cherry', 'orange', 'kiwi']
+# for i in fruits:
+#     if i == 'orange':
+#         continue
+#     print(i)
+# print()
+#
+# fruits = ['apple', 'banana', 'cherry', 'orange', 'kiwi']
+# for i in fruits:
+#     if i == 'orange':
+#         break
+#     print(i)
+# print()
+#
+# def my_func(country = "India"):
+#     print("I'm from" + country)
+#     return my_func()
+# my_func("Norway")
+# my_func("UK")
+# my_func("Sweden")
+
+# cars = ["Mahindra", "TATA", "Maruti"]
+# for i in cars:
+#     print(i, end=" ")
+# print()
+
+# cars = {"Mahindra":"XUV 700", "Tata":"Nexon EV"}
+# print(cars["Mahindra"])
+# print(cars["Tata"])
+
