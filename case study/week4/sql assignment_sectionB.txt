@@ -1,0 +1,96 @@
+Section B:-
+Use an appropriate combination of SQL, stored procedures and/or triggers to implement
+the ability to allow programmers to cast a new actor (by ID#) to a movie (by ID#).
+Do not allow actors to be cast more than once for each movie.
+Demonstrate that your system works by trying the following.
+Cast George Faraday (# 124) in Slumdog Millionaire (# 921).
+Cast George Faraday in Back to the Future (# 928).
+Cast George Faraday (# 124) in Slumdog Millionaire (# 921)
+Record in the script comments what happens with each of these updates and why.
+
+==>> SQL> CREATE OR REPLACE PROCEDURE N_CASTING (act_id IN NUMBER, mov_ID IN NUMBER, role IN VARCHAR2 ) AS
+  2  BEGIN
+  3  INSERT INTO MOVIE_CAST
+  4  VALUES (act_ID, mov_ID, role);
+  5  exception
+  6  when others then
+  7  dbms_output.put_line(' -20001, This actor is already cast for this movie.');
+  8  END N_CASTING;
+  9  /
+
+Procedure created.
+
+SQL> select * from movie_cast;
+
+    ACT_ID     MOV_ID ROLE
+---------- ---------- --------------------------------------------------
+       101        901 John Scottie Ferguson
+       102        902 Miss Giddens
+       103        903 T. E. Lawrence
+       104        904 Michael
+       105        905 Antonio Salieri
+       106        906 Rick Deckard
+       107        907 Alice Harford
+       108        908 McManus
+       109        909 J. J. Gittes
+       110        910 Eddie Adams
+       111        911 Alvy Singer
+       112        912 San
+       113        913 Adny Dufresne
+       114        914 Lester Burnham
+       115        915 Rose DeWitt Bukater
+       116        916 Sean Maguire
+       117        917 Ed
+       118        918 Renton
+       119        919 Alfred Borden
+       120        920 Elizabeth Darko
+       121        921 Older Jamal
+       122        922 Ripley
+       114        923 Bobby Darin
+
+23 rows selected.
+
+SQL> execute n_casting(124, 921, 'Javed');
+
+PL/SQL procedure successfully completed.
+
+SQL> execute n_casting(124, 928, 'David Shaw');
+
+PL/SQL procedure successfully completed.
+
+SQL> execute n_casting(124, 921, 'Jamil');
+-20001, This actor is already cast for this movie.
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from movie_cast;
+
+    ACT_ID     MOV_ID ROLE
+---------- ---------- --------------------------------------------------
+       101        901 John Scottie Ferguson
+       102        902 Miss Giddens
+       103        903 T. E. Lawrence
+       104        904 Michael
+       105        905 Antonio Salieri
+       106        906 Rick Deckard
+       107        907 Alice Harford
+       108        908 McManus
+       109        909 J. J. Gittes
+       110        910 Eddie Adams
+       111        911 Alvy Singer
+       112        912 San
+       113        913 Adny Dufresne
+       114        914 Lester Burnham
+       115        915 Rose DeWitt Bukater
+       116        916 Sean Maguire
+       117        917 Ed
+       118        918 Renton
+       119        919 Alfred Borden
+       120        920 Elizabeth Darko
+       121        921 Older Jamal
+       122        922 Ripley
+       114        923 Bobby Darin
+       124        921 Javed
+       124        928 David Shaw
+
+25 rows selected.
