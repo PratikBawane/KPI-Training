@@ -1,0 +1,114 @@
+1. Find the most frequent flight path (orign and desitnation combination)
+SQL> select max(origin) from flight_weather where origin=(select max(dest) from flight_weather);
+
+MAX(ORIGIN
+----------
+TYS
+
+
+2. Find Top 5 destinations airports with most delays
+SQL> select * from(select dest, max(arr_delay) from flight_weather group by dest order by 2 desc) where rownum<=5;
+
+DEST       MAX(ARR_DELAY)
+---------- --------------
+MCI                    80
+ROC                    80
+PHL                    80
+AUS                    80
+CMH                    80
+
+
+3. Find the Origin and Destination path with most delays
+SQL> select distinct(dest) from flight_weather having max(arr_delay) = (select max(arr_delay) from flight_weather) group by dest;
+
+DEST
+----------
+MCI
+PHL
+AUS
+CMH
+ROC
+MCO
+ELP
+ISP
+RNO
+TUS
+SAV
+LAN
+PWM
+ORF
+SAN
+SLC
+BUF
+LBB
+AMA
+EWR
+RIC
+MSP
+GSO
+CVG
+MIA
+GRR
+BTV
+PBI
+BNA
+ABQ
+PIT
+BOI
+LGA
+MEM
+MKE
+IND
+IAD
+SEA
+TUL
+DTW
+IAH
+DSM
+DFW
+FSD
+DCA
+FNT
+COS
+BWI
+LAS
+BHM
+BDL
+DEN
+PDX
+SAT
+STL
+LIT
+JFK
+BOS
+DAB
+FAT
+TPA
+LAX
+MSY
+RDU
+CLT
+CHS
+OMA
+JAX
+ALB
+CLE
+GEG
+PHX
+PVD
+SDF
+SFO
+DAL
+OKC
+ORD
+ATL
+SYR
+
+80 rows selected.
+
+4. Find the Avg delay by country and carrier
+SQL> select avg(arr_delay) from flight_weather where origin in (select code from airport group by country, carriers, code);
+
+AVG(ARR_DELAY)
+--------------
+    2.57879155
