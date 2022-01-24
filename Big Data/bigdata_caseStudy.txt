@@ -1,0 +1,612 @@
+*Scenario 1
+1) Load the given textfile in HDFS.
+[cloudera@quickstart ~]$ hdfs dfs -put /home/cloudera/bigdata/words.txt /user/cloudera
+[cloudera@quickstart ~]$ hdfs dfs -ls /user/cloudera
+Found 27 items
+drwx------   - cloudera cloudera          0 2022-01-13 03:00 /user/cloudera/.Trash
+drwx------   - cloudera cloudera          0 2022-01-21 19:50 /user/cloudera/.staging
+drwxr-xr-x   - cloudera cloudera          0 2020-05-23 23:09 /user/cloudera/avro_json_write
+drwxr-xr-x   - cloudera cloudera          0 2020-05-22 22:15 /user/cloudera/csv_dir
+drwxr-xr-x   - cloudera cloudera          0 2022-01-11 00:59 /user/cloudera/emp
+drwxr-xr-x   - cloudera cloudera          0 2022-01-21 03:03 /user/cloudera/groceries
+drwxr-xr-x   - cloudera cloudera          0 2022-01-07 02:09 /user/cloudera/hbase
+drwxr-xr-x   - cloudera cloudera          0 2020-06-04 08:36 /user/cloudera/import_avro
+drwxr-xr-x   - cloudera cloudera          0 2020-05-23 22:56 /user/cloudera/json_avro_1
+drwxr-xr-x   - cloudera cloudera          0 2020-05-22 22:13 /user/cloudera/json_dir
+drwxr-xr-x   - cloudera cloudera          0 2020-05-23 22:39 /user/cloudera/json_orc
+drwxr-xr-x   - cloudera cloudera          0 2020-05-23 22:56 /user/cloudera/json_orc_1
+drwxr-xr-x   - cloudera cloudera          0 2020-05-23 22:38 /user/cloudera/json_parquet
+drwxr-xr-x   - cloudera cloudera          0 2020-05-23 22:56 /user/cloudera/json_parquet_1
+drwxr-xr-x   - cloudera cloudera          0 2022-01-20 22:35 /user/cloudera/kpifolder
+-rw-r--r--   1 cloudera cloudera       1173 2022-01-20 22:42 /user/cloudera/mydir
+drwxr-xr-x   - cloudera cloudera          0 2020-05-22 22:11 /user/cloudera/orc_dir
+drwxr-xr-x   - cloudera cloudera          0 2022-01-11 22:50 /user/cloudera/output
+drwxr-xr-x   - cloudera cloudera          0 2020-05-22 22:14 /user/cloudera/parquet_dir
+drwxr-xr-x   - cloudera cloudera          0 2020-05-23 23:11 /user/cloudera/parquet_json_write
+drwxr-xr-x   - cloudera cloudera          0 2020-05-22 13:40 /user/cloudera/part_dir
+drwxr-xr-x   - cloudera cloudera          0 2020-05-22 14:01 /user/cloudera/part_dir2
+-rw-r--r--   1 cloudera cloudera         44 2022-01-09 21:54 /user/cloudera/sample_kpi.csv
+-rw-r--r--   1 cloudera cloudera         35 2022-01-05 22:26 /user/cloudera/sample_kpi.txt
+drwxr-xr-x   - cloudera cloudera          0 2022-01-11 01:18 /user/cloudera/student
+-rw-r--r--   1 cloudera cloudera       1173 2022-01-21 21:55 /user/cloudera/words.txt
+drwxr-xr-x   - cloudera cloudera          0 2020-06-04 09:04 /user/cloudera/zeyo_dir
+
+
+
+2) Perform WordCount on the text file using mapreduce.
+[cloudera@quickstart ~]$ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /user/cloudera/words.txt /user/cloudera/output
+22/01/21 22:06:07 INFO client.RMProxy: Connecting to ResourceManager at quickstart.cloudera/127.0.0.1:8032
+22/01/21 22:06:08 WARN security.UserGroupInformation: PriviledgedActionException as:cloudera (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output already exists
+org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output already exists
+	at org.apache.hadoop.mapreduce.lib.output.FileOutputFormat.checkOutputSpecs(FileOutputFormat.java:146)
+	at org.apache.hadoop.mapreduce.JobSubmitter.checkSpecs(JobSubmitter.java:270)
+	at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:143)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1307)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1304)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:422)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1917)
+	at org.apache.hadoop.mapreduce.Job.submit(Job.java:1304)
+	at org.apache.hadoop.mapreduce.Job.waitForCompletion(Job.java:1325)
+	at org.apache.hadoop.examples.WordCount.main(WordCount.java:87)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.hadoop.util.ProgramDriver$ProgramDescription.invoke(ProgramDriver.java:71)
+	at org.apache.hadoop.util.ProgramDriver.run(ProgramDriver.java:144)
+	at org.apache.hadoop.examples.ExampleDriver.main(ExampleDriver.java:74)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+[cloudera@quickstart ~]$ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /user/cloudera/words.txt /user/cloudera/output2
+22/01/21 22:06:26 INFO client.RMProxy: Connecting to ResourceManager at quickstart.cloudera/127.0.0.1:8032
+22/01/21 22:06:29 INFO input.FileInputFormat: Total input paths to process : 1
+22/01/21 22:06:29 INFO mapreduce.JobSubmitter: number of splits:1
+22/01/21 22:06:30 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1642829161573_0001
+22/01/21 22:06:32 INFO impl.YarnClientImpl: Submitted application application_1642829161573_0001
+22/01/21 22:06:32 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1642829161573_0001/
+22/01/21 22:06:32 INFO mapreduce.Job: Running job: job_1642829161573_0001
+22/01/21 22:07:00 INFO mapreduce.Job: Job job_1642829161573_0001 running in uber mode : false
+22/01/21 22:07:00 INFO mapreduce.Job:  map 0% reduce 0%
+22/01/21 22:07:32 INFO mapreduce.Job:  map 100% reduce 0%
+22/01/21 22:07:51 INFO mapreduce.Job:  map 100% reduce 100%
+22/01/21 22:07:52 INFO mapreduce.Job: Job job_1642829161573_0001 completed successfully
+22/01/21 22:07:53 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=1261
+		FILE: Number of bytes written=297413
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=1293
+		HDFS: Number of bytes written=1143
+		HDFS: Number of read operations=6
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=1
+		Launched reduce tasks=1
+		Data-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=14051840
+		Total time spent by all reduces in occupied slots (ms)=8226816
+		Total time spent by all map tasks (ms)=27445
+		Total time spent by all reduce tasks (ms)=16068
+		Total vcore-milliseconds taken by all map tasks=27445
+		Total vcore-milliseconds taken by all reduce tasks=16068
+		Total megabyte-milliseconds taken by all map tasks=14051840
+		Total megabyte-milliseconds taken by all reduce tasks=8226816
+	Map-Reduce Framework
+		Map input records=9
+		Map output records=203
+		Map output bytes=1980
+		Map output materialized bytes=1257
+		Input split bytes=120
+		Combine input records=203
+		Combine output records=134
+		Reduce input groups=134
+		Reduce shuffle bytes=1257
+		Reduce input records=134
+		Reduce output records=134
+		Spilled Records=268
+		Shuffled Maps =1
+		Failed Shuffles=0
+		Merged Map outputs=1
+		GC time elapsed (ms)=960
+		CPU time spent (ms)=3960
+		Physical memory (bytes) snapshot=255913984
+		Virtual memory (bytes) snapshot=3929698304
+		Total committed heap usage (bytes)=81788928
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=1173
+	File Output Format Counters 
+		Bytes Written=1143
+[cloudera@quickstart ~]$ hadoop dfs -ls /user/cloudera/output2
+DEPRECATED: Use of this script to execute hdfs command is deprecated.
+Instead use the hdfs command for it.
+
+Found 2 items
+-rw-r--r--   1 cloudera cloudera          0 2022-01-21 22:07 /user/cloudera/output2/_SUCCESS
+-rw-r--r--   1 cloudera cloudera       1143 2022-01-21 22:07 /user/cloudera/output2/part-r-00000
+[cloudera@quickstart ~]$ hadoop dfs -ls /user/cloudera/output2/part-r-00000
+DEPRECATED: Use of this script to execute hdfs command is deprecated.
+Instead use the hdfs command for it.
+
+-rw-r--r--   1 cloudera cloudera       1143 2022-01-21 22:07 /user/cloudera/output2/part-r-00000
+[cloudera@quickstart ~]$ hadoop dfs -cat /user/cloudera/output2/part-r-00000
+DEPRECATED: Use of this script to execute hdfs command is deprecated.
+Instead use the hdfs command for it.
+
+A	1
+Although	1
+Besides	1
+Bill	1
+Computer	2
+Gates	1
+I	3
+Information	1
+It	1
+It's	1
+Jobs	1
+LOT	1
+Mr.Cringely	1
+Personal	2
+Phone	1
+Silicon	1
+Smart	1
+Steve	2
+Tablet.	1
+Technology	1
+The	2
+This	1
+Today	1
+Valley	1
+We	1
+Why	1
+Wozniak	1
+a	1
+about	1
+actually	1
+and	11
+are	1
+became	1
+beloved	1
+book	4
+book,	1
+by	1
+can	2
+changing,	1
+companies	2
+company	1
+confess	1
+created	1
+days.	1
+declining,	1
+did	1
+early	1
+everyday	1
+examined	1
+experience	1
+facts	1
+failed.	1
+fall	1
+fights,	1
+focus	1
+from	2
+fun	1
+gave	1
+get	1
+happening	1
+high	2
+hilarious.	1
+history	2
+how	4
+ideas	1
+in	6
+industry	1
+industry,	2
+industry.	1
+inspired	1
+is	7
+it	3
+it,	1
+just	1
+laughed	1
+learn	1
+lessons	1
+like	2
+lively	1
+loss	1
+make	1
+many	1
+more	1
+most	1
+new	1
+now,	1
+of	3
+old	1
+opinion	1
+or	1
+part,	1
+past	1
+patterns	1
+people	1
+people,	1
+person	1
+pleasant	1
+product	1
+provided	1
+read	1
+reading	1
+reading.	1
+richest	1
+rise	1
+say	1
+shifting	1
+should	1
+silhouettes	1
+similar	1
+still	1
+struggles,	1
+succeeded,	1
+success.	1
+tech	2
+that	2
+the	18
+things.	1
+this	4
+this.	1
+through	1
+to	3
+today's	1
+too.	1
+truly	1
+understand	1
+used	1
+vivid	1
+was	1
+went	1
+what	2
+why	1
+winning	1
+world,	1
+world.	1
+
+
+
+
+3) Create a HBase table ‘Census’ using java with Column Family as ‘Personal’, ‘Professional’.
+hbase(main):003:0> create 'census', 'personel', 'professional'
+0 row(s) in 2.5470 seconds
+
+hbase(main):002:0> describe 'census'
+Table census is ENABLED                                                                                                                                                                                             
+census                                                                                                                                                                                                              
+COLUMN FAMILIES DESCRIPTION                                                                                                                                                                                         
+{NAME => 'personel', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', BLOCKC
+ACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                                                                                                                     
+{NAME => 'professional', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', BL
+OCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                                                                                                                 
+2 row(s) in 0.4000 seconds
+
+
+
+
+4) Put 2 rows in the Census table each having columns name and gender in personal and occupation in professional  and display data using HBase shell.
+hbase(main):013:0> put 'census', '1', 'professional:occupation', 'Manager'
+0 row(s) in 0.0090 seconds
+
+hbase(main):014:0> scan 'census'
+ROW                                                    COLUMN+CELL                                                                                                                                                  
+ 1                                                     column=personel:name, gender, timestamp=1642760755073, value=Emily, Female                                                                                   
+ 1                                                     column=professional:occupation, timestamp=1642760824566, value=Manager                                                                                       
+1 row(s) in 0.0130 seconds
+
+hbase(main):015:0> put 'census', '2', 'personel:name, gender', 'Henry, Female'
+0 row(s) in 0.0120 seconds
+
+hbase(main):016:0> put 'census', '2', 'professional:occupation', 'Analyst'
+0 row(s) in 0.0130 seconds
+
+hbase(main):017:0> scan 'census'
+ROW                                                    COLUMN+CELL                                                                                                                                                  
+ 1                                                     column=personel:name, gender, timestamp=1642760755073, value=Emily, Female                                                                                   
+ 1                                                     column=professional:occupation, timestamp=1642760824566, value=Manager                                                                                       
+ 2                                                     column=personel:name, gender, timestamp=1642760890922, value=Henry, Female                                                                                   
+ 2                                                     column=professional:occupation, timestamp=1642760909131, value=Analyst                                                                                       
+2 row(s) in 0.0170 seconds
+
+
+
+5) Load the groceries data file using Hbase, Hive, Sqoop with a schema and describe and display the data.
+*Hbase==>>
+[cloudera@quickstart ~]$ hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.separator="," -Dimporttsv.columns="HBASE_ROW_KEY,details:id,details:city,details:grocery,details:buy_date,details:units" groceries /user/cloudera/groceries.csv
+OpenJDK 64-Bit Server VM warning: Using incremental CMS is deprecated and will likely be removed in a future release
+22/01/22 01:28:56 INFO zookeeper.RecoverableZooKeeper: Process identifier=hconnection-0x544fa968 connecting to ZooKeeper ensemble=quickstart.cloudera:2181
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.5-cdh5.13.0--1, built on 10/04/2017 18:04 GMT
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:host.name=quickstart.cloudera
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:java.version=1.8.0_252
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:java.vendor=Oracle Corporation
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el6_10.x86_64/jre
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:java.class.path=/usr/lib/hbase/bin/../conf:/usr/lib/jvm/java-1.8.0-openjdk.x86_64/lib/tools.jar:/usr/lib/hbase/bin/..:/usr/lib/hbase/bin/../lib/activation-1.1.jar:/usr/lib/hbase/bin/../lib/apacheds-i18n-2.0.0-M15.jar:/usr/lib/hbase/bin/../lib/apacheds-kerberos-codec-2.0.0-M15.jar:/usr/lib/hbase/bin/../lib/api-asn1-api-1.0.0-M20.jar:/usr/lib/hbase/bin/../lib/api-util-1.0.0-M20.jar:/usr/lib/hbase/bin/../lib/asm-3.2.jar:/usr/lib/hbase/bin/../lib/avro.jar:/usr/lib/hbase/bin/../lib/aws-java-sdk-bundle-1.11.134.jar:/usr/lib/hbase/bin/../lib/commons-beanutils-1.9.2.jar:/usr/lib/hbase/bin/../lib/commons-beanutils-core-1.8.0.jar:/usr/lib/hbase/bin/../lib/commons-cli-1.2.jar:/usr/lib/hbase/bin/../lib/commons-codec-1.9.jar:/usr/lib/hbase/bin/../lib/commons-collections-3.2.2.jar:/usr/lib/hbase/bin/../lib/commons-compress-1.4.1.jar:/usr/lib/hbase/bin/../lib/commons-configuration-1.6.jar:/usr/lib/hbase/bin/../lib/commons-daemon-1.0.13.jar:/usr/lib/hbase/bin/../lib/commons-digester-1.8.jar:/usr/lib/hbase/bin/../lib/commons-el-1.0.jar:/usr/lib/hbase/bin/../lib/commons-httpclient-3.1.jar:/usr/lib/hbase/bin/../lib/commons-io-2.4.jar:/usr/lib/hbase/bin/../lib/commons-lang-2.6.jar:/usr/lib/hbase/bin/../lib/commons-logging-1.2.jar:/usr/lib/hbase/bin/../lib/commons-math-2.1.jar:/usr/lib/hbase/bin/../lib/commons-math3-3.1.1.jar:/usr/lib/hbase/bin/../lib/commons-net-3.1.jar:/usr/lib/hbase/bin/../lib/core-3.1.1.jar:/usr/lib/hbase/bin/../lib/curator-client-2.7.1.jar:/usr/lib/hbase/bin/../lib/curator-framework-2.7.1.jar:/usr/lib/hbase/bin/../lib/curator-recipes-2.7.1.jar:/usr/lib/hbase/bin/../lib/disruptor-3.3.0.jar:/usr/lib/hbase/bin/../lib/findbugs-annotations-1.3.9-1.jar:/usr/lib/hbase/bin/../lib/gson-2.2.4.jar:/usr/lib/hbase/bin/../lib/guava-12.0.1.jar:/usr/lib/hbase/bin/../lib/hamcrest-core-1.3.jar:/usr/lib/hbase/bin/../lib/hbase-annotations-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-annotations-1.2.0-cdh5.13.0-tests.jar:/usr/lib/hbase/bin/../lib/hbase-client-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-common-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-common-1.2.0-cdh5.13.0-tests.jar:/usr/lib/hbase/bin/../lib/hbase-examples-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-external-blockcache-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-hadoop2-compat-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-hadoop2-compat-1.2.0-cdh5.13.0-tests.jar:/usr/lib/hbase/bin/../lib/hbase-hadoop-compat-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-hadoop-compat-1.2.0-cdh5.13.0-tests.jar:/usr/lib/hbase/bin/../lib/hbase-it-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-it-1.2.0-cdh5.13.0-tests.jar:/usr/lib/hbase/bin/../lib/hbase-prefix-tree-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-procedure-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-protocol-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-resource-bundle-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-rest-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-rsgroup-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-rsgroup-1.2.0-cdh5.13.0-tests.jar:/usr/lib/hbase/bin/../lib/hbase-server-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-server-1.2.0-cdh5.13.0-tests.jar:/usr/lib/hbase/bin/../lib/hbase-shell-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-spark-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/hbase-thrift-1.2.0-cdh5.13.0.jar:/usr/lib/hbase/bin/../lib/high-scale-lib-1.1.1.jar:/usr/lib/hbase/bin/../lib/hsqldb-1.8.0.10.jar:/usr/lib/hbase/bin/../lib/htrace-core-3.2.0-incubating.jar:/usr/lib/hbase/bin/../lib/htrace-core4-4.0.1-incubating.jar:/usr/lib/hbase/bin/../lib/htrace-core.jar:/usr/lib/hbase/bin/../lib/httpclient-4.2.5.jar:/usr/lib/hbase/bin/../lib/httpcore-4.2.5.jar:/usr/lib/hbase/bin/../lib/jackson-annotations-2.2.3.jar:/usr/lib/hbase/bin/../lib/jackson-core-2.2.3.jar:/usr/lib/hbase/bin/../lib/jackson-core-asl-1.8.8.jar:/usr/lib/hbase/bin/../lib/jackson-databind-2.2.3.jar:/usr/lib/hbase/bin/../lib/jackson-jaxrs-1.8.8.jar:/usr/lib/hbase/bin/../lib/jackson-mapper-asl-1.8.8.jar:/usr/lib/hbase/bin/../lib/jackson-xc-1.8.8.jar:/usr/lib/hbase/bin/../lib/jamon-runtime-2.4.1.jar:/usr/lib/hbase/bin/../lib/jasper-compiler-5.5.23.jar:/usr/lib/hbase/bin/../lib/jasper-runtime-5.5.23.jar:/usr/lib/hbase/bin/../lib/java-xmlbuilder-0.4.jar:/usr/lib/hbase/bin/../lib/jaxb-api-2.1.jar:/usr/lib/hbase/bin/../lib/jaxb-impl-2.2.3-1.jar:/usr/lib/hbase/bin/../lib/jcodings-1.0.8.jar:/usr/lib/hbase/bin/../lib/jersey-client-1.9.jar:/usr/lib/hbase/bin/../lib/jersey-core-1.9.jar:/usr/lib/hbase/bin/../lib/jersey-json-1.9.jar:/usr/lib/hbase/bin/../lib/jersey-server-1.9.jar:/usr/lib/hbase/bin/../lib/jets3t-0.9.0.jar:/usr/lib/hbase/bin/../lib/jettison-1.3.3.jar:/usr/lib/hbase/bin/../lib/jetty-6.1.26.cloudera.4.jar:/usr/lib/hbase/bin/../lib/jetty-sslengine-6.1.26.cloudera.4.jar:/usr/lib/hbase/bin/../lib/jetty-util-6.1.26.cloudera.4.jar:/usr/lib/hbase/bin/../lib/joni-2.1.2.jar:/usr/lib/hbase/bin/../lib/jruby-cloudera-1.0.0.jar:/usr/lib/hbase/bin/../lib/jsch-0.1.42.jar:/usr/lib/hbase/bin/../lib/jsp-2.1-6.1.14.jar:/usr/lib/hbase/bin/../lib/jsp-api-2.1-6.1.14.jar:/usr/lib/hbase/bin/../lib/jsp-api-2.1.jar:/usr/lib/hbase/bin/../lib/junit-4.12.jar:/usr/lib/hbase/bin/../lib/leveldbjni-all-1.8.jar:/usr/lib/hbase/bin/../lib/libthrift-0.9.3.jar:/usr/lib/hbase/bin/../lib/log4j-1.2.17.jar:/usr/lib/hbase/bin/../lib/metrics-core-2.2.0.jar:/usr/lib/hbase/bin/../lib/netty-all-4.0.23.Final.jar:/usr/lib/hbase/bin/../lib/paranamer-2.3.jar:/usr/lib/hbase/bin/../lib/protobuf-java-2.5.0.jar:/usr/lib/hbase/bin/../lib/servlet-api-2.5-6.1.14.jar:/usr/lib/hbase/bin/../lib/servlet-api-2.5.jar:/usr/lib/hbase/bin/../lib/slf4j-api-1.7.5.jar:/usr/lib/hbase/bin/../lib/slf4j-log4j12.jar:/usr/lib/hbase/bin/../lib/snappy-java-1.0.4.1.jar:/usr/lib/hbase/bin/../lib/spymemcached-2.11.6.jar:/usr/lib/hbase/bin/../lib/xmlenc-0.52.jar:/usr/lib/hbase/bin/../lib/xz-1.0.jar:/usr/lib/hbase/bin/../lib/zookeeper.jar:/etc/hadoop/conf:/usr/lib/hadoop/lib/aws-java-sdk-bundle-1.11.134.jar:/usr/lib/hadoop/lib/commons-configuration-1.6.jar:/usr/lib/hadoop/lib/netty-3.10.5.Final.jar:/usr/lib/hadoop/lib/apacheds-kerberos-codec-2.0.0-M15.jar:/usr/lib/hadoop/lib/activation-1.1.jar:/usr/lib/hadoop/lib/jackson-jaxrs-1.8.8.jar:/usr/lib/hadoop/lib/log4j-1.2.17.jar:/usr/lib/hadoop/lib/httpclient-4.2.5.jar:/usr/lib/hadoop/lib/snappy-java-1.0.4.1.jar:/usr/lib/hadoop/lib/jersey-core-1.9.jar:/usr/lib/hadoop/lib/commons-httpclient-3.1.jar:/usr/lib/hadoop/lib/api-util-1.0.0-M20.jar:/usr/lib/hadoop/lib/jsch-0.1.42.jar:/usr/lib/hadoop/lib/commons-logging-1.1.3.jar:/usr/lib/hadoop/lib/stax-api-1.0-2.jar:/usr/lib/hadoop/lib/hamcrest-core-1.3.jar:/usr/lib/hadoop/lib/paranamer-2.3.jar:/usr/lib/hadoop/lib/junit-4.11.jar:/usr/lib/hadoop/lib/httpcore-4.2.5.jar:/usr/lib/hadoop/lib/jetty-6.1.26.cloudera.4.jar:/usr/lib/hadoop/lib/avro.jar:/usr/lib/hadoop/lib/commons-beanutils-core-1.8.0.jar:/usr/lib/hadoop/lib/gson-2.2.4.jar:/usr/lib/hadoop/lib/commons-collections-3.2.2.jar:/usr/lib/hadoop/lib/servlet-api-2.5.jar:/usr/lib/hadoop/lib/jersey-json-1.9.jar:/usr/lib/hadoop/lib/commons-beanutils-1.9.2.jar:/usr/lib/hadoop/lib/commons-math3-3.1.1.jar:/usr/lib/hadoop/lib/commons-digester-1.8.jar:/usr/lib/hadoop/lib/api-asn1-api-1.0.0-M20.jar:/usr/lib/hadoop/lib/commons-compress-1.4.1.jar:/usr/lib/hadoop/lib/jets3t-0.9.0.jar:/usr/lib/hadoop/lib/commons-el-1.0.jar:/usr/lib/hadoop/lib/xz-1.0.jar:/usr/lib/hadoop/lib/jasper-runtime-5.5.23.jar:/usr/lib/hadoop/lib/commons-codec-1.4.jar:/usr/lib/hadoop/lib/commons-net-3.1.jar:/usr/lib/hadoop/lib/jersey-server-1.9.jar:/usr/lib/hadoop/lib/jettison-1.1.jar:/usr/lib/hadoop/lib/asm-3.2.jar:/usr/lib/hadoop/lib/jsr305-3.0.0.jar:/usr/lib/hadoop/lib/commons-lang-2.6.jar:/usr/lib/hadoop/lib/jetty-util-6.1.26.cloudera.4.jar:/usr/lib/hadoop/lib/mockito-all-1.8.5.jar:/usr/lib/hadoop/lib/jasper-compiler-5.5.23.jar:/usr/lib/hadoop/lib/protobuf-java-2.5.0.jar:/usr/lib/hadoop/lib/guava-11.0.2.jar:/usr/lib/hadoop/lib/commons-io-2.4.jar:/usr/lib/hadoop/lib/slf4j-log4j12.jar:/usr/lib/hadoop/lib/commons-cli-1.2.jar:/usr/lib/hadoop/lib/curator-framework-2.7.1.jar:/usr/lib/hadoop/lib/curator-client-2.7.1.jar:/usr/lib/hadoop/lib/jaxb-api-2.2.2.jar:/usr/lib/hadoop/lib/slf4j-api-1.7.5.jar:/usr/lib/hadoop/lib/hue-plugins-3.9.0-cdh5.13.0.jar:/usr/lib/hadoop/lib/xmlenc-0.52.jar:/usr/lib/hadoop/lib/zookeeper.jar:/usr/lib/hadoop/lib/jaxb-impl-2.2.3-1.jar:/usr/lib/hadoop/lib/java-xmlbuilder-0.4.jar:/usr/lib/hadoop/lib/curator-recipes-2.7.1.jar:/usr/lib/hadoop/lib/logredactor-1.0.3.jar:/usr/lib/hadoop/lib/htrace-core4-4.0.1-incubating.jar:/usr/lib/hadoop/lib/jsp-api-2.1.jar:/usr/lib/hadoop/lib/apacheds-i18n-2.0.0-M15.jar:/usr/lib/hadoop/lib/azure-data-lake-store-sdk-2.2.3.jar:/usr/lib/hadoop/lib/jackson-xc-1.8.8.jar:/usr/lib/hadoop/.//parquet-test-hadoop2.jar:/usr/lib/hadoop/.//parquet-generator.jar:/usr/lib/hadoop/.//parquet-pig.jar:/usr/lib/hadoop/.//parquet-jackson.jar:/usr/lib/hadoop/.//parquet-tools.jar:/usr/lib/hadoop/.//parquet-protobuf.jar:/usr/lib/hadoop/.//parquet-format-javadoc.jar:/usr/lib/hadoop/.//hadoop-aws-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop/.//hadoop-common-2.6.0-cdh5.13.0-tests.jar:/usr/lib/hadoop/.//parquet-hadoop-bundle.jar:/usr/lib/hadoop/.//hadoop-aws.jar:/usr/lib/hadoop/.//parquet-format-sources.jar:/usr/lib/hadoop/.//parquet-thrift.jar:/usr/lib/hadoop/.//parquet-scala_2.10.jar:/usr/lib/hadoop/.//parquet-format.jar:/usr/lib/hadoop/.//parquet-cascading.jar:/usr/lib/hadoop/.//hadoop-common-tests.jar:/usr/lib/hadoop/.//parquet-scrooge_2.10.jar:/usr/lib/hadoop/.//parquet-column.jar:/usr/lib/hadoop/.//parquet-hadoop.jar:/usr/lib/hadoop/.//parquet-common.jar:/usr/lib/hadoop/.//hadoop-annotations.jar:/usr/lib/hadoop/.//hadoop-azure-datalake.jar:/usr/lib/hadoop/.//hadoop-nfs-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop/.//hadoop-annotations-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop/.//hadoop-auth-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop/.//parquet-pig-bundle.jar:/usr/lib/hadoop/.//hadoop-nfs.jar:/usr/lib/hadoop/.//hadoop-common-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop/.//parquet-avro.jar:/usr/lib/hadoop/.//hadoop-azure-datalake-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop/.//parquet-encoding.jar:/usr/lib/hadoop/.//hadoop-auth.jar:/usr/lib/hadoop/.//hadoop-common.jar:/usr/lib/hadoop-hdfs/./:/usr/lib/hadoop-hdfs/lib/netty-3.10.5.Final.jar:/usr/lib/hadoop-hdfs/lib/log4j-1.2.17.jar:/usr/lib/hadoop-hdfs/lib/jersey-core-1.9.jar:/usr/lib/hadoop-hdfs/lib/xercesImpl-2.9.1.jar:/usr/lib/hadoop-hdfs/lib/commons-logging-1.1.3.jar:/usr/lib/hadoop-hdfs/lib/commons-daemon-1.0.13.jar:/usr/lib/hadoop-hdfs/lib/jackson-core-asl-1.8.8.jar:/usr/lib/hadoop-hdfs/lib/jetty-6.1.26.cloudera.4.jar:/usr/lib/hadoop-hdfs/lib/servlet-api-2.5.jar:/usr/lib/hadoop-hdfs/lib/commons-el-1.0.jar:/usr/lib/hadoop-hdfs/lib/jasper-runtime-5.5.23.jar:/usr/lib/hadoop-hdfs/lib/xml-apis-1.3.04.jar:/usr/lib/hadoop-hdfs/lib/commons-codec-1.4.jar:/usr/lib/hadoop-hdfs/lib/jersey-server-1.9.jar:/usr/lib/hadoop-hdfs/lib/asm-3.2.jar:/usr/lib/hadoop-hdfs/lib/jsr305-3.0.0.jar:/usr/lib/hadoop-hdfs/lib/commons-lang-2.6.jar:/usr/lib/hadoop-hdfs/lib/jetty-util-6.1.26.cloudera.4.jar:/usr/lib/hadoop-hdfs/lib/leveldbjni-all-1.8.jar:/usr/lib/hadoop-hdfs/lib/protobuf-java-2.5.0.jar:/usr/lib/hadoop-hdfs/lib/guava-11.0.2.jar:/usr/lib/hadoop-hdfs/lib/commons-io-2.4.jar:/usr/lib/hadoop-hdfs/lib/commons-cli-1.2.jar:/usr/lib/hadoop-hdfs/lib/jackson-mapper-asl-1.8.8.jar:/usr/lib/hadoop-hdfs/lib/xmlenc-0.52.jar:/usr/lib/hadoop-hdfs/lib/htrace-core4-4.0.1-incubating.jar:/usr/lib/hadoop-hdfs/lib/jsp-api-2.1.jar:/usr/lib/hadoop-hdfs/.//hadoop-hdfs.jar:/usr/lib/hadoop-hdfs/.//hadoop-hdfs-nfs.jar:/usr/lib/hadoop-hdfs/.//hadoop-hdfs-tests.jar:/usr/lib/hadoop-hdfs/.//hadoop-hdfs-nfs-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-hdfs/.//hadoop-hdfs-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-hdfs/.//hadoop-hdfs-2.6.0-cdh5.13.0-tests.jar:/usr/lib/hadoop-yarn/lib/aopalliance-1.0.jar:/usr/lib/hadoop-yarn/lib/activation-1.1.jar:/usr/lib/hadoop-yarn/lib/jackson-jaxrs-1.8.8.jar:/usr/lib/hadoop-yarn/lib/log4j-1.2.17.jar:/usr/lib/hadoop-yarn/lib/jersey-client-1.9.jar:/usr/lib/hadoop-yarn/lib/jersey-core-1.9.jar:/usr/lib/hadoop-yarn/lib/jersey-guice-1.9.jar:/usr/lib/hadoop-yarn/lib/commons-logging-1.1.3.jar:/usr/lib/hadoop-yarn/lib/stax-api-1.0-2.jar:/usr/lib/hadoop-yarn/lib/jackson-core-asl-1.8.8.jar:/usr/lib/hadoop-yarn/lib/spark-1.6.0-cdh5.13.0-yarn-shuffle.jar:/usr/lib/hadoop-yarn/lib/jetty-6.1.26.cloudera.4.jar:/usr/lib/hadoop-yarn/lib/commons-collections-3.2.2.jar:/usr/lib/hadoop-yarn/lib/servlet-api-2.5.jar:/usr/lib/hadoop-yarn/lib/jersey-json-1.9.jar:/usr/lib/hadoop-yarn/lib/commons-compress-1.4.1.jar:/usr/lib/hadoop-yarn/lib/xz-1.0.jar:/usr/lib/hadoop-yarn/lib/jline-2.11.jar:/usr/lib/hadoop-yarn/lib/commons-codec-1.4.jar:/usr/lib/hadoop-yarn/lib/jersey-server-1.9.jar:/usr/lib/hadoop-yarn/lib/jettison-1.1.jar:/usr/lib/hadoop-yarn/lib/asm-3.2.jar:/usr/lib/hadoop-yarn/lib/jsr305-3.0.0.jar:/usr/lib/hadoop-yarn/lib/commons-lang-2.6.jar:/usr/lib/hadoop-yarn/lib/jetty-util-6.1.26.cloudera.4.jar:/usr/lib/hadoop-yarn/lib/guice-servlet-3.0.jar:/usr/lib/hadoop-yarn/lib/leveldbjni-all-1.8.jar:/usr/lib/hadoop-yarn/lib/protobuf-java-2.5.0.jar:/usr/lib/hadoop-yarn/lib/guava-11.0.2.jar:/usr/lib/hadoop-yarn/lib/commons-io-2.4.jar:/usr/lib/hadoop-yarn/lib/commons-cli-1.2.jar:/usr/lib/hadoop-yarn/lib/jaxb-api-2.2.2.jar:/usr/lib/hadoop-yarn/lib/javax.inject-1.jar:/usr/lib/hadoop-yarn/lib/spark-yarn-shuffle.jar:/usr/lib/hadoop-yarn/lib/jackson-mapper-asl-1.8.8.jar:/usr/lib/hadoop-yarn/lib/zookeeper.jar:/usr/lib/hadoop-yarn/lib/jaxb-impl-2.2.3-1.jar:/usr/lib/hadoop-yarn/lib/guice-3.0.jar:/usr/lib/hadoop-yarn/lib/jackson-xc-1.8.8.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-common.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-applications-unmanaged-am-launcher.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-nodemanager-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-tests-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-applications-unmanaged-am-launcher-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-resourcemanager-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-api-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-client.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-web-proxy.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-resourcemanager.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-registry.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-common-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-api.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-client-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-applicationhistoryservice-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-applications-distributedshell-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-registry-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-common-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-applications-distributedshell.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-applicationhistoryservice.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-common.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-web-proxy-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-tests.jar:/usr/lib/hadoop-yarn/.//hadoop-yarn-server-nodemanager.jar:/usr/lib/hadoop-mapreduce/lib/netty-3.10.5.Final.jar:/usr/lib/hadoop-mapreduce/lib/aopalliance-1.0.jar:/usr/lib/hadoop-mapreduce/lib/log4j-1.2.17.jar:/usr/lib/hadoop-mapreduce/lib/snappy-java-1.0.4.1.jar:/usr/lib/hadoop-mapreduce/lib/jersey-core-1.9.jar:/usr/lib/hadoop-mapreduce/lib/jersey-guice-1.9.jar:/usr/lib/hadoop-mapreduce/lib/hamcrest-core-1.3.jar:/usr/lib/hadoop-mapreduce/lib/paranamer-2.3.jar:/usr/lib/hadoop-mapreduce/lib/junit-4.11.jar:/usr/lib/hadoop-mapreduce/lib/jackson-core-asl-1.8.8.jar:/usr/lib/hadoop-mapreduce/lib/avro.jar:/usr/lib/hadoop-mapreduce/lib/commons-compress-1.4.1.jar:/usr/lib/hadoop-mapreduce/lib/xz-1.0.jar:/usr/lib/hadoop-mapreduce/lib/jersey-server-1.9.jar:/usr/lib/hadoop-mapreduce/lib/asm-3.2.jar:/usr/lib/hadoop-mapreduce/lib/guice-servlet-3.0.jar:/usr/lib/hadoop-mapreduce/lib/leveldbjni-all-1.8.jar:/usr/lib/hadoop-mapreduce/lib/protobuf-java-2.5.0.jar:/usr/lib/hadoop-mapreduce/lib/commons-io-2.4.jar:/usr/lib/hadoop-mapreduce/lib/javax.inject-1.jar:/usr/lib/hadoop-mapreduce/lib/jackson-mapper-asl-1.8.8.jar:/usr/lib/hadoop-mapreduce/lib/guice-3.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-openstack-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//commons-configuration-1.6.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-nativetask-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-archives.jar:/usr/lib/hadoop-mapreduce/.//apacheds-kerberos-codec-2.0.0-M15.jar:/usr/lib/hadoop-mapreduce/.//hadoop-datajoin.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-hs.jar:/usr/lib/hadoop-mapreduce/.//activation-1.1.jar:/usr/lib/hadoop-mapreduce/.//jackson-jaxrs-1.8.8.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-core.jar:/usr/lib/hadoop-mapreduce/.//log4j-1.2.17.jar:/usr/lib/hadoop-mapreduce/.//httpclient-4.2.5.jar:/usr/lib/hadoop-mapreduce/.//snappy-java-1.0.4.1.jar:/usr/lib/hadoop-mapreduce/.//okio-1.4.0.jar:/usr/lib/hadoop-mapreduce/.//jersey-core-1.9.jar:/usr/lib/hadoop-mapreduce/.//microsoft-windowsazure-storage-sdk-0.6.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-examples-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//commons-httpclient-3.1.jar:/usr/lib/hadoop-mapreduce/.//api-util-1.0.0-M20.jar:/usr/lib/hadoop-mapreduce/.//jsch-0.1.42.jar:/usr/lib/hadoop-mapreduce/.//hadoop-extras.jar:/usr/lib/hadoop-mapreduce/.//metrics-core-3.0.2.jar:/usr/lib/hadoop-mapreduce/.//commons-logging-1.1.3.jar:/usr/lib/hadoop-mapreduce/.//hadoop-archive-logs-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//stax-api-1.0-2.jar:/usr/lib/hadoop-mapreduce/.//jackson-core-2.2.3.jar:/usr/lib/hadoop-mapreduce/.//hamcrest-core-1.3.jar:/usr/lib/hadoop-mapreduce/.//paranamer-2.3.jar:/usr/lib/hadoop-mapreduce/.//junit-4.11.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-shuffle.jar:/usr/lib/hadoop-mapreduce/.//jackson-core-asl-1.8.8.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-app-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//httpcore-4.2.5.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-core-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//jetty-6.1.26.cloudera.4.jar:/usr/lib/hadoop-mapreduce/.//avro.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-hs-plugins-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//commons-beanutils-core-1.8.0.jar:/usr/lib/hadoop-mapreduce/.//gson-2.2.4.jar:/usr/lib/hadoop-mapreduce/.//commons-collections-3.2.2.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-nativetask.jar:/usr/lib/hadoop-mapreduce/.//servlet-api-2.5.jar:/usr/lib/hadoop-mapreduce/.//okhttp-2.4.0.jar:/usr/lib/hadoop-mapreduce/.//jersey-json-1.9.jar:/usr/lib/hadoop-mapreduce/.//commons-beanutils-1.9.2.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-examples.jar:/usr/lib/hadoop-mapreduce/.//commons-math3-3.1.1.jar:/usr/lib/hadoop-mapreduce/.//commons-digester-1.8.jar:/usr/lib/hadoop-mapreduce/.//hadoop-rumen.jar:/usr/lib/hadoop-mapreduce/.//api-asn1-api-1.0.0-M20.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-hs-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//commons-compress-1.4.1.jar:/usr/lib/hadoop-mapreduce/.//jets3t-0.9.0.jar:/usr/lib/hadoop-mapreduce/.//commons-el-1.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-ant-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//xz-1.0.jar:/usr/lib/hadoop-mapreduce/.//jasper-runtime-5.5.23.jar:/usr/lib/hadoop-mapreduce/.//hadoop-azure-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-openstack.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-shuffle-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//jackson-annotations-2.2.3.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-jobclient.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-jobclient-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//commons-codec-1.4.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-hs-plugins.jar:/usr/lib/hadoop-mapreduce/.//hadoop-gridmix.jar:/usr/lib/hadoop-mapreduce/.//commons-net-3.1.jar:/usr/lib/hadoop-mapreduce/.//hadoop-archives-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//jersey-server-1.9.jar:/usr/lib/hadoop-mapreduce/.//hadoop-distcp.jar:/usr/lib/hadoop-mapreduce/.//hadoop-rumen-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//jettison-1.1.jar:/usr/lib/hadoop-mapreduce/.//asm-3.2.jar:/usr/lib/hadoop-mapreduce/.//jsr305-3.0.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-sls.jar:/usr/lib/hadoop-mapreduce/.//commons-lang-2.6.jar:/usr/lib/hadoop-mapreduce/.//jetty-util-6.1.26.cloudera.4.jar:/usr/lib/hadoop-mapreduce/.//hadoop-auth-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//mockito-all-1.8.5.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-jobclient-2.6.0-cdh5.13.0-tests.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-common.jar:/usr/lib/hadoop-mapreduce/.//jasper-compiler-5.5.23.jar:/usr/lib/hadoop-mapreduce/.//protobuf-java-2.5.0.jar:/usr/lib/hadoop-mapreduce/.//guava-11.0.2.jar:/usr/lib/hadoop-mapreduce/.//commons-io-2.4.jar:/usr/lib/hadoop-mapreduce/.//commons-cli-1.2.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-jobclient-tests.jar:/usr/lib/hadoop-mapreduce/.//hadoop-ant.jar:/usr/lib/hadoop-mapreduce/.//curator-framework-2.7.1.jar:/usr/lib/hadoop-mapreduce/.//hadoop-datajoin-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//curator-client-2.7.1.jar:/usr/lib/hadoop-mapreduce/.//jaxb-api-2.2.2.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-common-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-streaming-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//jackson-mapper-asl-1.8.8.jar:/usr/lib/hadoop-mapreduce/.//xmlenc-0.52.jar:/usr/lib/hadoop-mapreduce/.//hadoop-distcp-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-streaming.jar:/usr/lib/hadoop-mapreduce/.//zookeeper.jar:/usr/lib/hadoop-mapreduce/.//jackson-databind-2.2.3.jar:/usr/lib/hadoop-mapreduce/.//jaxb-impl-2.2.3-1.jar:/usr/lib/hadoop-mapreduce/.//hadoop-archive-logs.jar:/usr/lib/hadoop-mapreduce/.//java-xmlbuilder-0.4.jar:/usr/lib/hadoop-mapreduce/.//curator-recipes-2.7.1.jar:/usr/lib/hadoop-mapreduce/.//hadoop-sls-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-extras-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//htrace-core4-4.0.1-incubating.jar:/usr/lib/hadoop-mapreduce/.//jsp-api-2.1.jar:/usr/lib/hadoop-mapreduce/.//apacheds-i18n-2.0.0-M15.jar:/usr/lib/hadoop-mapreduce/.//hadoop-gridmix-2.6.0-cdh5.13.0.jar:/usr/lib/hadoop-mapreduce/.//hadoop-mapreduce-client-app.jar:/usr/lib/hadoop-mapreduce/.//hadoop-auth.jar:/usr/lib/hadoop-mapreduce/.//jackson-xc-1.8.8.jar:/usr/lib/hadoop-mapreduce/.//hadoop-azure.jar:/etc/hadoop/conf/usr/lib/hadoop/*:/usr/lib/hadoop/lib/aws-java-sdk-bundle-1.11.134.jar:/usr/lib/hadoop/lib/commons-configuration-1.6.jar:/usr/lib/hadoop/lib/netty-3.10.5.Final.jar:/usr/lib/hadoop/lib/apacheds-kerberos-codec-2.0.0-M15.jar:/usr/lib/hadoop/lib/activation-1.1.jar:/usr/lib/hadoop/lib/jackson-jaxrs-1.8.8.jar:/usr/lib/hadoop/lib/log4j-1.2.17.jar:/usr/lib/hadoop/lib/httpclient-4.2.5.jar:/usr/lib/hadoop/lib/snappy-java-1.0.4.1.jar:/usr/lib/hadoop/lib/jersey-core-1.9.jar:/usr/lib/hadoop/lib/commons-httpclient-3.1.jar:/usr/lib/hadoop/lib/api-util-1.0.0-M20.jar:/usr/lib/hadoop/lib/jsch-0.1.42.jar:/usr/lib/hadoop/lib/commons-logging-1.1.3.jar:/usr/lib/hadoop/lib/stax-api-1.0-2.jar:/usr/lib/hadoop/lib/hamcrest-core-1.3.jar:/usr/lib/hadoop/lib/paranamer-2.3.jar:/usr/lib/hadoop/lib/junit-4.11.jar:/usr/lib/hadoop/lib/httpcore-4.2.5.jar:/usr/lib/hadoop/lib/jetty-6.1.26.cloudera.4.jar:/usr/lib/hadoop/lib/avro.jar:/usr/lib/hadoop/lib/commons-beanutils-core-1.8.0.jar:/usr/lib/hadoop/lib/gson-2.2.4.jar:/usr/lib/hadoop/lib/commons-collections-3.2.2.jar:/usr/lib/hadoop/lib/servlet-api-2.5.jar:/usr/lib/hadoop/lib/jersey-json-1.9.jar:/usr/lib/hadoop/lib/commons-beanutils-1.9.2.jar:/usr/lib/hadoop/lib/commons-math3-3.1.1.jar:/usr/lib/hadoop/lib/commons-digester-1.8.jar:/usr/lib/hadoop/lib/api-asn1-api-1.0.0-M20.jar:/usr/lib/hadoop/lib/commons-compress-1.4.1.jar:/usr/lib/hadoop/lib/jets3t-0.9.0.jar:/usr/lib/hadoop/lib/commons-el-1.0.jar:/usr/lib/hadoop/lib/xz-1.0.jar:/usr/lib/hadoop/lib/jasper-runtime-5.5.23.jar:/usr/lib/hadoop/lib/commons-codec-1.4.jar:/usr/lib/hadoop/lib/commons-net-3.1.jar:/usr/lib/hadoop/lib/jersey-server-1.9.jar:/usr/lib/hadoop/lib/jettison-1.1.jar:/usr/lib/hadoop/lib/asm-3.2.jar:/usr/lib/hadoop/lib/jsr305-3.0.0.jar:/usr/lib/hadoop/lib/commons-lang-2.6.jar:/usr/lib/hadoop/lib/jetty-util-6.1.26.cloudera.4.jar:/usr/lib/hadoop/lib/mockito-all-1.8.5.jar:/usr/lib/hadoop/lib/jasper-compiler-5.5.23.jar:/usr/lib/hadoop/lib/protobuf-java-2.5.0.jar:/usr/lib/hadoop/lib/guava-11.0.2.jar:/usr/lib/hadoop/lib/commons-io-2.4.jar:/usr/lib/hadoop/lib/slf4j-log4j12.jar:/usr/lib/hadoop/lib/commons-cli-1.2.jar:/usr/lib/hadoop/lib/curator-framework-2.7.1.jar:/usr/lib/hadoop/lib/curator-client-2.7.1.jar:/usr/lib/hadoop/lib/jaxb-api-2.2.2.jar:/usr/lib/hadoop/lib/slf4j-api-1.7.5.jar:/usr/lib/hadoop/lib/hue-plugins-3.9.0-cdh5.13.0.jar:/usr/lib/hadoop/lib/xmlenc-0.52.jar:/usr/lib/hadoop/lib/zookeeper.jar:/usr/lib/hadoop/lib/jaxb-impl-2.2.3-1.jar:/usr/lib/hadoop/lib/java-xmlbuilder-0.4.jar:/usr/lib/hadoop/lib/curator-recipes-2.7.1.jar:/usr/lib/hadoop/lib/logredactor-1.0.3.jar:/usr/lib/hadoop/lib/htrace-core4-4.0.1-incubating.jar:/usr/lib/hadoop/lib/jsp-api-2.1.jar:/usr/lib/hadoop/lib/apacheds-i18n-2.0.0-M15.jar:/usr/lib/hadoop/lib/azure-data-lake-store-sdk-2.2.3.jar:/usr/lib/hadoop/lib/jackson-xc-1.8.8.jar:/usr/lib/zookeeper/zookeeper-3.4.5-cdh5.13.0.jar:/usr/lib/zookeeper/zookeeper.jar:/usr/lib/zookeeper/lib/netty-3.10.5.Final.jar:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar:/usr/lib/zookeeper/lib/jline-2.11.jar:/usr/lib/zookeeper/lib/log4j-1.2.16.jar:/usr/lib/zookeeper/lib/slf4j-log4j12.jar:/usr/lib/zookeeper/lib/slf4j-api-1.7.5.jar:
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:java.library.path=/usr/lib/hadoop/lib/native:/usr/lib/hbase/bin/../lib/native/Linux-amd64-64
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:os.name=Linux
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:os.arch=amd64
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:os.version=2.6.32-573.el6.x86_64
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:user.name=cloudera
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:user.home=/home/cloudera
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Client environment:user.dir=/home/cloudera
+22/01/22 01:28:56 INFO zookeeper.ZooKeeper: Initiating client connection, connectString=quickstart.cloudera:2181 sessionTimeout=60000 watcher=hconnection-0x544fa9680x0, quorum=quickstart.cloudera:2181, baseZNode=/hbase
+22/01/22 01:28:56 INFO zookeeper.ClientCnxn: Opening socket connection to server quickstart.cloudera/192.168.245.129:2181. Will not attempt to authenticate using SASL (unknown error)
+22/01/22 01:28:56 INFO zookeeper.ClientCnxn: Socket connection established, initiating session, client: /192.168.245.129:56597, server: quickstart.cloudera/192.168.245.129:2181
+22/01/22 01:28:56 INFO zookeeper.ClientCnxn: Session establishment complete on server quickstart.cloudera/192.168.245.129:2181, sessionid = 0x17e81105de2004b, negotiated timeout = 60000
+22/01/22 01:28:57 INFO Configuration.deprecation: io.bytes.per.checksum is deprecated. Instead, use dfs.bytes-per-checksum
+22/01/22 01:28:57 INFO client.ConnectionManager$HConnectionImplementation: Closing zookeeper sessionid=0x17e81105de2004b
+22/01/22 01:28:57 INFO zookeeper.ClientCnxn: EventThread shut down
+22/01/22 01:28:57 INFO zookeeper.ZooKeeper: Session: 0x17e81105de2004b closed
+22/01/22 01:28:58 INFO client.RMProxy: Connecting to ResourceManager at quickstart.cloudera/192.168.245.129:8032
+22/01/22 01:28:58 INFO Configuration.deprecation: io.bytes.per.checksum is deprecated. Instead, use dfs.bytes-per-checksum
+22/01/22 01:28:59 WARN hdfs.DFSClient: Caught exception 
+java.lang.InterruptedException
+	at java.lang.Object.wait(Native Method)
+	at java.lang.Thread.join(Thread.java:1252)
+	at java.lang.Thread.join(Thread.java:1326)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.closeResponder(DFSOutputStream.java:967)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.endBlock(DFSOutputStream.java:705)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.run(DFSOutputStream.java:894)
+22/01/22 01:29:00 INFO input.FileInputFormat: Total input paths to process : 1
+22/01/22 01:29:00 INFO mapreduce.JobSubmitter: number of splits:1
+22/01/22 01:29:00 INFO Configuration.deprecation: io.bytes.per.checksum is deprecated. Instead, use dfs.bytes-per-checksum
+22/01/22 01:29:01 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1642842810623_0001
+22/01/22 01:29:02 INFO impl.YarnClientImpl: Submitted application application_1642842810623_0001
+22/01/22 01:29:02 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1642842810623_0001/
+22/01/22 01:29:02 INFO mapreduce.Job: Running job: job_1642842810623_0001
+22/01/22 01:29:10 INFO mapreduce.Job: Job job_1642842810623_0001 running in uber mode : false
+22/01/22 01:29:10 INFO mapreduce.Job:  map 0% reduce 0%
+22/01/22 01:29:19 INFO mapreduce.Job:  map 100% reduce 0%
+22/01/22 01:29:20 INFO mapreduce.Job: Job job_1642842810623_0001 completed successfully
+22/01/22 01:29:20 INFO mapreduce.Job: Counters: 31
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=185143
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=525
+		HDFS: Number of bytes written=0
+		HDFS: Number of read operations=2
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=0
+	Job Counters 
+		Launched map tasks=1
+		Data-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=3325952
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=6496
+		Total vcore-milliseconds taken by all map tasks=6496
+		Total megabyte-milliseconds taken by all map tasks=3325952
+	Map-Reduce Framework
+		Map input records=15
+		Map output records=14
+		Input split bytes=124
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=154
+		CPU time spent (ms)=1530
+		Physical memory (bytes) snapshot=131948544
+		Virtual memory (bytes) snapshot=1968037888
+		Total committed heap usage (bytes)=38273024
+	ImportTsv
+		Bad Lines=1
+	File Input Format Counters 
+		Bytes Read=401
+	File Output Format Counters 
+		Bytes Written=0
+
+
+hbase(main):007:0> scan 'groceries'
+ROW                                                    COLUMN+CELL                                                                                                                                                  
+ 1                                                     column=details:buy_date, timestamp=1642843735589, value=7                                                                                                    
+ 1                                                     column=details:city, timestamp=1642843735589, value=Bananas                                                                                                  
+ 1                                                     column=details:grocery, timestamp=1642843735589, value=1/1/2017                                                                                              
+ 1                                                     column=details:id, timestamp=1642843735589, value=Seattle                                                                                                    
+ 10                                                    column=details:buy_date, timestamp=1642843735589, value=4                                                                                                    
+ 10                                                    column=details:city, timestamp=1642843735589, value=Onion                                                                                                    
+ 10                                                    column=details:grocery, timestamp=1642843735589, value=1/6/2017                                                                                              
+ 10                                                    column=details:id, timestamp=1642843735589, value=Issaquah                                                                                                   
+ 11                                                    column=details:buy_date, timestamp=1642843735589, value=5                                                                                                    
+ 11                                                    column=details:city, timestamp=1642843735589, value=Bread                                                                                                    
+ 11                                                    column=details:grocery, timestamp=1642843735589, value=1/5/2017                                                                                              
+ 11                                                    column=details:id, timestamp=1642843735589, value=Renton                                                                                                     
+ 12                                                    column=details:buy_date, timestamp=1642843735589, value=4                                                                                                    
+ 12                                                    column=details:city, timestamp=1642843735589, value=Onion                                                                                                    
+ 12                                                    column=details:grocery, timestamp=1642843735589, value=1/7/2017                                                                                              
+ 12                                                    column=details:id, timestamp=1642843735589, value=Issaquah                                                                                                   
+ 13                                                    column=details:buy_date, timestamp=1642843735589, value=5                                                                                                    
+ 13                                                    column=details:city, timestamp=1642843735589, value=Bread                                                                                                    
+ 13                                                    column=details:grocery, timestamp=1642843735589, value=1/7/2017                                                                                              
+ 13                                                    column=details:id, timestamp=1642843735589, value=Sammamish                                                                                                  
+ 14                                                    column=details:buy_date, timestamp=1642843735589, value=6                                                                                                    
+ 14                                                    column=details:city, timestamp=1642843735589, value=Tomato                                                                                                   
+ 14                                                    column=details:grocery, timestamp=1642843735589, value=1/7/2017                                                                                              
+ 14                                                    column=details:id, timestamp=1642843735589, value=Issaquah                                                                                                   
+ 2                                                     column=details:buy_date, timestamp=1642843735589, value=20                                                                                                   
+ 2                                                     column=details:city, timestamp=1642843735589, value=Apples                                                                                                   
+ 2                                                     column=details:grocery, timestamp=1642843735589, value=1/2/2017                                                                                              
+ 2                                                     column=details:id, timestamp=1642843735589, value=Kent                                                                                                       
+ 3                                                     column=details:buy_date, timestamp=1642843735589, value=10                                                                                                   
+ 3                                                     column=details:city, timestamp=1642843735589, value=Flowers                                                                                                  
+ 3                                                     column=details:grocery, timestamp=1642843735589, value=1/2/2017                                                                                              
+ 3                                                     column=details:id, timestamp=1642843735589, value=Bellevue                                                                                                   
+ 4                                                     column=details:buy_date, timestamp=1642843735589, value=40                                                                                                   
+ 4                                                     column=details:city, timestamp=1642843735589, value=Meat                                                                                                     
+ 4                                                     column=details:grocery, timestamp=1642843735589, value=1/3/2017                                                                                              
+ 4                                                     column=details:id, timestamp=1642843735589, value=Redmond                                                                                                    
+ 5                                                     column=details:buy_date, timestamp=1642843735589, value=9                                                                                                    
+ 5                                                     column=details:city, timestamp=1642843735589, value=Potatoes                                                                                                 
+ 5                                                     column=details:grocery, timestamp=1642843735589, value=1/4/2017                                                                                              
+ 5                                                     column=details:id, timestamp=1642843735589, value=Seattle                                                                                                    
+ 6                                                     column=details:buy_date, timestamp=1642843735589, value=5                                                                                                    
+ 6                                                     column=details:city, timestamp=1642843735589, value=Bread                                                                                                    
+ 6                                                     column=details:grocery, timestamp=1642843735589, value=1/4/2017                                                                                              
+ 6                                                     column=details:id, timestamp=1642843735589, value=Bellevue                                                                                                   
+ 7                                                     column=details:buy_date, timestamp=1642843735589, value=5                                                                                                    
+ 7                                                     column=details:city, timestamp=1642843735589, value=Bread                                                                                                    
+ 7                                                     column=details:grocery, timestamp=1642843735589, value=1/5/2017                                                                                              
+ 7                                                     column=details:id, timestamp=1642843735589, value=Redmond                                                                                                    
+ 8                                                     column=details:buy_date, timestamp=1642843735589, value=4                                                                                                    
+ 8                                                     column=details:city, timestamp=1642843735589, value=Onion                                                                                                    
+ 8                                                     column=details:grocery, timestamp=1642843735589, value=1/5/2017                                                                                              
+ 8                                                     column=details:id, timestamp=1642843735589, value=Issaquah                                                                                                   
+ 9                                                     column=details:buy_date, timestamp=1642843735589, value=15                                                                                                   
+ 9                                                     column=details:city, timestamp=1642843735589, value=Cheese                                                                                                   
+ 9                                                     column=details:grocery, timestamp=1642843735589, value=1/5/2017                                                                                              
+ 9                                                     column=details:id, timestamp=1642843735589, value=Redmond                                                                                                    
+14 row(s) in 0.1430 seconds
+
+
+*Hive==>>
+hive> create table groceries(id int, city varchar(20), grocery varchar(20), buy_date date, units int) row format delimited fields terminated by ",";
+OK
+Time taken: 0.139 seconds
+
+hive> load data inpath '/user/cloudera/groceries.csv' overwrite into table groceries;
+Loading data to table example.groceries
+chgrp: changing ownership of 'hdfs://quickstart.cloudera:8020/user/hive/warehouse/example.db/groceries/groceries.csv': User does not belong to supergroup
+Table example.groceries stats: [numFiles=1, numRows=0, totalSize=429, rawDataSize=0]
+OK
+Time taken: 0.336 seconds
+hive> select * from groceries;
+OK
+1	Seattle	Bananas	2017-01-01	7
+2	Kent	Apples	2017-01-02	20
+3	Bellevue	Flowers	2017-01-02	10
+4	Redmond	Meat	2017-01-03	40
+5	Seattle	Potatoes	2017-01-04	9
+6	Bellevue	Bread	2017-01-04	5
+7	Redmond	Bread	2017-01-05	5
+8	Issaquah	Onion	2017-01-05	4
+9	Redmond	Cheese	2017-01-05	15
+10	Issaquah	Onion	2017-01-06	4
+11	Renton	Bread	2017-01-05	5
+12	Issaquah	Onion	2017-01-07	4
+13	Sammamish	Bread	2017-01-07	5
+14	Issaquah	Tomato	2017-01-07	6
+NULL	NULL	NULL	NULL	NULL
+Time taken: 0.068 seconds, Fetched: 15 row(s)
+
+
+
+*Sqoop==>>
+[cloudera@quickstart ~]$ sqoop export --connect jdbc:mysql://quickstart:3306/sampledb --username root -password cloudera --table groceries --export-dir /user/cloudera/groceries.csv -m 1;
+Warning: /usr/lib/sqoop/../accumulo does not exist! Accumulo imports will fail.
+Please set $ACCUMULO_HOME to the root of your Accumulo installation.
+22/01/23 22:27:24 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.13.0
+22/01/23 22:27:24 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+22/01/23 22:27:24 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+22/01/23 22:27:24 INFO tool.CodeGenTool: Beginning code generation
+22/01/23 22:27:25 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `groceries` AS t LIMIT 1
+22/01/23 22:27:25 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `groceries` AS t LIMIT 1
+22/01/23 22:27:25 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-cloudera/compile/078057fc36b5af7f19d46dcef50196d8/groceries.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+22/01/23 22:27:27 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-cloudera/compile/078057fc36b5af7f19d46dcef50196d8/groceries.jar
+22/01/23 22:27:27 INFO mapreduce.ExportJobBase: Beginning export of groceries
+22/01/23 22:27:28 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+22/01/23 22:27:29 INFO Configuration.deprecation: mapred.reduce.tasks.speculative.execution is deprecated. Instead, use mapreduce.reduce.speculative
+22/01/23 22:27:29 INFO Configuration.deprecation: mapred.map.tasks.speculative.execution is deprecated. Instead, use mapreduce.map.speculative
+22/01/23 22:27:29 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+22/01/23 22:27:30 INFO client.RMProxy: Connecting to ResourceManager at quickstart.cloudera/127.0.0.1:8032
+22/01/23 22:27:31 WARN hdfs.DFSClient: Caught exception 
+java.lang.InterruptedException
+	at java.lang.Object.wait(Native Method)
+	at java.lang.Thread.join(Thread.java:1252)
+	at java.lang.Thread.join(Thread.java:1326)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.closeResponder(DFSOutputStream.java:967)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.endBlock(DFSOutputStream.java:705)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.run(DFSOutputStream.java:894)
+22/01/23 22:27:32 WARN hdfs.DFSClient: Caught exception 
+java.lang.InterruptedException
+	at java.lang.Object.wait(Native Method)
+	at java.lang.Thread.join(Thread.java:1252)
+	at java.lang.Thread.join(Thread.java:1326)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.closeResponder(DFSOutputStream.java:967)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.endBlock(DFSOutputStream.java:705)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.run(DFSOutputStream.java:894)
+22/01/23 22:27:32 INFO input.FileInputFormat: Total input paths to process : 1
+22/01/23 22:27:32 INFO input.FileInputFormat: Total input paths to process : 1
+22/01/23 22:27:33 INFO mapreduce.JobSubmitter: number of splits:1
+22/01/23 22:27:33 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1642991915005_0006
+22/01/23 22:27:33 INFO impl.YarnClientImpl: Submitted application application_1642991915005_0006
+22/01/23 22:27:33 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1642991915005_0006/
+22/01/23 22:27:33 INFO mapreduce.Job: Running job: job_1642991915005_0006
+22/01/23 22:27:44 INFO mapreduce.Job: Job job_1642991915005_0006 running in uber mode : false
+22/01/23 22:27:44 INFO mapreduce.Job:  map 0% reduce 0%
+22/01/23 22:27:52 INFO mapreduce.Job:  map 100% reduce 0%
+22/01/23 22:27:53 INFO mapreduce.Job: Job job_1642991915005_0006 failed with state FAILED due to: Task failed task_1642991915005_0006_m_000000
+Job failed as tasks failed. failedMaps:1 failedReduces:0
+
+22/01/23 22:27:53 INFO mapreduce.Job: Counters: 8
+	Job Counters 
+		Failed map tasks=1
+		Launched map tasks=1
+		Data-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=2639872
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=5156
+		Total vcore-milliseconds taken by all map tasks=5156
+		Total megabyte-milliseconds taken by all map tasks=2639872
+22/01/23 22:27:53 WARN mapreduce.Counters: Group FileSystemCounters is deprecated. Use org.apache.hadoop.mapreduce.FileSystemCounter instead
+22/01/23 22:27:53 INFO mapreduce.ExportJobBase: Transferred 0 bytes in 23.8391 seconds (0 bytes/sec)
+22/01/23 22:27:53 WARN mapreduce.Counters: Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+22/01/23 22:27:53 INFO mapreduce.ExportJobBase: Exported 0 records.
+22/01/23 22:27:53 ERROR tool.ExportTool: Error during export: 
+Export job failed!
+	at org.apache.sqoop.mapreduce.ExportJobBase.runExport(ExportJobBase.java:439)
+	at org.apache.sqoop.manager.SqlManager.exportTable(SqlManager.java:931)
+	at org.apache.sqoop.tool.ExportTool.exportTable(ExportTool.java:80)
+	at org.apache.sqoop.tool.ExportTool.run(ExportTool.java:99)
+	at org.apache.sqoop.Sqoop.run(Sqoop.java:147)
+	at org.apache.hadoop.util.ToolRunner.run(ToolRunner.java:70)
+	at org.apache.sqoop.Sqoop.runSqoop(Sqoop.java:183)
+	at org.apache.sqoop.Sqoop.runTool(Sqoop.java:234)
+	at org.apache.sqoop.Sqoop.runTool(Sqoop.java:243)
+	at org.apache.sqoop.Sqoop.main(Sqoop.java:252)
+
+
+*mysql==>>
+mysql> select *from groceries;
++------+-----------+----------+------------+-------+
+| id   | city      | grocery  | buy_date   | units |
++------+-----------+----------+------------+-------+
+|    1 | Seattle   | Bananas  | 2017-01-01 |     7 |
+|    2 | Kent      | Apples   | 2017-01-02 |    20 |
+|    3 | Bellevue  | Flowers  | 2017-01-02 |    10 |
+|    4 | Redmond   | Meat     | 2017-01-03 |    40 |
+|    5 | Seattle   | Potatoes | 2017-01-04 |     9 |
+|    6 | Bellevue  | Bread    | 2017-01-04 |     5 |
+|    7 | Redmond   | Bread    | 2017-01-05 |     5 |
+|    8 | Issaquah  | Onion    | 2017-01-05 |     4 |
+|    9 | Redmond   | Cheese   | 2017-01-05 |    15 |
+|   10 | Issaquah  | Onion    | 2017-01-06 |     4 |
+|   11 | Renton    | Bread    | 2017-01-05 |     5 |
+|   12 | Issaquah  | Onion    | 2017-01-07 |     4 |
+|   13 | Sammamish | Bread    | 2017-01-07 |     5 |
+|   14 | Issaquah  | Tomato   | 2017-01-07 |     6 |
++------+-----------+----------+------------+-------+
+14 rows in set (0.00 sec)
+
+
