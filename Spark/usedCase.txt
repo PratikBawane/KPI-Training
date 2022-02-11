@@ -1,0 +1,180 @@
+
+2) Find the number of complaints for which the Company response is currently "in progress".
+==>> select Compliant_ID from compliants where Company_response="In progress" 
+df = spark.sql("select count(Company) from details where Company_response='In progress'").show()
++--------------+
+|count(Company)|
++--------------+
+|          2612|
++--------------+
+
+
+3) Which company has the maximum consumer complaints.
+==>> select company from details where Complaint_ID = (select max(Complaint_ID) from details)
+table = spark.sql("select company, count(issue) as no_of_issue from details group by company, issue order by no_of_issue desc limit 1").show()
+
++---------------+-----------+
+|        company|no_of_issue|
++---------------+-----------+
+|Bank of America|      20038|
++---------------+-----------+
+
+
+4) Which Companies is able to solve issues of customers (on the terms of Company response and timely response)
+==>> table = spark.sql("select company from details group by company, company_response, timely_response").show()
++--------------------+
+|             company|
++--------------------+
+|United Collection...|
+|    AR Solutions Inc|
+|         Veldos, LLC|
+|Euler Hermes Coll...|
+|        GM Financial|
+|Diversified Adjus...|
+|Stonegate Mortgag...|
+|Merchants Credit ...|
+|Global Payments C...|
+|Houstonian Mortga...|
+|Nationwide Arbitr...|
+|First Advantage C...|
+|Encore Capital Group|
+|Radius Global Sol...|
+|The Law Office of...|
+|American Financia...|
+|NCP Finance Limit...|
+|WestStar Mortgage...|
+|Ditech Mortgage Corp|
+|Evergreen Recover...|
++--------------------+
+only showing top 20 rows
+
+
+5) Which companies are having least response time for a complaint raised?
+==>> table = spark.sql("select company from details where timely_response='Yes' group by company, timely_response").show()
++--------------------+
+|             company|
++--------------------+
+|JA Cambece Law Of...|
+|  BlueChip Financial|
+|FEDERAL PACIFIC C...|
+|Royal United Mort...|
+| Suttell & Hammer PS|
+|            RFNA, LP|
+|Blatt, Hasenmille...|
+|Midway Resolution...|
+|     TrueAccord Corp|
+|Turning Point Sol...|
+|Credit Bureau of ...|
+|P&B Capital Group...|
+|       RMP Group Inc|
+|Southern Manageme...|
+|Express Recovery ...|
+|States Recovery S...|
+|Credit Solutions,...|
+|Specialized Loan ...|
+|Midstate Collecti...|
+|Michael Harrison,...|
++--------------------+
+only showing top 20 rows
+
+
+
+6) Find the issue that occurred mostly.
+==> import org.apache.spark.sql.SparkSession
+object usedCase{
+  def main(args:Array[String]): Unit ={
+    val spark : SparkSession = SparkSession.builder()
+      .master("local[*]")
+      .appName("usedCase")
+      .getOrCreate()
+
+    val df = spark.read.option("header", true).csv("src/data/complaints.csv")
+    df.createOrReplaceTempView("details")
+    val table = spark.sql("select issue, count(issue) from details group by issue order by 2 desc limit 1")
+    println(table.show())
+  }
+}
+
++--------------------+------------+
+|               issue|count(issue)|
++--------------------+------------+
+|Loan modification...|       70487|
++--------------------+------------+
+
+
+
+7) Which are the Top 5 states having the highest volume of complaints coming.
+==>> import org.apache.spark.sql.SparkSession
+object  usedCase{
+  def main(args:Array[String]): Unit ={
+    val spark : SparkSession = SparkSession.builder()
+      .master("local[*]")
+      .appName("usedCase")
+      .getOrCreate()
+
+    val df = spark.read.option("header", true).csv("src/data/complaints.csv")
+    df.createOrReplaceTempView("details")
+    val table = spark.sql("select state, count(issue) from details group by state order by 2 desc limit 5")
+    println(table.show())
+  }
+}
+
++-----+------------+
+|state|count(issue)|
++-----+------------+
+|   CA|       47076|
+|   FL|       30164|
+|   TX|       21711|
+|   NY|       21519|
+|   GA|       13514|
++-----+------------+
+
+
+8) Which are the Top 5 companies people complaining the most.
+==>> import org.apache.spark.sql.SparkSession
+object usedCase{
+  def main(args:Array[String]): Unit ={
+    val spark : SparkSession = SparkSession.builder()
+      .master("local[*]")
+      .appName("usedCase")
+      .getOrCreate()
+
+    val df = spark.read.option("header", true).csv("src/data/complaints.csv")
+    df.createOrReplaceTempView("details")
+    val table = spark.sql("select company, count(issue) from details group by company, issue order by 2 desc limit 5")
+    println(table.show())
+  }
+}
+
++---------------+------------+
+|        company|count(issue)|
++---------------+------------+
+|Bank of America|       20038|
+|    Wells Fargo|       10874|
+|       Experian|       10377|
+|        Equifax|        9358|
+|     TransUnion|        8047|
++---------------+------------+
+
+
+
+9) Which product has the most number of complaints.
+object usedCase{
+  def main(args:Array[String]): Unit ={
+    val spark: SparkSession = SparkSession.builder()
+      .master("local[*]")
+      .appName("usedCase")
+      .getOrCreate()
+
+    val df = spark.read.option("header", true).csv("src/data/complaints.csv")
+    df.createOrReplaceTempView("details")
+    val table = spark.sql("select product, count(issue) from details group by product, issue order by 2 desc limit 1")
+    println(table.show())
+  }
+}
+
++--------+------------+
+| product|count(issue)|
++--------+------------+
+|Mortgage|       70487|
++--------+------------+
