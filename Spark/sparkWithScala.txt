@@ -1,0 +1,604 @@
+1) object demo2 {
+      def main(args:Array[String]): Unit ={
+        val logfile = "src/data/sample.txt"
+
+        val spark = SparkSession.builder
+          .master("local[*]")
+          .appName("Spark Word Count").getOrCreate()
+
+        val logData = spark.sparkContext.textFile(logfile, 0).cache()
+        val num = logData.filter(line => line.contains("to")).count()
+        println("Lines with 'to' are: %s".format(num))
+      }
+}
+
+==>> Lines with 'to' are: 4
+
+
+2) import org.apache.spark.sql.{SQLContext, SparkSession}
+object demo2{
+  def main(args:Array[String]): Unit = {
+    val spark = SparkSession.builder()
+      .master("local[1]")
+      .appName("SparkByExamples.com")
+      .getOrCreate()
+    spark.sparkContext.setLogLevel("Error")
+    val sqlContext: SQLContext = spark.sqlContext
+
+    val df = sqlContext.read.options(Map("inferSchema" -> "true", "delimiter" -> ",", "header" -> "true")).csv("src/data/zipcodes.csv")
+      df.printSchema()
+      df.show()
+
+      df.createOrReplaceTempView("TAB")
+      sqlContext.sql("select * from TAB").show(false)
+  }
+}
+
+==>> root
+ |-- RecordNumber: integer (nullable = true)
+ |-- Zipcode: integer (nullable = true)
+ |-- ZipCodeType: string (nullable = true)
+ |-- City: string (nullable = true)
+ |-- State: string (nullable = true)
+ |-- LocationType: string (nullable = true)
+ |-- Lat: double (nullable = true)
+ |-- Long: double (nullable = true)
+ |-- Xaxis: double (nullable = true)
+ |-- Yaxis: double (nullable = true)
+ |-- Zaxis: double (nullable = true)
+ |-- WorldRegion: string (nullable = true)
+ |-- Country: string (nullable = true)
+ |-- LocationText: string (nullable = true)
+ |-- Location: string (nullable = true)
+ |-- Decommisioned: boolean (nullable = true)
+ |-- TaxReturnsFiled: integer (nullable = true)
+ |-- EstimatedPopulation: integer (nullable = true)
+ |-- TotalWages: integer (nullable = true)
+ |-- Notes: string (nullable = true)
+
++------------+-------+-----------+-------------------+-----+--------------+-----+-------+-----+-----+-----+-----------+-------+--------------------+--------------------+-------------+---------------+-------------------+----------+-------------+
+|RecordNumber|Zipcode|ZipCodeType|               City|State|  LocationType|  Lat|   Long|Xaxis|Yaxis|Zaxis|WorldRegion|Country|        LocationText|            Location|Decommisioned|TaxReturnsFiled|EstimatedPopulation|TotalWages|        Notes|
++------------+-------+-----------+-------------------+-----+--------------+-----+-------+-----+-----+-----+-----------+-------+--------------------+--------------------+-------------+---------------+-------------------+----------+-------------+
+|           1|    704|   STANDARD|        PARC PARQUE|   PR|NOT ACCEPTABLE|17.96| -66.22| 0.38|-0.87|  0.3|         NA|     US|     Parc Parque, PR|NA-US-PR-PARC PARQUE|        false|           null|               null|      null|         null|
+|           2|    704|   STANDARD|PASEO COSTA DEL SUR|   PR|NOT ACCEPTABLE|17.96| -66.22| 0.38|-0.87|  0.3|         NA|     US|Paseo Costa Del S...|NA-US-PR-PASEO CO...|        false|           null|               null|      null|         null|
+|          10|    709|   STANDARD|       BDA SAN LUIS|   PR|NOT ACCEPTABLE|18.14| -66.26| 0.38|-0.86| 0.31|         NA|     US|    Bda San Luis, PR|NA-US-PR-BDA SAN ...|        false|           null|               null|      null|         null|
+|       61391|  76166|     UNIQUE|  CINGULAR WIRELESS|   TX|NOT ACCEPTABLE|32.72| -97.31| -0.1|-0.83| 0.54|         NA|     US|Cingular Wireless...|NA-US-TX-CINGULAR...|        false|           null|               null|      null|         null|
+|       61392|  76177|   STANDARD|         FORT WORTH|   TX|       PRIMARY|32.75| -97.33| -0.1|-0.83| 0.54|         NA|     US|      Fort Worth, TX| NA-US-TX-FORT WORTH|        false|           2126|               4053| 122396986|         null|
+|       61393|  76177|   STANDARD|           FT WORTH|   TX|    ACCEPTABLE|32.75| -97.33| -0.1|-0.83| 0.54|         NA|     US|        Ft Worth, TX|   NA-US-TX-FT WORTH|        false|           2126|               4053| 122396986|         null|
+|           4|    704|   STANDARD|    URB EUGENE RICE|   PR|NOT ACCEPTABLE|17.96| -66.22| 0.38|-0.87|  0.3|         NA|     US| Urb Eugene Rice, PR|NA-US-PR-URB EUGE...|        false|           null|               null|      null|         null|
+|       39827|  85209|   STANDARD|               MESA|   AZ|       PRIMARY|33.37|-111.64| -0.3|-0.77| 0.55|         NA|     US|            Mesa, AZ|       NA-US-AZ-MESA|        false|          14962|              26883| 563792730|no NWS data, |
+|       39828|  85210|   STANDARD|               MESA|   AZ|       PRIMARY|33.38|-111.84|-0.31|-0.77| 0.55|         NA|     US|            Mesa, AZ|       NA-US-AZ-MESA|        false|          14374|              25446| 471000465|         null|
+|       49345|  32046|   STANDARD|           HILLIARD|   FL|       PRIMARY|30.69| -81.92| 0.12|-0.85| 0.51|         NA|     US|        Hilliard, FL|   NA-US-FL-HILLIARD|        false|           3922|               7443| 133112149|         null|
+|       49346|  34445|     PO BOX|             HOLDER|   FL|       PRIMARY|28.96| -82.41| 0.11|-0.86| 0.48|         NA|     US|          Holder, FL|     NA-US-FL-HOLDER|        false|           null|               null|      null|         null|
+|       49347|  32564|   STANDARD|               HOLT|   FL|       PRIMARY|30.72| -86.67| 0.04|-0.85| 0.51|         NA|     US|            Holt, FL|       NA-US-FL-HOLT|        false|           1207|               2190|  36395913|         null|
+|       49348|  34487|     PO BOX|          HOMOSASSA|   FL|       PRIMARY|28.78| -82.61| 0.11|-0.86| 0.48|         NA|     US|       Homosassa, FL|  NA-US-FL-HOMOSASSA|        false|           null|               null|      null|         null|
+|          10|    708|   STANDARD|       BDA SAN LUIS|   PR|NOT ACCEPTABLE|18.14| -66.26| 0.38|-0.86| 0.31|         NA|     US|    Bda San Luis, PR|NA-US-PR-BDA SAN ...|        false|           null|               null|      null|         null|
+|           3|    704|   STANDARD|      SECT LANAUSSE|   PR|NOT ACCEPTABLE|17.96| -66.22| 0.38|-0.87|  0.3|         NA|     US|   Sect Lanausse, PR|NA-US-PR-SECT LAN...|        false|           null|               null|      null|         null|
+|       54354|  36275|     PO BOX|      SPRING GARDEN|   AL|       PRIMARY|33.97| -85.55| 0.06|-0.82| 0.55|         NA|     US|   Spring Garden, AL|NA-US-AL-SPRING G...|        false|           null|               null|      null|         null|
+|       54355|  35146|   STANDARD|        SPRINGVILLE|   AL|       PRIMARY|33.77| -86.47| 0.05|-0.82| 0.55|         NA|     US|     Springville, AL|NA-US-AL-SPRINGVILLE|        false|           4046|               7845| 172127599|         null|
+|       54356|  35585|   STANDARD|        SPRUCE PINE|   AL|       PRIMARY|34.37| -87.69| 0.03|-0.82| 0.56|         NA|     US|     Spruce Pine, AL|NA-US-AL-SPRUCE PINE|        false|            610|               1209|  18525517|         null|
+|       76511|  27007|   STANDARD|           ASH HILL|   NC|NOT ACCEPTABLE| 36.4| -80.56| 0.13|-0.79| 0.59|         NA|     US|        Ash Hill, NC|   NA-US-NC-ASH HILL|        false|            842|               1666|  28876493|         null|
+|       76512|  27203|   STANDARD|           ASHEBORO|   NC|       PRIMARY|35.71| -79.81| 0.14|-0.79| 0.58|         NA|     US|        Asheboro, NC|   NA-US-NC-ASHEBORO|        false|           8355|              15228| 215474318|         null|
++------------+-------+-----------+-------------------+-----+--------------+-----+-------+-----+-----+-----+-----------+-------+--------------------+--------------------+-------------+---------------+-------------------+----------+-------------+
+only showing top 20 rows
+
++------------+-------+-----------+-------------------+-----+--------------+-----+-------+-----+-----+-----+-----------+-------+-----------------------+----------------------------+-------------+---------------+-------------------+----------+-------------+
+|RecordNumber|Zipcode|ZipCodeType|City               |State|LocationType  |Lat  |Long   |Xaxis|Yaxis|Zaxis|WorldRegion|Country|LocationText           |Location                    |Decommisioned|TaxReturnsFiled|EstimatedPopulation|TotalWages|Notes        |
++------------+-------+-----------+-------------------+-----+--------------+-----+-------+-----+-----+-----+-----------+-------+-----------------------+----------------------------+-------------+---------------+-------------------+----------+-------------+
+|1           |704    |STANDARD   |PARC PARQUE        |PR   |NOT ACCEPTABLE|17.96|-66.22 |0.38 |-0.87|0.3  |NA         |US     |Parc Parque, PR        |NA-US-PR-PARC PARQUE        |false        |null           |null               |null      |null         |
+|2           |704    |STANDARD   |PASEO COSTA DEL SUR|PR   |NOT ACCEPTABLE|17.96|-66.22 |0.38 |-0.87|0.3  |NA         |US     |Paseo Costa Del Sur, PR|NA-US-PR-PASEO COSTA DEL SUR|false        |null           |null               |null      |null         |
+|10          |709    |STANDARD   |BDA SAN LUIS       |PR   |NOT ACCEPTABLE|18.14|-66.26 |0.38 |-0.86|0.31 |NA         |US     |Bda San Luis, PR       |NA-US-PR-BDA SAN LUIS       |false        |null           |null               |null      |null         |
+|61391       |76166  |UNIQUE     |CINGULAR WIRELESS  |TX   |NOT ACCEPTABLE|32.72|-97.31 |-0.1 |-0.83|0.54 |NA         |US     |Cingular Wireless, TX  |NA-US-TX-CINGULAR WIRELESS  |false        |null           |null               |null      |null         |
+|61392       |76177  |STANDARD   |FORT WORTH         |TX   |PRIMARY       |32.75|-97.33 |-0.1 |-0.83|0.54 |NA         |US     |Fort Worth, TX         |NA-US-TX-FORT WORTH         |false        |2126           |4053               |122396986 |null         |
+|61393       |76177  |STANDARD   |FT WORTH           |TX   |ACCEPTABLE    |32.75|-97.33 |-0.1 |-0.83|0.54 |NA         |US     |Ft Worth, TX           |NA-US-TX-FT WORTH           |false        |2126           |4053               |122396986 |null         |
+|4           |704    |STANDARD   |URB EUGENE RICE    |PR   |NOT ACCEPTABLE|17.96|-66.22 |0.38 |-0.87|0.3  |NA         |US     |Urb Eugene Rice, PR    |NA-US-PR-URB EUGENE RICE    |false        |null           |null               |null      |null         |
+|39827       |85209  |STANDARD   |MESA               |AZ   |PRIMARY       |33.37|-111.64|-0.3 |-0.77|0.55 |NA         |US     |Mesa, AZ               |NA-US-AZ-MESA               |false        |14962          |26883              |563792730 |no NWS data, |
+|39828       |85210  |STANDARD   |MESA               |AZ   |PRIMARY       |33.38|-111.84|-0.31|-0.77|0.55 |NA         |US     |Mesa, AZ               |NA-US-AZ-MESA               |false        |14374          |25446              |471000465 |null         |
+|49345       |32046  |STANDARD   |HILLIARD           |FL   |PRIMARY       |30.69|-81.92 |0.12 |-0.85|0.51 |NA         |US     |Hilliard, FL           |NA-US-FL-HILLIARD           |false        |3922           |7443               |133112149 |null         |
+|49346       |34445  |PO BOX     |HOLDER             |FL   |PRIMARY       |28.96|-82.41 |0.11 |-0.86|0.48 |NA         |US     |Holder, FL             |NA-US-FL-HOLDER             |false        |null           |null               |null      |null         |
+|49347       |32564  |STANDARD   |HOLT               |FL   |PRIMARY       |30.72|-86.67 |0.04 |-0.85|0.51 |NA         |US     |Holt, FL               |NA-US-FL-HOLT               |false        |1207           |2190               |36395913  |null         |
+|49348       |34487  |PO BOX     |HOMOSASSA          |FL   |PRIMARY       |28.78|-82.61 |0.11 |-0.86|0.48 |NA         |US     |Homosassa, FL          |NA-US-FL-HOMOSASSA          |false        |null           |null               |null      |null         |
+|10          |708    |STANDARD   |BDA SAN LUIS       |PR   |NOT ACCEPTABLE|18.14|-66.26 |0.38 |-0.86|0.31 |NA         |US     |Bda San Luis, PR       |NA-US-PR-BDA SAN LUIS       |false        |null           |null               |null      |null         |
+|3           |704    |STANDARD   |SECT LANAUSSE      |PR   |NOT ACCEPTABLE|17.96|-66.22 |0.38 |-0.87|0.3  |NA         |US     |Sect Lanausse, PR      |NA-US-PR-SECT LANAUSSE      |false        |null           |null               |null      |null         |
+|54354       |36275  |PO BOX     |SPRING GARDEN      |AL   |PRIMARY       |33.97|-85.55 |0.06 |-0.82|0.55 |NA         |US     |Spring Garden, AL      |NA-US-AL-SPRING GARDEN      |false        |null           |null               |null      |null         |
+|54355       |35146  |STANDARD   |SPRINGVILLE        |AL   |PRIMARY       |33.77|-86.47 |0.05 |-0.82|0.55 |NA         |US     |Springville, AL        |NA-US-AL-SPRINGVILLE        |false        |4046           |7845               |172127599 |null         |
+|54356       |35585  |STANDARD   |SPRUCE PINE        |AL   |PRIMARY       |34.37|-87.69 |0.03 |-0.82|0.56 |NA         |US     |Spruce Pine, AL        |NA-US-AL-SPRUCE PINE        |false        |610            |1209               |18525517  |null         |
+|76511       |27007  |STANDARD   |ASH HILL           |NC   |NOT ACCEPTABLE|36.4 |-80.56 |0.13 |-0.79|0.59 |NA         |US     |Ash Hill, NC           |NA-US-NC-ASH HILL           |false        |842            |1666               |28876493  |null         |
+|76512       |27203  |STANDARD   |ASHEBORO           |NC   |PRIMARY       |35.71|-79.81 |0.14 |-0.79|0.58 |NA         |US     |Asheboro, NC           |NA-US-NC-ASHEBORO           |false        |8355           |15228              |215474318 |null         |
++------------+-------+-----------+-------------------+-----+--------------+-----+-------+-----+-----+-----+-----------+-------+-----------------------+----------------------------+-------------+---------------+-------------------+----------+-------------+
+only showing top 20 rows
+
+
+3) import org.apache.spark.sql.SparkSession 
+object demo2{
+  def main(args:Array[String]): Unit ={
+    val spark: SparkSession = SparkSession.builder()
+      .master("local[5]")
+      .appName("SparkByExamples.com")
+      .getOrCreate()
+    spark.sparkContext.setLogLevel("Error")
+
+    import spark.implicits._
+    val simpleData = Seq(("James","Sales","NY",90000,34,10000),
+      ("Michael","Sales","NY",86000,56,20000),
+      ("Robert","Sales","CA",81000,30,23000),
+      ("Maria","Finance","CA",90000,24,23000),
+      ("Raman","Finance","CA",99000,40,24000),
+      ("Scott","Finance","NY",83000,36,19000),
+      ("Jen","Finance","NY",79000,53,15000),
+      ("Jeff","Marketing","CA",80000,25,18000),
+      ("Kumar","Marketing","NY",91000,50,21000)
+    )
+
+    val df = simpleData.toDF("EmpName", "Dept", "State", "Sal", "Age", "Bonus")
+    val df1 =  df.groupBy("Dept").count()
+    println("Number of Partitions: " + df1.rdd.getNumPartitions)
+
+//    spark.conf.set("spark.sql.adaptive.enabled", 200)
+    val df2 = df.groupBy("Dept").count()
+    println("Number of Partitions: " + df2.rdd.getNumPartitions)
+  }
+}
+
+==>> Number of Partitions: 1
+Number of Partitions: 1
+
+
+4) object demo2{
+  def main(args:Array[String]): Unit ={
+      val spark: SparkSession = SparkSession.builder()
+        .master("local[1]")
+        .appName("SparkExamples.com")
+        .getOrCreate()
+
+      val data = Seq(21,3,4,5)
+       import spark.sqlContext.implicits._
+
+      val df = data.toDF("field1")
+          df.createOrReplaceTempView("table1")
+
+    val df2 = spark.sql("select tb1.field1 as field1,tb2.field1 as field2 from table1 tb1, table1 tb2 where tb1.field1 <> tb2.field1")
+        df2.printSchema()
+        df2.show(false)
+
+    df2.createOrReplaceTempView("table2")
+    val df3 = spark.sql("select distinct tb1.field1, tb1.field2 from table2 tb1, table2 tb2 where tb1.field1 == tb2.field2 and tb1.field2 == tb2.field1")
+    df3.show()
+
+  }
+}
+
+==>> root
+ |-- field1: integer (nullable = false)
+ |-- field2: integer (nullable = false)
+
++------+------+
+|field1|field2|
++------+------+
+|21    |3     |
+|21    |4     |
+|21    |5     |
+|3     |21    |
+|3     |4     |
+|3     |5     |
+|4     |21    |
+|4     |3     |
+|4     |5     |
+|5     |21    |
+|5     |3     |
+|5     |4     |
++------+------+
+
++------+------+
+|field1|field2|
++------+------+
+|     5|    21|
+|    21|     5|
+|     3|     5|
+|     5|     4|
+|    21|     3|
+|    21|     4|
+|     4|     3|
+|     4|    21|
+|     3|    21|
+|     5|     3|
+|     3|     4|
+|     4|     5|
++------+------+
+
+7) object demo2{
+  def main(args: Array[String]){
+    val spark: SparkSession = SparkSession.builder()
+      .master("local[1]")
+      .appName("Array")
+      .getOrCreate()
+
+    val data = Seq(
+      Row("James,,Smith",List("Java","Scala","C++"),"CA"),
+      Row("Michael,Rose,",List("Spark","Java","C++"),"NJ"),
+      Row("Robert,,Williams",null,"NV")
+    )
+
+    val schema = new StructType()
+      .add("name",StringType)
+      .add("languagesAtSchool", ArrayType(StringType))
+      .add("currentState", StringType)
+
+    val df = spark.createDataFrame(spark.sparkContext.parallelize(data), schema)
+    df.printSchema()
+    df.show()
+
+    val df2 = df.withColumn("Java Present", array_contains(col("languagesAtSchool"), "Java"))
+    df2.show(false)
+
+    val df3 = df.where(array_contains(col("languagesAtSchool"), "Java"))
+    df3.show(false)
+  }
+}
+
+==>> root
+ |-- name: string (nullable = true)
+ |-- languagesAtSchool: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- currentState: string (nullable = true)
+
++----------------+------------------+------------+
+|            name| languagesAtSchool|currentState|
++----------------+------------------+------------+
+|    James,,Smith|[Java, Scala, C++]|          CA|
+|   Michael,Rose,|[Spark, Java, C++]|          NJ|
+|Robert,,Williams|              null|          NV|
++----------------+------------------+------------+
+
++----------------+------------------+------------+------------+
+|name            |languagesAtSchool |currentState|Java Present|
++----------------+------------------+------------+------------+
+|James,,Smith    |[Java, Scala, C++]|CA          |true        |
+|Michael,Rose,   |[Spark, Java, C++]|NJ          |true        |
+|Robert,,Williams|null              |NV          |null        |
++----------------+------------------+------------+------------+
+
++-------------+------------------+------------+
+|name         |languagesAtSchool |currentState|
++-------------+------------------+------------+
+|James,,Smith |[Java, Scala, C++]|CA          |
+|Michael,Rose,|[Spark, Java, C++]|NJ          |
++-------------+------------------+------------+
+
+
+8) object demo2{
+  def main(args:Array[String]): Unit ={
+    val spark: SparkSession = SparkSession.builder()
+      .master("local[1]")
+      .appName("SQLDistinct")
+      .getOrCreate()
+
+    spark.sparkContext.setLogLevel("Error")
+    import spark.implicits._
+    val simpleData = Seq(("James", "Sales", 3000),
+      ("Michael", "Sales", 4600),
+      ("Robert", "Sales", 4100),
+      ("Maria", "Finance", 3000),
+      ("James", "Sales", 3000),
+      ("Scott", "Finance", 3300),
+      ("Jen", "Finance", 3900),
+      ("Jeff", "Marketing", 3000),
+      ("Kumar", "Marketing", 2000),
+      ("Saif", "Sales", 4100)
+    )
+     val df = simpleData.toDF("employee_name", "dept", "sal")
+      df.show()
+
+    //distinct all columns
+    val distinctDF = df.distinct()
+    println("Distinct count: " + distinctDF.count())
+    distinctDF.show()
+
+    val df2 = df.dropDuplicates()
+    println("Distinct count: " + df2.count())
+    df2.show()
+
+    //distinct using dropDuplicates
+    val dropDisDF = df.dropDuplicates("department","salary")
+    println("Distinct count of department & salary:" + dropDisDF.count())
+    dropDisDF.show(false)
+
+  }
+}
+
+==>> +-------------+---------+----+
+|employee_name|     dept| sal|
++-------------+---------+----+
+|        James|    Sales|3000|
+|      Michael|    Sales|4600|
+|       Robert|    Sales|4100|
+|        Maria|  Finance|3000|
+|        James|    Sales|3000|
+|        Scott|  Finance|3300|
+|          Jen|  Finance|3900|
+|         Jeff|Marketing|3000|
+|        Kumar|Marketing|2000|
+|         Saif|    Sales|4100|
++-------------+---------+----+
+
+Distinct count: 9
++-------------+---------+----+
+|employee_name|     dept| sal|
++-------------+---------+----+
+|        James|    Sales|3000|
+|      Michael|    Sales|4600|
+|        Maria|  Finance|3000|
+|       Robert|    Sales|4100|
+|         Saif|    Sales|4100|
+|        Scott|  Finance|3300|
+|         Jeff|Marketing|3000|
+|          Jen|  Finance|3900|
+|        Kumar|Marketing|2000|
++-------------+---------+----+
+
+Distinct count: 9
++-------------+---------+----+
+|employee_name|     dept| sal|
++-------------+---------+----+
+|        James|    Sales|3000|
+|      Michael|    Sales|4600|
+|        Maria|  Finance|3000|
+|       Robert|    Sales|4100|
+|         Saif|    Sales|4100|
+|        Scott|  Finance|3300|
+|         Jeff|Marketing|3000|
+|          Jen|  Finance|3900|
+|        Kumar|Marketing|2000|
++-------------+---------+----+
+
+9) object createTable {
+    def main(args:Array[String]): Unit ={
+        val spark : SparkSession = SparkSession.builder()
+          .master("local[*]")
+          .appName("creating table and joining tables")
+          .getOrCreate()
+
+        import spark.implicits._
+        val dept = Seq((10, "Inventory", "Hydb"), (20, "Finance", "Mbi"), (30, "HR", "Bglr")).toDF("Deptno", "Dname", "Loc")
+        dept.show()
+
+        val emp = Seq(("James", "Manager", "50000", "10"), ("Robin", "Clerk", "20000", "20"), ("Rupert", "Analyst", "35000", "40")).toDF("Ename", "Job", "Sal", "Deptno")
+        emp.show()
+
+        val join = dept.join(emp, "Deptno")
+        join.show()
+
+        dept.createOrReplaceTempView("dept")
+        emp.createOrReplaceTempView("emp")
+
+        val table = spark.sql("select e.Ename, d.Dname, e.Job, d.Deptno from emp e join dept d on e.deptno=d.deptno")
+        table.show()
+    }
+}
+
+==>> +------+---------+----+
+|Deptno|    Dname| Loc|
++------+---------+----+
+|    10|Inventory|Hydb|
+|    20|  Finance| Mbi|
+|    30|       HR|Bglr|
++------+---------+----+
+
++------+-------+-----+------+
+| Ename|    Job|  Sal|Deptno|
++------+-------+-----+------+
+| James|Manager|50000|    10|
+| Robin|  Clerk|20000|    20|
+|Rupert|Analyst|35000|    40|
++------+-------+-----+------+
+
++------+---------+----+-----+-------+-----+
+|Deptno|    Dname| Loc|Ename|    Job|  Sal|
++------+---------+----+-----+-------+-----+
+|    10|Inventory|Hydb|James|Manager|50000|
+|    20|  Finance| Mbi|Robin|  Clerk|20000|
++------+---------+----+-----+-------+-----+
+
++-----+---------+-------+------+
+|Ename|    Dname|    Job|Deptno|
++-----+---------+-------+------+
+|James|Inventory|Manager|    10|
+|Robin|  Finance|  Clerk|    20|
++-----+---------+-------+------+
+
+object prac{
+  def main(args:Array[String]): Unit ={
+    val spark : SparkSession = SparkSession.builder()
+      .master("local[*]")
+      .appName("join")
+      .getOrCreate()
+
+    import spark.implicits._
+    val emp = Seq(("James", "Manager", "50000", "10"), ("Robin", "Salesman", "20000", "20"), ("Susane", "Analyst", "35000", "40"),("Rupert", "Analyst", "30000", "30"),("Betty", "Clerk", "28000", "40")).toDF("Ename", "Job", "Sal", "Deptno")
+    val dept = Seq((10, "Inventory", "Hydb"), (20, "Finance", "Mbi"), (30, "HR", "Bglr"),(40, "Accounting", "Chennai")).toDF("Deptno", "Dname", "Loc")
+
+    emp.createOrReplaceTempView("emp")
+    println("emp table")
+    emp.show()
+    dept.createOrReplaceTempView("dept")
+    println("dept table")
+    dept.show()
+
+    val table1 = spark.sql("select e.ename, d.dname from emp e right join dept d on e.deptno=d.deptno")
+    val table2 = spark.sql("select e.ename, d.dname from emp e left join dept d on e.deptno=d.deptno")
+
+    println("right outer join:")
+    table1.show()
+    println("left outer join:")
+    table2.show()
+  }
+}
+
+==>>
+emp table
++------+--------+-----+------+
+| Ename|     Job|  Sal|Deptno|
++------+--------+-----+------+
+| James| Manager|50000|    10|
+| Robin|Salesman|20000|    20|
+|Susane| Analyst|35000|    40|
+|Rupert| Analyst|30000|    30|
+| Betty|   Clerk|28000|    40|
++------+--------+-----+------+
+
+dept table
++------+----------+-------+
+|Deptno|     Dname|    Loc|
++------+----------+-------+
+|    10| Inventory|   Hydb|
+|    20|   Finance|    Mbi|
+|    30|        HR|   Bglr|
+|    40|Accounting|Chennai|
++------+----------+-------+
+
+right outer join:
++------+----------+
+| ename|     dname|
++------+----------+
+| James| Inventory|
+| Robin|   Finance|
+|Rupert|        HR|
+| Betty|Accounting|
+|Susane|Accounting|
++------+----------+
+
+left outer join:
++------+----------+
+| ename|     dname|
++------+----------+
+| James| Inventory|
+| Robin|   Finance|
+|Susane|Accounting|
+|Rupert|        HR|
+| Betty|Accounting|
++------+----------+
+
+10) object prac{
+  def  main(args:Array[String]): Unit ={
+    val spark : SparkSession = SparkSession.builder()
+      .master("local[*]")
+      .appName("inner join")
+      .getOrCreate()
+
+    import spark.implicits._
+    val emp = Seq(("James", "Manager", "50000", "10"), ("Robin", "Salesman", "20000", "20"), ("Susane", "Analyst", "35000", "40"),("Rupert", "Analyst", "30000", "30"),("Betty", "Clerk", "28000", "40")).toDF("Ename", "Job", "Sal", "Deptno")
+    val dept = Seq((10, "Inventory", "Hydb"), (20, "Finance", "Mbi"), (30, "HR", "Bglr"),(40, "Accounting", "Chennai")).toDF("Deptno", "Dname", "Loc")
+
+    emp.createOrReplaceTempView("emp")
+    dept.createOrReplaceTempView("dept")
+
+    println("emp table:")
+    emp.show()
+
+    println("dept table:")
+    dept.show()
+
+    val table =  spark.sql("select e.Ename, d.Dname, e.Job, d.Deptno from emp e join dept d on e.Deptno=d.Deptno order by 4")
+    table.show()
+  }
+}
+
+==> emp table:
++------+--------+-----+------+
+| Ename|     Job|  Sal|Deptno|
++------+--------+-----+------+
+| James| Manager|50000|    10|
+| Robin|Salesman|20000|    20|
+|Susane| Analyst|35000|    40|
+|Rupert| Analyst|30000|    30|
+| Betty|   Clerk|28000|    40|
++------+--------+-----+------+
+
+dept table:
++------+----------+-------+
+|Deptno|     Dname|    Loc|
++------+----------+-------+
+|    10| Inventory|   Hydb|
+|    20|   Finance|    Mbi|
+|    30|        HR|   Bglr|
+|    40|Accounting|Chennai|
++------+----------+-------+
+
++------+----------+--------+------+
+| Ename|     Dname|     Job|Deptno|
++------+----------+--------+------+
+| James| Inventory| Manager|    10|
+| Robin|   Finance|Salesman|    20|
+|Rupert|        HR| Analyst|    30|
+|Susane|Accounting| Analyst|    40|
+| Betty|Accounting|   Clerk|    40|
++------+----------+--------+------+
+
+12) object prac{
+  def main(args:Array[String]): Unit ={
+    val spark : SparkSession = SparkSession.builder()
+      .master("local[*]")
+      .appName("createDataFrame")
+      .getOrCreate()
+
+    import spark.implicits._
+    val data = Seq(("Python", "240903"), ("Java", "23435"), ("Scala", "143453"), ("SQL", "24535343")).toDF("Language", "user_counts")
+    data.printSchema()
+    data.show()
+    
+	val structureData = Seq(
+      Row("James","","Smith","36636","NewYork",3100),
+      Row("Michael","Rose","","40288","California",4300),
+      Row("Robert","","Williams","42114","Florida",1400),
+      Row("Maria","Anne","Jones","39192","Florida",5500),
+      Row("Jen","Mary","Brown","34561","NewYork",3000)
+    )
+
+    val structureSchema = new StructType()
+      .add("firstname",StringType)
+      .add("middlename",StringType)
+      .add("lastname",StringType)
+      .add("id",StringType)
+      .add("location",StringType)
+      .add("salary",IntegerType)
+
+    val df2 = spark.createDataFrame(
+      spark.sparkContext.parallelize(structureData),structureSchema)
+    df2.printSchema()
+    df2.show(false)
+
+  }
+}
+
+==>> root
+ |-- Language: string (nullable = true)
+ |-- user_counts: string (nullable = true)
+
+
++--------+-----------+
+|Language|user_counts|
++--------+-----------+
+|  Python|     240903|
+|    Java|      23435|
+|   Scala|     143453|
+|     SQL|   24535343|
++--------+-----------+
+
+
+root
+ |-- firstname: string (nullable = true)
+ |-- middlename: string (nullable = true)
+ |-- lastname: string (nullable = true)
+ |-- id: string (nullable = true)
+ |-- location: string (nullable = true)
+ |-- salary: integer (nullable = true)
+
++---------+----------+--------+-----+----------+------+
+|firstname|middlename|lastname|id   |location  |salary|
++---------+----------+--------+-----+----------+------+
+|James    |          |Smith   |36636|NewYork   |3100  |
+|Michael  |Rose      |        |40288|California|4300  |
+|Robert   |          |Williams|42114|Florida   |1400  |
+|Maria    |Anne      |Jones   |39192|Florida   |5500  |
+|Jen      |Mary      |Brown   |34561|NewYork   |3000  |
++---------+----------+--------+-----+----------+------+
